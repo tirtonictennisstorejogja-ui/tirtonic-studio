@@ -50,7 +50,7 @@ Di laptop Zaki, Claude Code juga bisa mem-Publish-nya langsung (Firebase CLI sud
 | **Panduan** | Aturan kerja, jobdesk, penyesuaian otomatis | Lihat & ubah jobdesk | Lihat | Lihat |
 | **Tim & Aktivitas** | Beban kerja, track per minggu, template caption, akun tim, latar login | Ya | – | – |
 
-Di laptop menu berupa kolom ikon di kanan; di HP berupa bilah di bawah layar. Pengaturan **Tampilan** (5 tema) berlaku per perangkat. Klik **avatar/nama Anda** di menu untuk membuka **Profil** dan memilih warna avatar; pilihan ini tersimpan di akun dan tampil di semua perangkat.
+Menu berupa kotak-kotak di **Beranda**, tepat di bawah sapaan; geser ke kanan untuk melihat semuanya. Isinya menyesuaikan akun masing-masing. Dari halaman mana pun, klik **logo Tirtonic** di kiri atas untuk kembali ke Beranda. Klik **avatar Anda** di kanan atas untuk membuka **Profil** (warna avatar, tersimpan di akun), **Tampilan** (5 tema, berlaku per perangkat), dan **Keluar**.
 
 ## Alur kerja konten
 

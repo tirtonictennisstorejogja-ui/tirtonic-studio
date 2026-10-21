@@ -55,7 +55,7 @@ PANDUAN.md                    Panduan untuk manusia (pemasangan & pemakaian)
 
 ### Peta kode index.html (cari dengan nama fungsi)
 - Masuk & peran: `boot`, `start`, `applyRole`, `showLogin`, `loginReveal` (animasi login).
-- Navigasi: `setTab` (panel `p-home`, `p-masuk`, `p-pipeline` = Workflow Hub, `p-kalender`, `p-idcc`, `p-jumat` = Laporan Admin, `p-panduan`, `p-tim`), menu `nav.tabs` (kolom ikon kanan di laptop, bilah bawah di HP).
+- Navigasi: `setTab` (panel `p-home`, `p-masuk`, `p-pipeline` = Workflow Hub, `p-kalender`, `p-idcc`, `p-jumat` = Laporan Admin, `p-panduan`, `p-tim`), menu `nav.tabs` disembunyikan sejak v5.5 tetapi tetap di DOM (dipakai `setTab`, `applyRole`, `cntOpen`); yang terlihat adalah menu kotak geser di Beranda (`renderHomeMenu`, `#hMenu`, mengikuti tab yang tidak `hidden`) dan logo `#goHome` untuk kembali ke Beranda. Profil, Tampilan, dan Keluar ada di tombol avatar kanan atas (`#prof` → `#profPop`).
 - Render: `renderAll`, `renderHome`, `renderWatch` (+ `watchGroups`, `watchTile`), `renderBoard` + `cardInner` (kartu kanban), `renderCal`, `renderDay`, `renderMetaQueue`, `renderItems`, `renderReports`, `renderTeam`, `renderWeeks`.
 - Penjadwalan: `planBatch` (barang baru), `planOld` (stok lama/IDCC), `scheduleShoot`, `scheduleEdit`, `capState`, `slotUse`, `findSlot`, `pickPost`, `pickIdcc`, `dayPlan`, penyeimbang otomatis `computeBalance` / `runBalance` / `queueBalance`.
 - Data: `newTask`, `saveItem`, `setStatus`, `fileName` (format nama file), foto `makePhoto`/`savePhoto`/`thumbHtml`.
