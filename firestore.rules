@@ -1,0 +1,86 @@
+rules_version = '2';
+
+// Aturan keamanan Media Desk.
+// LANGKAH WAJIB: ganti dua email di ownerEmails() dengan email Google admin (huruf kecil semua),
+// sama persis dengan adminEmails di config.js. Admin lain bisa ditambahkan dari menu Tim & Aktivitas.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function ownerEmails() {
+      return ['mzakiramadhan261003@gmail.com'];
+    }
+
+    function signedIn() {
+      return request.auth != null
+        && request.auth.token.email != null
+        && request.auth.token.email_verified == true;
+    }
+    function myEmail() { return request.auth.token.email.lower(); }
+    function memberPath() { return /databases/$(database)/documents/members/$(myEmail()); }
+    function isOwner() { return signedIn() && myEmail() in ownerEmails(); }
+    function hasMemberDoc() { return signedIn() && exists(memberPath()); }
+    function isMember() { return isOwner() || hasMemberDoc(); }
+    function isAdmin() { return isOwner() || (hasMemberDoc() && get(memberPath()).data.role == 'admin'); }
+    // Anggota yang dicentang "Boleh memakai Analisis IDCC" (misalnya Aulia)
+    function isIdcc() { return isAdmin() || (hasMemberDoc() && get(memberPath()).data.get('idcc', false) == true); }
+
+    // Akun tim: setiap orang bisa membaca akunnya sendiri, hanya admin yang mengelola
+    match /members/{email} {
+      allow read: if signedIn() && (email == myEmail() || isAdmin());
+      allow write: if isAdmin();
+    }
+
+    match /items/{id} {
+      allow read: if isMember();
+      allow write: if isAdmin();
+      // anggota IDCC hanya boleh MENAMBAH barang stok lama dari hasil analisis, tidak mengubah barang yang ada
+      allow create: if isIdcc() && request.resource.data.get('old', false) == true;
+    }
+    // Gambar latar halaman login: dibaca sebelum login, diubah admin
+    match /public/{id}   { allow read: if true; allow write: if isAdmin(); }
+    // Riwayat Analisis IDCC
+    match /idcc/{id}     { allow read, create: if isIdcc(); allow update, delete: if isAdmin(); }
+    // Foto barang (ukuran besar). Thumbnail tersimpan di data barang.
+    match /photos/{id}   { allow read: if isMember(); allow write: if isAdmin(); }
+    match /settings/{id} { allow read: if isMember(); allow write: if isAdmin(); }
+    match /logs/{id}     { allow read: if isMember(); allow write: if isAdmin(); }
+    match /locks/{id}    { allow read, write: if isAdmin(); }
+    // Laporan mingguan, planning, dan bulanan: khusus admin
+    match /reports/{id}  { allow read, write: if isAdmin(); }
+
+    match /tasks/{id} {
+      // semua anggota boleh membaca (untuk kalender tim); aplikasi hanya menampilkan tugas miliknya di pipeline
+      allow read: if isMember();
+      allow create: if isAdmin() || idccCreate();
+      allow delete: if isAdmin();
+      allow update: if isAdmin() || memberStatusUpdate();
+
+      // Anggota IDCC: hanya membuat konten IDCC baru dari stok lama, status awal Rencana
+      function idccCreate() {
+        let d = request.resource.data;
+        return isIdcc()
+          && d.get('source', '') == 'lama'
+          && d.get('reason', '') == 'idcc'
+          && d.get('type', '') in ['idc', 'idf']
+          && d.get('status', '') == 'Rencana';
+      }
+
+      // Anggota: hanya tugas tempat ia menjadi produser / editor / talent / penulis skrip,
+      // hanya status (Rencana s.d. QC), catatan, dan riwayat yang boleh berubah.
+      function memberStatusUpdate() {
+        let before = resource.data;
+        let after = request.resource.data;
+        let early = ['Rencana', 'Siap Produksi', 'Diproduksi', 'Editing', 'QC'];
+        let code = get(memberPath()).data.get('code', '');
+        return hasMemberDoc()
+          && code is string && code != ''
+          && code in [before.get('producer', ''), before.get('editor', ''), before.get('talent', ''), before.get('script', '')]
+          && after.diff(before).affectedKeys().hasOnly(['status', 'shotAt', 'readyAt', 'note', 'history', 'updatedAt', 'updatedBy'])
+          && before.status in early
+          && after.status in early
+          && after.get('note', '') is string && after.get('note', '').size() <= 1000
+          && after.get('history', []) is list && after.get('history', []).size() <= 40;
+      }
+    }
+  }
+}
