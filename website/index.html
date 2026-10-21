@@ -52,7 +52,65 @@ html,body{margin:0}[hidden]{display:none!important}img{max-width:100%}
 .chip.ty{background:color-mix(in srgb,var(--t) 14%,transparent);color:var(--t);border:1px solid color-mix(in srgb,var(--t) 40%,transparent)}
 
 /* ---------- tema tampilan: glass, gradasi, midnight ---------- */
-:root{--on-navy:#ffffff}
+:root{--on-navy:#ffffff;--st-1:#5b6b85;--st-2:#d9730d;--st-3:#7c4ddb;--st-4:#0e8f80;--st-5:#4d8a12}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--st-1:#9fb0cc;--st-2:#f5a04a;--st-3:#b79bff;--st-4:#45d0bd;--st-5:#a3d95b}}
+:root[data-theme="dark"]{--st-1:#9fb0cc;--st-2:#f5a04a;--st-3:#b79bff;--st-4:#45d0bd;--st-5:#a3d95b}
+/* ---------- pipeline kanban ---------- */
+.panel,#board,main.wrap{min-width:0}
+.kanban{max-width:100%;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(300px,1fr);gap:12px;overflow-x:auto;padding:2px 2px 12px;scroll-snap-type:x proximity;align-items:start}
+.kcol{scroll-snap-align:start;background:color-mix(in srgb,var(--sc) 7%,var(--bg));border:1px solid color-mix(in srgb,var(--sc) 22%,var(--line));border-radius:14px;display:grid;gap:10px;padding:10px;min-width:0}
+.kch{display:flex;align-items:center;gap:10px;padding:4px 4px 8px;border-bottom:3px solid var(--sc)}
+.kch .kic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--sc);color:#fff;flex:none}
+.kch .kic svg{width:20px;height:20px}
+.kch b{display:block;font:800 17px/1.1 var(--display);color:var(--sc)}
+.kch small{display:block;color:var(--muted);font-size:12px}
+.kch .kn{margin-left:auto;font:800 15px/1 var(--display);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 10px;color:var(--ink)}
+.kbody{display:grid;gap:10px}
+.kempty{border:2px dashed color-mix(in srgb,var(--sc) 30%,var(--line));border-radius:10px;padding:18px;text-align:center;color:var(--muted);font-size:13px}
+.card.k{gap:10px;padding:12px;border-radius:12px;border:1px solid var(--line);border-top:5px solid var(--t);box-shadow:0 6px 16px -14px #0006;transition:transform .15s,box-shadow .15s}
+.card.k:hover{transform:translateY(-1px);box-shadow:0 12px 24px -16px #0007}
+.card.k.late{border-left:1px solid var(--line)}
+.khead{display:flex;flex-direction:column;gap:6px}
+.ktype{margin:0;font:800 20px/1.1 var(--display);letter-spacing:-.01em;color:var(--t);text-transform:none}
+.kdl{display:inline-flex;align-items:center;gap:5px;align-self:flex-start;font:700 13px/1.25 var(--body);color:var(--crit);background:color-mix(in srgb,var(--crit) 9%,transparent);border-radius:7px;padding:4px 8px}
+.kdl svg{width:15px;height:15px;flex:none}
+.kdl.late{background:var(--crit);color:#fff}
+.kdl.ok{color:var(--good);background:color-mix(in srgb,var(--good) 12%,transparent)}
+.kmain{display:flex;gap:10px;align-items:center}
+.ktitle{font-weight:700;font-size:15px;line-height:1.3;overflow-wrap:anywhere}
+.kmeta{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin-top:4px;font-size:12.5px;color:var(--muted)}
+.kmeta a.chip{text-decoration:none}
+.kpeople{display:flex;flex-wrap:wrap;gap:6px}
+.av{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:var(--muted);background:var(--chip);border-radius:999px;padding:2px 8px 2px 2px}
+.av i{font-style:normal;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:var(--surface);color:var(--ink);font:800 11px/1 var(--display);border:1px solid var(--line)}
+.av.me{background:var(--navy-soft);color:var(--navy);font-weight:700}
+.av.me i{background:var(--navy);color:var(--on-navy);border-color:var(--navy)}
+.ksteps{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.kst{all:unset;box-sizing:border-box;cursor:pointer;text-align:center;font:700 10px/1 var(--body);letter-spacing:-.01em;padding:7px 1px 6px;border-radius:7px;color:var(--muted);background:var(--chip);position:relative;overflow:hidden;transition:background .2s,color .2s,transform .1s}
+.kst span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kst.done{background:color-mix(in srgb,var(--sc) 22%,var(--chip));color:var(--ink)}
+.kst.cur{background:var(--sc);color:#fff;box-shadow:0 4px 10px -6px var(--sc)}
+.kst:not(:disabled):not(.cur):hover{background:color-mix(in srgb,var(--sc) 35%,var(--chip));color:var(--ink);transform:translateY(-1px)}
+.kst:disabled{cursor:default}
+.kst:not(.cur):disabled{opacity:.75}
+.kst:focus-visible{outline:2px solid var(--navy);outline-offset:1px}
+.kflags{display:flex;gap:6px;flex-wrap:wrap}
+.kflag{all:unset;cursor:pointer;font:700 12px/1 var(--body);padding:6px 9px;border-radius:999px;border:1px dashed var(--st-4);color:var(--st-4)}
+.kflag.on{border-style:solid;background:color-mix(in srgb,var(--st-4) 14%,transparent)}
+span.kflag{cursor:default}
+.kflag.meta{border:1px solid var(--good);color:var(--good);background:color-mix(in srgb,var(--good) 10%,transparent);cursor:default}
+details.kmore summary{cursor:pointer;color:var(--muted);font-size:13px;font-weight:600;list-style:none;display:flex;align-items:center;gap:6px}
+details.kmore summary::-webkit-details-marker{display:none}
+details.kmore summary::before{content:"";width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(-45deg);transition:transform .15s}
+details.kmore[open] summary::before{transform:rotate(45deg)}
+details.kmore[open]{display:grid;gap:8px}
+details.kmore[open] summary{margin-bottom:4px}
+.kgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 8px}
+.kgrid select,.kgrid input{padding:6px 8px;font-size:13px}
+.krow{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.addph2{cursor:pointer;border-style:dashed}
+.addph2:hover{color:var(--navy);border-color:var(--navy)}
+@media (max-width:820px){.kanban{grid-auto-columns:86%;scroll-snap-type:x mandatory}}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--on-navy:#0f1613}}
 :root[data-theme="dark"]{--on-navy:#0f1613}
 html[data-skin] body{background:transparent}
@@ -104,6 +162,53 @@ html[data-skin] .box{box-shadow:0 10px 30px -22px #0005}
 .themepop .opt[aria-checked="true"] .ck{visibility:visible}
 .themepop .reset{all:unset;cursor:pointer;color:var(--muted);font-size:12.5px;text-decoration:underline;justify-self:start}
 
+/* ---------- Watchlist (layar pantauan, hanya baca) ---------- */
+.wtop{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
+.live{display:inline-flex;align-items:center;gap:7px;font:800 12px/1 var(--display);letter-spacing:.08em;color:var(--crit);background:color-mix(in srgb,var(--crit) 10%,transparent);padding:6px 10px;border-radius:999px}
+.live span{letter-spacing:0;font-weight:600;color:var(--muted)}
+.live i{width:8px;height:8px;border-radius:50%;background:var(--crit);box-shadow:0 0 0 0 color-mix(in srgb,var(--crit) 60%,transparent);animation:livep 1.6s infinite}
+@keyframes livep{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--crit) 55%,transparent)}70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.wsum{display:flex;flex-wrap:wrap;gap:6px}
+.wsum span{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;padding:5px 10px;border-radius:999px;background:color-mix(in srgb,var(--sc) 13%,var(--surface));color:var(--ink);border:1px solid color-mix(in srgb,var(--sc) 35%,var(--line))}
+.wsum span b{font:800 14px/1 var(--display);color:var(--sc)}
+.wtools{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+.wtools input[type=search]{max-width:240px}
+.wtools select{width:auto}
+.wtools .btn{margin-left:auto}
+.wgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:12px;align-items:start}
+.witem{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;display:grid;gap:10px;min-width:0}
+.witem.alldone{opacity:.7}
+.whead{display:flex;gap:10px;align-items:center;min-width:0}
+.whead .wn{font-weight:800;font-size:15px;line-height:1.25;overflow-wrap:anywhere}
+.whead .wm{font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;margin-top:2px}
+.wpic{font-size:11px;color:var(--muted)}
+.wpic b{color:var(--ink);font-weight:700}
+.wrows{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.wrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 8px;align-items:center}
+.wrow .wt{font:800 13px/1.2 var(--display);color:var(--t)}
+.wrow .ws{font:700 12px/1 var(--body);color:var(--sc);justify-self:end;display:inline-flex;align-items:center;gap:5px}
+.wrow .ws i{width:7px;height:7px;border-radius:50%;background:var(--sc);animation:livep2 1.8s infinite}
+@keyframes livep2{0%,100%{opacity:1}50%{opacity:.35}}
+.wbar5{grid-column:1/-1;display:grid;grid-template-columns:repeat(5,1fr);gap:3px}
+.wbar5 span{height:7px;border-radius:4px;background:var(--chip)}
+.wbar5 span.done{background:color-mix(in srgb,var(--sc2) 55%,var(--chip))}
+.wbar5 span.cur{background:var(--sc2);box-shadow:0 0 0 2px color-mix(in srgb,var(--sc2) 25%,transparent);animation:livep2 1.8s infinite}
+.wrow .wwho{grid-column:1/-1;font-size:11px;color:var(--muted)}
+.wrow .wwho b{color:var(--ink);font-weight:600}
+.wrow .wwho .late{color:var(--crit);font-weight:700}
+@media (prefers-reduced-motion:reduce){.live i,.wrow .ws i,.wbar5 span.cur{animation:none}}
+/* Mode TV */
+body.tv header.top,body.tv nav.tabs,body.tv .scrim,body.tv .demobar{display:none!important}
+body.tv .shell{display:block}
+body.tv main.wrap{max-width:none}
+body.tv #p-watch{padding-block:16px}
+body.tv #p-watch .pghd .help,body.tv .wtools input,body.tv .wtools select,body.tv .wtools label{display:none}
+body.tv .wgrid{grid-template-columns:repeat(auto-fill,minmax(380px,1fr))}
+body.tv .whead .wn{font-size:18px}
+body.tv .wrow .wt{font-size:15px}
+.tvclock{display:none}
+body.tv .tvclock{display:inline-block;font:800 20px/1 var(--display);color:var(--navy);margin-left:auto}
+
 .legend{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 
 *{box-sizing:border-box}
@@ -117,7 +222,7 @@ header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background
 .brand h1{font-family:var(--display);font-weight:800;font-size:27px;line-height:1.1;letter-spacing:-.015em;margin:0}
 .brand .dot{width:12px;height:12px;border-radius:50%;background:var(--ball);box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--ball-ink) 25%,transparent);align-self:center}
 .brand small{color:var(--muted);font-size:13px}
-@media (max-width:520px){.brand h1{font-size:23px}.brand img.logo{width:36px;height:36px}}
+@media (max-width:520px){.brand h1{font-size:19px}.brand img.logo{width:30px;height:30px}.brand small{font-size:11.5px}}
 /* menu samping kiri yang bisa dibuka-tutup */
 .shell{display:grid;grid-template-columns:var(--sw,224px) minmax(0,1fr);align-items:start;transition:grid-template-columns .2s ease}
 .shell.collapsed{--sw:68px}
@@ -180,7 +285,7 @@ input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid 
 .check input{width:auto}
 button.btn{font:600 14px/1 var(--body);background:var(--accent);color:var(--accent-ink);border:0;border-radius:7px;padding:11px 16px;cursor:pointer}
 button.btn[disabled]{opacity:.5;cursor:not-allowed}
-button.ghost{font:500 13px/1 var(--body);background:var(--chip);color:var(--ink);border:0;border-radius:6px;padding:7px 10px;cursor:pointer}
+button.ghost,a.ghost{font:500 13px/1 var(--body);background:var(--chip);color:var(--ink);border:0;border-radius:6px;padding:7px 10px;cursor:pointer}
 button.ghost.danger{color:var(--crit)}
 .preview{font-size:13px;color:var(--muted);background:var(--bg);border:1px dashed var(--line);border-radius:7px;padding:10px 12px}
 .preview b{color:var(--ink);font-weight:600}
@@ -432,9 +537,23 @@ body.gate{overflow:hidden}
 .login-card{position:relative;backdrop-filter:blur(6px);box-shadow:0 20px 50px -20px #000a;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px 24px;max-width:400px;width:100%;display:grid;gap:14px;text-align:center}
 .login-card h1{font:800 26px/1 var(--display);letter-spacing:-.015em;margin:0;display:flex;gap:10px;align-items:center;justify-content:center}
 .login-card img.logo{width:40px;height:40px;object-fit:contain;image-rendering:pixelated}
-.who{display:flex;align-items:center;gap:8px;font-size:13px;margin-left:auto}
-.who .role{font-size:11px;font-weight:600;padding:2px 7px;border-radius:999px;background:var(--chip)}
-.who .role.admin{background:var(--ball);color:var(--ball-ink)}
+.role{font-size:11px;font-weight:600;padding:2px 7px;border-radius:999px;background:var(--chip);color:var(--ink)}
+.role.admin{background:var(--ball);color:var(--ball-ink)}
+.clock{margin-left:auto;display:grid;justify-items:end;gap:2px;text-align:right}
+.ck-time{font:800 22px/1 var(--display);letter-spacing:-.01em;color:var(--navy);font-variant-numeric:tabular-nums}
+.ck-time small{font-size:12px;font-weight:700;color:var(--muted);margin-left:4px}
+.ck-date{font-size:13px;color:var(--muted);font-weight:600}
+.ck-date .sh{display:none}
+@media (max-width:520px){.ck-time{font-size:16px}.ck-time small{font-size:10px}.ck-date{font-size:10.5px}.ck-date .lg{display:none}.ck-date .sh{display:inline}header.top .wrap{flex-wrap:nowrap;gap:8px}.brand{gap:7px}}
+.prof{display:flex;align-items:center;gap:10px;padding:8px 12px 10px}
+.pav{width:32px;height:32px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--navy);color:var(--on-navy);font:800 14px/1 var(--display)}
+.pinfo{display:grid;gap:3px;min-width:0}
+.pinfo b{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pinfo .role{justify-self:start}
+.shell.collapsed .prof{justify-content:center;padding:8px 0 10px}
+.shell.collapsed .prof .lbl{display:none}
+@media (max-width:820px){.shell.collapsed .prof{justify-content:flex-start;padding:8px 12px 10px}.shell.collapsed .prof .lbl{display:grid}}
+#signOut:hover{background:color-mix(in srgb,var(--crit) 12%,transparent);color:var(--crit)}
 .note{width:100%;min-height:52px;resize:vertical;font-size:13px}
 .hist summary{cursor:pointer;font-size:12.5px;color:var(--muted)}
 .hist ul{margin:6px 0 0;padding:0;list-style:none;display:grid;gap:3px;font-size:12px;color:var(--muted)}
@@ -442,6 +561,20 @@ body.gate{overflow:hidden}
 .rolestxt{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12.5px;color:var(--muted)}
 .rolestxt b{color:var(--ink);font-weight:600}
 .rolestxt .me{background:var(--ball);color:var(--ball-ink);border-radius:4px;padding:0 4px}
+.list.tl li{gap:10px;flex-wrap:wrap}
+.list.tl li>span:first-child{display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0}
+.time{font:800 14px/1 var(--display);color:var(--navy);background:var(--navy-soft);border-radius:6px;padding:5px 7px;min-width:52px;text-align:center}
+.time.over{color:var(--crit);background:color-mix(in srgb,var(--crit) 12%,transparent)}
+.acts2{display:flex;gap:6px;flex-wrap:wrap;align-items:center;justify-content:flex-end}
+.ghost.sm,.btn.sm{padding:6px 10px;font-size:12.5px}
+a.ghost{text-decoration:none;display:inline-flex;align-items:center}
+.qday{margin:14px 0 6px;font:700 14px/1.2 var(--display);color:var(--muted)}
+details.cap{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--bg)}
+details.cap summary{cursor:pointer;font-weight:600;font-size:13.5px}
+details.cap[open] summary{margin-bottom:8px}
+details.cap textarea{min-height:70px}
+details.cap textarea.capfinal{min-height:170px}
+.caprow{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
 .subhd{margin:4px 0 -2px;font-size:15px;color:var(--muted)}
 .wk-t td,.wk-t th{text-align:center}
 .wk-t td:first-child,.wk-t th:first-child{text-align:left}
@@ -474,7 +607,7 @@ body.gate{overflow:hidden}
   <div class="wrap">
     <button class="iconbtn" type="button" id="burger" aria-label="Buka menu" aria-controls="sideNav" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     <div class="brand"><img class="logo" src="logo.png" alt="Logo Tirtonic"><div><h1>Tirtonic Studio</h1><small id="conn" class="conn">Menyambungkan…</small></div></div>
-    <div class="who" id="who"><span id="whoName"></span><span class="role" id="whoRole"></span><button class="ghost" type="button" id="signOut">Keluar</button></div>
+    <div class="clock" id="clock" aria-label="Jam dan tanggal sekarang"><span class="ck-time num" id="ckTime">--.--</span><span class="ck-date" id="ckDate"></span></div>
   </div>
 </header>
 
@@ -483,13 +616,14 @@ body.gate{overflow:hidden}
   <nav class="tabs" role="tablist" aria-label="Halaman" id="sideNav" aria-orientation="vertical">
     <div class="navhead"><span class="lbl">MENU</span><button class="iconbtn" type="button" id="navToggle" aria-label="Tutup menu" title="Tutup menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button></div>
       <button role="tab" id="tab-masuk" aria-selected="true" data-tab="masuk" title="Barang Masuk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8l9-5 9 5v8l-9 5-9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg><span class="lbl">Barang Masuk</span></button>
-      <button role="tab" id="tab-pipeline" aria-selected="false" data-tab="pipeline" title="Pipeline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="10" y="4" width="5" height="11" rx="1.5"/><rect x="17" y="4" width="4" height="7" rx="1.5"/></svg><span class="lbl">Pipeline</span> <span id="cntOpen" class="num"></span></button>
+      <button role="tab" id="tab-pipeline" aria-selected="false" data-tab="pipeline" title="Workflow Hub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="10" y="4" width="5" height="11" rx="1.5"/><rect x="17" y="4" width="4" height="7" rx="1.5"/></svg><span class="lbl">Workflow Hub</span> <span id="cntOpen" class="num"></span></button>
+      <button role="tab" id="tab-watch" aria-selected="false" data-tab="watch" title="Watchlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/><circle cx="12" cy="10" r="2.2"/><path d="M6.5 10c1.4-2.3 3.3-3.4 5.5-3.4s4.1 1.1 5.5 3.4c-1.4 2.3-3.3 3.4-5.5 3.4S7.9 12.3 6.5 10z"/></svg><span class="lbl">Watchlist</span></button>
       <button role="tab" id="tab-kalender" aria-selected="false" data-tab="kalender" title="Kalender"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="lbl">Kalender</span></button>
       <button role="tab" id="tab-idcc" aria-selected="false" data-tab="idcc" title="Analisis IDCC" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span class="lbl">Analisis IDCC</span><span class="badge">Baru</span></button>
       <button role="tab" id="tab-jumat" aria-selected="false" data-tab="jumat" title="Laporan Admin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h4"/></svg><span class="lbl">Laporan Admin</span></button>
       <button role="tab" id="tab-panduan" aria-selected="false" data-tab="panduan" title="Panduan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></svg><span class="lbl">Panduan</span></button>
       <button role="tab" id="tab-tim" aria-selected="false" data-tab="tim" title="Tim & Aktivitas" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.6c3 .2 5.5 2 5.5 5.4"/></svg><span class="lbl">Tim &amp; Aktivitas</span></button>
-    <div class="navfoot"><button type="button" id="themeBtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="themePop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.2 0 1.8-.8 1.8-1.7 0-.5-.2-.9-.5-1.3-.3-.4-.5-.8-.5-1.3 0-1 .8-1.7 1.8-1.7H17a4 4 0 0 0 4-4C21 6.6 17 3 12 3z"/><circle cx="7.5" cy="11" r="1.2" fill="currentColor"/><circle cx="10.5" cy="7.3" r="1.2" fill="currentColor"/><circle cx="15" cy="7.5" r="1.2" fill="currentColor"/></svg><span class="lbl">Tampilan</span></button></div>
+    <div class="navfoot"><div class="prof" id="prof"><span class="pav" id="whoAv" aria-hidden="true"></span><span class="lbl pinfo"><b id="whoName"></b><span class="role" id="whoRole"></span></span></div><button type="button" id="themeBtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="themePop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.2 0 1.8-.8 1.8-1.7 0-.5-.2-.9-.5-1.3-.3-.4-.5-.8-.5-1.3 0-1 .8-1.7 1.8-1.7H17a4 4 0 0 0 4-4C21 6.6 17 3 12 3z"/><circle cx="7.5" cy="11" r="1.2" fill="currentColor"/><circle cx="10.5" cy="7.3" r="1.2" fill="currentColor"/><circle cx="15" cy="7.5" r="1.2" fill="currentColor"/></svg><span class="lbl">Tampilan</span></button><button type="button" id="signOut"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l-5-5 5-5M5 12h11"/></svg><span class="lbl">Keluar</span></button></div>
   </nav>
   <div class="themepop" id="themePop" role="dialog" aria-label="Pilih tampilan" hidden></div>
 <main class="wrap">
@@ -520,7 +654,7 @@ body.gate{overflow:hidden}
     </div>
     <div class="box" id="batchBox" hidden>
       <h3>Beberapa barang datang bersamaan</h3>
-      <p class="status" style="margin:-4px 0 12px">Kuota tayang per hari: 2 foto Instagram, 1 video produk, 1 video review. Barang diurutkan acak dan selang-seling antar kategori; jika slot sebuah hari sudah penuh, konten otomatis digeser ke hari berikutnya.</p>
+      <p class="status" style="margin:-4px 0 12px">Kuota tayang per hari: 2 foto Instagram (09.00 &amp; 15.00) dan 2 video jenis apa pun (12.00 &amp; 18.00). Barang diurutkan acak dan selang-seling antar kategori; jika slot sebuah hari sudah penuh, konten otomatis digeser ke hari berikutnya.</p>
       <div class="toolbar" style="margin-bottom:12px;align-items:end">
         <label class="l" for="bDate" style="width:180px">Tanggal datang<input type="date" id="bDate"></label>
         <button type="button" class="ghost" id="bAdd">+ Tambah baris</button>
@@ -577,7 +711,7 @@ body.gate{overflow:hidden}
   <!-- PIPELINE -->
   <section class="panel" id="p-pipeline" hidden>
     <div>
-      <div class="pghd"><h2>Pipeline konten</h2><button type="button" class="help" aria-expanded="false" aria-label="Cara kerja: Pipeline konten"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.4"/><circle cx="12" cy="16.8" r=".6" fill="currentColor"/></svg>How to work?</button><div class="pop" role="tooltip">Geser status setiap konten sampai tayang. Kartu bergaris merah sudah lewat batas waktu. Setiap konten aktif di pipeline selama 1 bulan sejak dibuat, lalu hangus: hilang dari pipeline, kalender, dan penjadwalan, tetapi tetap bisa dilihat sebagai arsip lewat pilihan bulan.</div></div>
+      <div class="pghd"><h2>Workflow Hub</h2><button type="button" class="help" aria-expanded="false" aria-label="Cara kerja: Workflow Hub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.4"/><circle cx="12" cy="16.8" r=".6" fill="currentColor"/></svg>How to work?</button><div class="pop" role="tooltip">Lima tahap: <b>Terdata</b> (masuk pantauan), <b>Diproduksi</b> (sedang syuting), <b>Editing</b>, <b>Ready</b> (file final sudah di Google Drive), <b>Tayang</b>. Klik nama tahap di kartu untuk memindahkannya. Tulisan merah di kartu adalah deadline untuk orang yang sedang ditunggu (pilih nama orang untuk melihat deadline orang itu). Kartu Ready yang sudah dijadwalkan di Meta otomatis pindah ke Tayang setelah jam tayangnya lewat. Setiap konten aktif di Workflow Hub selama 1 bulan sejak dibuat, lalu hangus: hilang dari Workflow Hub, kalender, dan penjadwalan, tetapi tetap bisa dilihat sebagai arsip lewat pilihan bulan.</div></div>
     </div>
     <div class="toolbar">
       <span class="status">Orang:</span>
@@ -588,7 +722,7 @@ body.gate{overflow:hidden}
     </div>
     <div id="mySchedule" hidden></div>
     <div class="searchbar" role="search">
-      <input id="pSearch" type="search" placeholder="Cari barang, jenis konten, orang, atau status (mis. asics review)" aria-label="Cari di pipeline">
+      <input id="pSearch" type="search" placeholder="Cari barang, jenis konten, orang, atau status (mis. asics review)" aria-label="Cari di Workflow Hub">
       <select id="pMonth" aria-label="Bulan"><option value="">Semua bulan</option></select>
       <select id="pStatus" aria-label="Status"><option value="">Semua status</option></select>
       <button type="button" class="ghost" id="pClear" hidden>Hapus pencarian</button>
@@ -623,10 +757,26 @@ body.gate{overflow:hidden}
     <div id="board" class="panel"></div>
   </section>
 
+  <!-- WATCHLIST -->
+  <section class="panel" id="p-watch" hidden>
+    <div class="pghd"><h2>Watchlist</h2><button type="button" class="help" aria-expanded="false" aria-label="Cara kerja: Watchlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.4"/><circle cx="12" cy="16.8" r=".6" fill="currentColor"/></svg>How to work?</button><div class="pop" role="tooltip">Layar pantauan semua barang yang sedang diproses menjadi konten. Halaman ini hanya untuk melihat: tahap setiap konten berubah sendiri saat tim memindahkan kartu di Workflow Hub. <b>Mode TV</b> menampilkan layar penuh dan bergulir otomatis, cocok untuk monitor di studio.</div></div>
+    <div class="wtop">
+      <span class="live" aria-live="polite"><i aria-hidden="true"></i>LIVE <span id="wUpd"></span></span><span class="tvclock" id="tvClock"></span>
+      <div class="wsum" id="wSum"></div>
+    </div>
+    <div class="wtools">
+      <input id="wSearch" type="search" placeholder="Cari barang…" aria-label="Cari barang di Watchlist">
+      <select id="wCat" aria-label="Kategori"><option value="">Semua kategori</option></select>
+      <label class="check"><input type="checkbox" id="wDone"> Tampilkan yang sudah tayang semua</label>
+      <button type="button" class="btn" id="wTv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="width:16px;height:16px;vertical-align:-3px;margin-right:6px"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>Mode TV</button>
+    </div>
+    <div class="wgrid" id="wGrid"></div>
+  </section>
+
   <!-- KALENDER -->
   <section class="panel" id="p-kalender" hidden>
     <div>
-      <div class="pghd"><h2>Kalender</h2><button type="button" class="help" aria-expanded="false" aria-label="Cara kerja: Kalender"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.4"/><circle cx="12" cy="16.8" r=".6" fill="currentColor"/></svg>How to work?</button><div class="pop" role="tooltip">Jadwal tayang Instagram (2 foto, 1 video produk, 1 video review per hari) dan jadwal syuting tim. Video payday tayang tiap tanggal 23, video tanggal kembar tayang H-2, dan IDCC punya satu slot video per minggu. Klik tanggal untuk melihat rinciannya.</div></div>
+      <div class="pghd"><h2>Kalender</h2><button type="button" class="help" aria-expanded="false" aria-label="Cara kerja: Kalender"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.4"/><circle cx="12" cy="16.8" r=".6" fill="currentColor"/></svg>How to work?</button><div class="pop" role="tooltip">Jadwal syuting tim dan jadwal tayang Instagram: 4 posting per hari, foto pukul 09.00 dan 15.00, video jenis apa pun pukul 12.00 dan 18.00. Jenis video diacak supaya feed bervariasi. Video payday tayang tiap tanggal 23, video tanggal kembar tayang H-2, dan IDCC punya satu slot video per minggu. Klik tanggal untuk melihat rinciannya.</div></div>
     </div>
     <div class="toolbar">
       <div class="calnav">
@@ -648,11 +798,15 @@ body.gate{overflow:hidden}
     </div>
     <div class="calwrap"><div class="cal" id="cal"></div></div>
     <div class="box" id="calDay"></div>
+    <div class="box" id="metaBox" hidden>
+      <div class="pghd sub"><h3>Antrian upload Meta Business Suite</h3><button type="button" class="help" aria-expanded="false" aria-label="Cara kerja: antrian upload Meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.4"/><circle cx="12" cy="16.8" r=".6" fill="currentColor"/></svg>How to work?</button><div class="pop" role="tooltip">Daftar konten 7 hari ke depan sesuai jam tayang. Untuk setiap baris: klik <b>Buka file</b> (link Google Drive dari editor), unduh filenya, klik <b>Salin caption</b>, lalu buat postingan terjadwal di Meta Business Suite pada tanggal dan jam yang sama. Setelah itu klik <b>Sudah dijadwalkan di Meta</b>: status berubah menjadi Terjadwal dan jamnya terkunci.</div></div>
+      <div id="metaQueue"></div>
+    </div>
   </section>
 
   <!-- ANALISIS IDCC -->
   <section class="panel" id="p-idcc" hidden>
-    <div class="pghd"><h2>Analisis IDCC</h2><button type="button" class="help" aria-expanded="false" aria-label="Cara kerja: Analisis IDCC"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.4"/><circle cx="12" cy="16.8" r=".6" fill="currentColor"/></svg>How to work?</button><div class="pop" role="tooltip">Unggah laporan "Umur Persediaan" dari finance (PDF ACCURATE, boleh beberapa file sekaligus: sepatu, raket, tas). Media Desk membaca tabelnya dan mengelompokkan varian per model barang. Barang yang memenuhi kriteria dinilai AI: rekomendasi video IDCC, foto IDCC, atau pantau, lengkap dengan alasan dan ide konten. Centang barang yang disetujui, cek pratinjau jadwal, lalu simpan: konten masuk ke Pipeline dan kalender.</div></div>
+    <div class="pghd"><h2>Analisis IDCC</h2><button type="button" class="help" aria-expanded="false" aria-label="Cara kerja: Analisis IDCC"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.4"/><circle cx="12" cy="16.8" r=".6" fill="currentColor"/></svg>How to work?</button><div class="pop" role="tooltip">Unggah laporan "Umur Persediaan" dari finance (PDF ACCURATE, boleh beberapa file sekaligus: sepatu, raket, tas). Media Desk membaca tabelnya dan mengelompokkan varian per model barang. Barang yang memenuhi kriteria dinilai AI: rekomendasi video IDCC, foto IDCC, atau pantau, lengkap dengan alasan dan ide konten. Centang barang yang disetujui, cek pratinjau jadwal, lalu simpan: konten masuk ke Workflow Hub dan kalender.</div></div>
     <div class="box">
       <h3>1. Unggah laporan Umur Persediaan dari finance</h3>
       <label class="drop" for="idccFiles"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" style="width:30px;height:30px;color:var(--navy)"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><b>Pilih file PDF</b><span class="status">Boleh beberapa file sekaligus, misalnya sepatu, raket, dan tas</span><input type="file" id="idccFiles" accept="application/pdf,.pdf" multiple hidden></label>
@@ -694,6 +848,11 @@ body.gate{overflow:hidden}
     </div>
     <h3 class="subhd">Beban kerja saat ini</h3>
     <div class="team" id="teamProgress"></div>
+    <div class="box" id="capTplBox">
+      <div class="pghd sub"><h3>Template caption Instagram</h3><button type="button" class="help" aria-expanded="false" aria-label="Cara kerja: template caption"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.4"/><circle cx="12" cy="16.8" r=".6" fill="currentColor"/></svg>How to work?</button><div class="pop" role="tooltip">Tempel template caption Tirtonic yang biasa dipakai. Saat tombol <b>Buat caption dengan AI</b> di kartu Workflow Hub diklik, AI menulis isi caption dari deskripsi toko online, lalu hasilnya dimasukkan ke template ini. Kode yang bisa dipakai: <b>{caption}</b> (wajib, isi dari AI), <b>{hashtag}</b> (hashtag spesifik barang dari AI), <b>{nama}</b>, <b>{warna}</b>, <b>{kategori}</b>, <b>{gender}</b>.</div></div>
+      <textarea id="capTpl" rows="8" maxlength="3000" style="font-family:var(--mono);font-size:13px"></textarea>
+      <div class="toolbar" style="margin-top:10px"><button class="btn" type="button" id="capTplSave">Simpan template</button><button class="ghost" type="button" id="capTplReset">Isi contoh bawaan</button></div>
+    </div>
     <div class="box" id="weekBox">
       <div class="toolbar" style="justify-content:space-between;margin-bottom:10px">
         <h3 style="margin:0">Track per minggu</h3>
@@ -723,7 +882,7 @@ body.gate{overflow:hidden}
           <label class="check" style="grid-column:1/-1"><input type="checkbox" id="mIdcc"> Boleh memakai Analisis IDCC (unggah PDF finance dan membuat konten IDCC)</label>
           <button class="btn" type="submit">Tambah</button>
         </form>
-        <p class="status" style="margin:10px 0 0">Anggota hanya melihat tugas tempat ia menjadi produser, editor, talent, atau penulis skrip, dan hanya bisa mengubah status (sampai QC) serta catatan. Admin bisa mengubah semuanya.</p>
+        <p class="status" style="margin:10px 0 0">Anggota hanya melihat tugas tempat ia menjadi produser, editor, talent, atau penulis skrip, dan hanya bisa memindahkan tahap sampai Ready, menulis catatan, dan menempel link file final. Admin bisa mengubah semuanya.</p>
       </div>
     </div>
     <div class="box">
@@ -812,15 +971,28 @@ body.gate{overflow:hidden}
       <div class="tw"><table class="t">
         <thead><tr><th>Konten</th><th>Jadwal tayang</th><th>Slot</th><th>Produksi</th></tr></thead>
         <tbody>
-          <tr><td><span class="chip ty ty-igf">Foto Instagram</span></td><td>Setiap hari, 2 posting</td><td>2 slot foto</td><td>Rayhan + Salma, hari pertama keduanya masuk setelah barang datang</td></tr>
-          <tr><td><span class="chip ty ty-vpr">Video produk</span></td><td>Setiap hari, 1 posting</td><td>1 slot video produk</td><td>Rayhan + Salma (Jumat: talent Zaki)</td></tr>
-          <tr><td><span class="chip ty ty-vrv">Video review</span></td><td>Setiap hari, 1 posting</td><td>1 slot video review</td><td>Skrip Salma, syuting Aulia + Salma mulai sehari setelah barang datang, maksimal 2 review per hari</td></tr>
-          <tr><td><span class="tag ev">Payday</span></td><td>Tanggal 23 setiap bulan, untuk payday tanggal 25</td><td>Memakai slot review hari itu</td><td>Syuting ±8 hari sebelum tayang, siap 3 hari kerja sebelum tayang</td></tr>
-          <tr><td><span class="tag ev">Tanggal kembar</span></td><td>H-2 (contoh: 11.11 tayang 9 November)</td><td>Memakai slot review hari itu</td><td>Sama seperti payday</td></tr>
-          <tr><td><span class="tag idcc">IDCC</span></td><td>1 video per minggu di hari yang dipilih (bawaan: Rabu)</td><td>Memakai slot review hari itu</td><td>Aulia + Salma, dipilih dari kandidat IDCC di Rapat Jumat</td></tr>
+          <tr><td><span class="chip ty ty-igf">Foto Instagram</span> <span class="chip ty ty-idf">Foto IDCC</span></td><td>Setiap hari pukul <b>09.00</b> dan <b>15.00</b></td><td>2 slot foto</td><td>Rayhan + Salma, hari pertama keduanya masuk setelah barang datang</td></tr>
+          <tr><td><span class="chip ty ty-vpr">Video produk</span> <span class="chip ty ty-vrv">Video review</span> <span class="chip ty">Video lain</span></td><td>Setiap hari pukul <b>12.00</b> dan <b>18.00</b>, jenis video apa pun</td><td>2 slot video</td><td>Jenis video yang sama tidak tayang dua kali sehari bila bisa, dan jam yang sama tidak diisi jenis yang sama seperti 1–2 hari sebelumnya</td></tr>
+          <tr><td><span class="tag ev">Payday</span></td><td>Tanggal 23 setiap bulan, untuk payday tanggal 25</td><td>Memakai satu slot video hari itu</td><td>Syuting ±8 hari sebelum tayang, siap 3 hari kerja sebelum tayang</td></tr>
+          <tr><td><span class="tag ev">Tanggal kembar</span></td><td>H-2 (contoh: 11.11 tayang 9 November)</td><td>Memakai satu slot video hari itu</td><td>Sama seperti payday</td></tr>
+          <tr><td><span class="tag idcc">IDCC</span></td><td>1 video per minggu di hari yang dipilih (bawaan: Rabu)</td><td>Memakai satu slot video hari itu</td><td>Aulia + Salma, dipilih dari kandidat IDCC di Rapat Jumat</td></tr>
         </tbody>
       </table></div>
-      <p class="status" style="margin:10px 0 0">Kuota per hari: 2 foto Instagram, 1 video produk, 1 video review. Jika beberapa barang datang bersamaan, urutannya diacak dan diselang-seling antar kategori, satu barang tidak tayang dua kali sehari, dan hari yang sudah penuh dilewati. Konten harus siap (lolos QC) paling lambat H-2 sebelum tayang. Jika event dan IDCC jatuh di hari yang sama, IDCC bergeser ke hari berikutnya. Hari Kamis tim libur, tetapi konten tetap tayang lewat penjadwalan.</p>
+      <p class="status" style="margin:10px 0 0">Kuota per hari: 2 foto Instagram (09.00 &amp; 15.00) dan 2 video jenis apa pun (12.00 &amp; 18.00). Jika beberapa barang datang bersamaan, urutannya diacak dan diselang-seling antar kategori, satu barang tidak tayang dua kali sehari, dan hari yang sudah penuh dilewati. Konten harus Ready paling lambat H-2 sebelum tayang. Jika event dan IDCC jatuh di hari yang sama, IDCC bergeser ke hari berikutnya. Hari Kamis tim libur, tetapi konten tetap tayang lewat penjadwalan.</p>
+    </div>
+    <div class="box">
+      <h3>Alur upload ke Instagram (Meta Business Suite)</h3>
+      <div class="tw"><table class="t">
+        <thead><tr><th>Langkah</th><th>Siapa</th><th>Di mana</th><th>Yang dilakukan</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Editor</td><td>Google Drive</td><td>Unggah file final ke folder Drive dengan nama file dari kartu konten.</td></tr>
+          <tr><td>2</td><td>Editor</td><td>Workflow Hub</td><td>Tempel link Drive di kartu (<b>Link file final</b>), lalu pindahkan kartu ke <b>Ready</b>.</td></tr>
+          <tr><td>3</td><td>Zaki</td><td>Workflow Hub</td><td>Cek file, klik <b>Tandai sudah dicek</b>. Buka <b>Caption Instagram</b> di kartu, tempel deskripsi dari toko online, klik <b>Buat caption dengan AI</b>, lalu edit bila perlu.</td></tr>
+          <tr><td>4</td><td>Zaki</td><td>Kalender → Antrian upload</td><td>Untuk setiap baris: <b>Buka file</b> lalu unduh, <b>Salin caption</b>, lalu jadwalkan di Meta Business Suite pada tanggal dan jam yang tertera.</td></tr>
+          <tr><td>5</td><td>Zaki</td><td>Kalender → Antrian upload</td><td>Klik <b>Sudah dijadwalkan di Meta</b>. Status menjadi Terjadwal dan jamnya terkunci.</td></tr>
+        </tbody>
+      </table></div>
+      <p class="status" style="margin:10px 0 0">Tips: jadwalkan sekaligus untuk 2–3 hari ke depan setiap pagi. Konten harus Ready paling lambat H-2 sebelum tayang.</p>
     </div>
     <div class="box">
       <h3>Siklus mingguan</h3>
@@ -867,7 +1039,10 @@ const nm=c=>NAMES[c]||'-';
 const EXTRA={idf:['S',''],ktl:['',''],igf:['S',''],vpr:['S',''],vrv:['S','S'],evt:['S','A'],khs:['S','A'],idc:['S','A'],cmp:['S','']};
 const HAS_TALENT=t=>t!=='ktl';
 const HAS_SCRIPT=t=>['vrv','evt','khs','idc'].includes(t);
-const STAGES=['Rencana','Siap Produksi','Diproduksi','Editing','QC','Terjadwal','Tayang'];
+const STAGES=['Terdata','Diproduksi','Editing','Ready','Tayang'];
+/* status lama (sebelum v5.2) dipetakan ke status baru */
+const OLD_STATUS={'Rencana':'Terdata','Siap Produksi':'Terdata','QC':'Ready','Terjadwal':'Ready'};
+const sched=t=>t.status==='Tayang'||(t.status==='Ready'&&!!t.metaAt);   /* sudah dijadwalkan di Meta / tayang */
 const IDX=Object.fromEntries(STAGES.map((s,i)=>[s,i]));
 /* sla = batas maksimal (hari kerja setelah barang datang); target = sasaran lebih cepat bila ada (0 = hari itu juga) */
 const TYPES={ktl:{label:'Foto katalog',prio:1,sla:1,target:0},igf:{label:'Foto Instagram',prio:2,sla:1},vpr:{label:'Video produk',prio:3,sla:2},vrv:{label:'Video review',prio:4,sla:7},
@@ -910,10 +1085,11 @@ const fmtLong=s=>HARI_FULL[dowOf(s)]+', '+Number(s.slice(8))+' '+BULAN_FULL[Numb
 function avail(p,s){return !p||!(OFF[p]||[]).includes(dowOf(s))}
 function nextDayWith(people,from){let d=from;for(let i=0;i<21;i++){if(!isOff(toT(d))&&people.every(p=>avail(p,d)))return d;d=addDays(d,1)}return from}
 function subWork(s,n){let t=toT(s),c=0;while(c<n){t-=DAY;if(!isOff(t))c++;}return fromT(t)}
-/* kuota tayang per hari: 2 foto IG, 1 video produk, 1 video review. Video event & IDCC memakai slot review hari itu */
-function kindOf(type){return(type==='igf'||type==='cmp'||type==='idf')?'foto':(type==='vpr'||type==='khs')?'vpr':'vrv'}
-const CAP={foto:2,vpr:1,vrv:1};
-const KIND_LBL={foto:'Foto Instagram',vpr:'Video produk',vrv:'Video review'};
+/* kuota tayang per hari: 2 foto IG (09.00 & 15.00) + 2 video jenis apa pun (12.00 & 18.00). Video event & IDCC memakai slot video hari itu */
+function kindOf(type){return(type==='igf'||type==='cmp'||type==='idf')?'foto':'video'}
+const CAP={foto:2,video:2};
+const KIND_LBL={foto:'Foto Instagram',video:'Video'};
+const SLOT_TIMES={foto:['09:00','15:00'],video:['12:00','18:00']};
 /* event tetap: video payday diunggah tgl 23 (untuk tgl 25); video tanggal kembar diunggah H-2 */
 function eventOn(d){const out=[];const m=Number(d.slice(5,7)),dd=Number(d.slice(8));
   if(dd===23)out.push({key:'payday-'+d.slice(0,7),short:'Payday',title:'Payday '+BULAN_FULL[m-1]+' '+d.slice(0,4),note:'tayang tgl 23 untuk payday tgl 25'});
@@ -923,23 +1099,44 @@ function eventOn(d){const out=[];const m=Number(d.slice(5,7)),dd=Number(d.slice(
 /* slot IDCC mingguan: hari yang dipilih; bila bentrok dengan event, geser ke hari berikutnya */
 function isIdccDay(d){const D=Number(S.settings.idccDay);if(dowOf(d)===D&&!eventOn(d).length)return true;const p=addDays(d,-1);return dowOf(p)===D&&eventOn(p).length>0}
 function unfilled(d){return eventOn(d).filter(ev=>!S.tasks.some(t=>t.eventKey===ev.key&&t.postAt===d)).length+(isIdccDay(d)&&!S.tasks.some(t=>t.type==='idc'&&t.postAt===d)?1:0)}
-const newUse=()=>({foto:0,vpr:0,vrv:0,old:0,idc:0,items:[],cats:[]});
+const newUse=()=>({foto:0,video:0,old:0,idc:0,items:[],cats:[],vt:[]});
 const OLD_PER_DAY=1;   /* konten stok lama maksimal 1 per hari (di luar slot IDCC), supaya slot lain tetap terbuka untuk barang baru */
-function slotUse(){const m={};S.tasks.forEach(t=>{if(!t.postAt||!POSTED.includes(t.type))return;const u=m[t.postAt]=m[t.postAt]||newUse();const k=kindOf(t.type);u[k]++;
+function slotUse(){const m={};S.tasks.forEach(t=>{if(!t.postAt||!POSTED.includes(t.type))return;const u=m[t.postAt]=m[t.postAt]||newUse();const k=kindOf(t.type);u[k]++;if(k==='video')u.vt.push(t.type);
   if(t.itemId)u.items.push(t.itemId);if(t.cat)u.cats.push(k+':'+t.cat);if(t.type==='idc')u.idc++;else if(t.source==='lama')u.old++});return m}
-const capOf=(kind,d)=>CAP[kind]-(kind==='vrv'?unfilled(d):0);
+const capOf=(kind,d)=>CAP[kind]-(kind==='video'?unfilled(d):0);
 /* cari hari tayang pertama yang slotnya masih ada. Aturan: satu barang tidak tayang dua kali sehari; strict = dua foto IG di hari yang sama tidak boleh kategori yang sama */
-function findSlot(kind,from,key,cat,use,strict,isOld){for(let i=0;i<240;i++){const d=addDays(from,i);const u=use[d]||newUse();
-    if(key&&u.items.includes(key))continue;if(strict&&cat&&u.cats.includes(kind+':'+cat))continue;if(isOld&&u.old>=OLD_PER_DAY)continue;if(u[kind]<capOf(kind,d))return d}return''}
-function reserveSlot(use,d,kind,key,cat,isOld){const u=use[d]||(use[d]=newUse());u[kind]++;if(key)u.items.push(key);if(cat)u.cats.push(kind+':'+cat);if(isOld)u.old++}
-function pickPost(kind,from,key,use,cat,isOld){let d=findSlot(kind,from,key,cat,use,false,isOld);
-  if(d&&kind==='foto'&&cat){const ds=findSlot(kind,from,key,cat,use,true,isOld);if(ds&&(toT(ds)-toT(d))/DAY<=1)d=ds}  /* variasikan kategori bila hanya menggeser ≤1 hari */
-  if(d)reserveSlot(use,d,kind,key,cat,isOld);return d}
+function findSlot(kind,from,key,cat,use,strict,isOld,type){for(let i=0;i<240;i++){const d=addDays(from,i);const u=use[d]||newUse();
+    if(key&&u.items.includes(key))continue;if(strict&&kind==='foto'&&cat&&u.cats.includes(kind+':'+cat))continue;
+    if(strict&&kind==='video'&&type){const pv=use[addDays(d,-1)];if(u.vt.includes(type)||(pv&&pv.vt.length>=2&&pv.vt.every(x=>x===type)))continue}   /* variasi: jenis video yang sama tidak dua kali sehari */if(isOld&&u.old>=OLD_PER_DAY)continue;if(u[kind]<capOf(kind,d))return d}return''}
+function reserveSlot(use,d,kind,key,cat,isOld,type){const u=use[d]||(use[d]=newUse());u[kind]++;if(kind==='video'&&type)u.vt.push(type);if(key)u.items.push(key);if(cat)u.cats.push(kind+':'+cat);if(isOld)u.old++}
+function pickPost(kind,from,key,use,cat,isOld,type){let d=findSlot(kind,from,key,cat,use,false,isOld,type);
+  if(d&&((kind==='foto'&&cat)||(kind==='video'&&type))){const ds=findSlot(kind,from,key,cat,use,true,isOld,type);if(ds&&(toT(ds)-toT(d))/DAY<=(kind==='video'?3:1))d=ds}  /* variasi: kategori foto boleh geser ≤1 hari, jenis video ≤3 hari */
+  if(d)reserveSlot(use,d,kind,key,cat,isOld,type);return d}
+/* jam tayang: 09.00 & 15.00 foto, 12.00 & 18.00 video. Pengacak: urutan dipilih supaya jam yang sama tidak diisi
+   jenis video (atau kategori foto) yang sama seperti 1–2 hari sebelumnya; seri diputus dengan acakan tetap per tanggal */
+let PLAN_MEMO={};
+const hashS=x=>{let h=2166136261;for(let i=0;i<x.length;i++){h^=x.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0};
+const fmtTime=t=>t?t.replace(':','.'):'';
+function dayPlan(d,depth){if(PLAN_MEMO[d])return PLAN_MEMO[d];depth=depth||0;
+  const ts=S.tasks.filter(t=>t.postAt===d&&POSTED.includes(t.type));const out={foto:[null,null],video:[null,null],extra:[]};
+  if(!ts.length||depth>60){PLAN_MEMO[d]=out;return out}
+  const prev=dayPlan(addDays(d,-1),depth+1),prev2=dayPlan(addDays(d,-2),depth+1);
+  ['foto','video'].forEach(k=>{const times=SLOT_TIMES[k];const slots=[null,null];const rest=[];
+    ts.filter(t=>kindOf(t.type)===k).sort((a,b)=>hashS(d+a.id)-hashS(d+b.id)).forEach(t=>{const i=times.indexOf(t.postTime);if(i>=0&&!slots[i])slots[i]=t;else rest.push(t)});
+    const key=t=>t?(k==='video'?t.type:(t.cat||t.type)):'#';
+    const pen=(t,i)=>(key(prev[k][i])===key(t)?2:0)+(key(prev2[k][i])===key(t)?1:0);
+    const free=[0,1].filter(i=>!slots[i]);
+    if(free.length===2&&rest.length>=2){const a=rest[0],b=rest[1];if(pen(b,0)+pen(a,1)<pen(a,0)+pen(b,1)){slots[0]=b;slots[1]=a}else{slots[0]=a;slots[1]=b}rest.splice(0,2)}
+    else if(free.length===2&&rest.length===1){const t=rest.shift();const p0=pen(t,0),p1=pen(t,1);slots[p0<p1?0:p1<p0?1:hashS(d+t.id)%2]=t}
+    else if(free.length===1&&rest.length)slots[free[0]]=rest.shift();
+    out[k]=slots;out.extra.push(...rest)});
+  PLAN_MEMO[d]=out;return out}
+function timeOf(t){if(!t||!t.postAt||!POSTED.includes(t.type))return'';const k=kindOf(t.type);const i=dayPlan(t.postAt)[k].findIndex(x=>x&&x.id===t.id);return i>=0?SLOT_TIMES[k][i]:''}
 /* slot IDCC berikutnya yang belum terisi (memakai peta slot agar beberapa IDCC sekaligus tidak bertumpuk) */
 function pickIdcc(from,key,use){for(let i=0;i<400;i++){const d=addDays(from,i);const u=use[d]||newUse();if(isIdccDay(d)&&!u.idc&&!S.tasks.some(t=>t.type==='idc'&&t.postAt===d)&&!(key&&u.items.includes(key))){
-    const w=use[d]||(use[d]=newUse());w.idc++;w.vrv++;if(key)w.items.push(key);return d}}return''}
+    const w=use[d]||(use[d]=newUse());w.idc++;w.video++;w.vt.push('idc');if(key)w.items.push(key);return d}}return''}
 function nextIdcc(from){for(let i=0;i<70;i++){const d=addDays(from,i);if(isIdccDay(d)&&!S.tasks.some(t=>t.type==='idc'&&t.postAt===d))return d}return''}
-function conflict(t){const d=t.shootPlan;return !!d&&IDX[t.status]<=1&&(!avail(t.producer,d)||(!!t.talent&&!avail(t.talent,d)))}
+function conflict(t){const d=t.shootPlan;return !!d&&IDX[t.status]<=0&&(!avail(t.producer,d)||(!!t.talent&&!avail(t.talent,d)))}
 
 const S={me:null,isAdmin:false,members:[],items:[],tasks:[],settings:{idccQty:10,idccDays:90,idccDay:3},cal:{month:'',mode:'prod',sel:''},tab:'masuk',person:'all',showDone:false,db:null,itemsLoaded:false,tasksLoaded:false,canWrite:true,armed:null,search:''};
 
@@ -960,7 +1157,7 @@ window.addEventListener('resize',setHH);applyNav();
 /* How to work?: muncul saat kursor menyentuh; di HP diketuk */
 document.addEventListener('click',e=>{const h=e.target.closest('.help');document.querySelectorAll('.help[aria-expanded="true"]').forEach(x=>{if(x!==h)x.setAttribute('aria-expanded','false')});if(h)h.setAttribute('aria-expanded',String(h.getAttribute('aria-expanded')!=='true'))});
 function setTab(t){S.tab=t;document.querySelectorAll('nav.tabs button[role="tab"]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===t)));
-  ['masuk','pipeline','kalender','idcc','jumat','panduan','tim'].forEach(k=>{$('p-'+k).hidden=k!==t});try{localStorage.setItem('md-tab',t)}catch(e){}window.scrollTo(0,0)}
+  ['masuk','pipeline','watch','kalender','idcc','jumat','panduan','tim'].forEach(k=>{$('p-'+k).hidden=k!==t});if(t!=='watch'&&document.body.classList.contains('tv'))tvMode(false);try{localStorage.setItem('md-tab',t)}catch(e){}window.scrollTo(0,0)}
 try{const t=localStorage.getItem('md-tab');if(t&&$('p-'+t))setTab(t)}catch(e){}
 
 /* ---------- item form ---------- */
@@ -969,7 +1166,7 @@ function syncGender(){const on=GENDER_CATS.includes($('fCat').value);$('fGenderW
 $('fGender').innerHTML=genderOpts('');syncGender();
 $('fCat').addEventListener('change',()=>{$('fHot').checked=HOTCATS.includes($('fCat').value);syncGender();preview()});
 ['fName','fColor','fDate','fHot'].forEach(id=>$(id).addEventListener('input',preview));
-function editQueue(){const q={Z:0,R:0,A:0,S:0};S.tasks.forEach(t=>{if(IDX[t.status]<IDX['QC']&&q[t.editor]!=null)q[t.editor]++});return q}
+function editQueue(){const q={Z:0,R:0,A:0,S:0};S.tasks.forEach(t=>{if(IDX[t.status]<IDX['Ready']&&q[t.editor]!=null)q[t.editor]++});return q}
 /* ---------- kapasitas produksi: jam kerja per orang per hari + batas per jenis konten ---------- */
 const SHOOT_H={idf:0.5,ktl:0.25,igf:0.5,vpr:0.5,vrv:1.25,idc:1,evt:1.5,khs:1.5,cmp:1};    /* perkiraan jam syuting per konten */
 const EDIT_H={idf:0.3,ktl:0.25,igf:0.3,vpr:0.75,vrv:2.5,idc:2,evt:2.5,khs:2,cmp:0.75};     /* perkiraan jam editing per konten */
@@ -986,8 +1183,8 @@ const getH=(m,d,p)=>(m[d]&&m[d][p])||0;
 const overloaded=(st,d)=>PEOPLE.filter(p=>getH(st.sh,d,p)>SHOOT_CAP[p]+1e-9||getH(st.ed,d,p)>EDIT_CAP[p]+1e-9);
 /* beban yang sudah terjadwal dari konten yang ada */
 function capState(){const st={sh:{},ed:{},ty:{}};S.tasks.forEach(t=>{
-    if(t.shootPlan&&IDX[t.status]<=1){addH(st.sh,t.shootPlan,t.producer,SHOOT_H[t.type]||0.5);if(t.talent)addH(st.sh,t.shootPlan,t.talent,SHOOT_H[t.type]||0.5);addH(st.ty,t.shootPlan,t.type,1)}
-    if(t.editPlan&&IDX[t.status]<IDX['QC'])addH(st.ed,t.editPlan,t.editor,EDIT_H[t.type]||0.5)});return st}
+    if(t.shootPlan&&IDX[t.status]<=0){addH(st.sh,t.shootPlan,t.producer,SHOOT_H[t.type]||0.5);if(t.talent)addH(st.sh,t.shootPlan,t.talent,SHOOT_H[t.type]||0.5);addH(st.ty,t.shootPlan,t.type,1)}
+    if(t.editPlan&&IDX[t.status]<IDX['Ready'])addH(st.ed,t.editPlan,t.editor,EDIT_H[t.type]||0.5)});return st}
 /* hari syuting pertama di mana produser (dan talent) masuk dan masih punya jam, serta kuota jenis konten belum penuh */
 function scheduleShoot(st,type,from,prodPool,talPool,days){const h=SHOOT_H[type]||0.5;prodPool=prodPool||job(type).prod;talPool=talPool||job(type).tal;days=days||90;
   let d=from;for(let i=0;i<days;i++,d=addDays(d,1)){if(isOff(toT(d))||getH(st.ty,d,type)>=TYPE_CAP[type])continue;
@@ -1010,15 +1207,15 @@ function scheduleEdit(st,type,from,pool,days){const h=EDIT_H[type]||0.5;pool=poo
    3) bila pengganti juga penuh, dipindah ke hari berikutnya; tanggal tayang ikut menyesuaikan.
    Konten yang dikunci tidak dipindah (kecuali tanggalnya sudah lewat). */
 function prioOf(t){return(t.source==='lama'?10:0)+({ktl:0,evt:1,igf:1,vpr:2,vrv:3,khs:3,cmp:3,idf:4,idc:4}[t.type]??5)}
-function releaseSlot(use,t){const u=use[t.postAt];if(!u)return;const k=kindOf(t.type);u[k]=Math.max(0,u[k]-1);const i=u.items.indexOf(t.itemId);if(i>=0)u.items.splice(i,1);
+function releaseSlot(use,t){const u=use[t.postAt];if(!u)return;const k=kindOf(t.type);u[k]=Math.max(0,u[k]-1);if(k==='video'){const j=u.vt.indexOf(t.type);if(j>=0)u.vt.splice(j,1)}const i=u.items.indexOf(t.itemId);if(i>=0)u.items.splice(i,1);
   const c=u.cats.indexOf(k+':'+t.cat);if(c>=0)u.cats.splice(c,1);if(t.type==='idc')u.idc=Math.max(0,u.idc-1);else if(t.source==='lama')u.old=Math.max(0,u.old-1)}
 function computeBalance(){const now=new Date(),td=today(),start=now.getHours()>=15?addDays(td,1):td;
   const st={sh:{},ed:{},ty:{}},P={};const get=t=>P[t.id]||(P[t.id]={});const cur=(t,k)=>(P[t.id]&&P[t.id][k]!==undefined)?P[t.id][k]:t[k];
-  const openT=S.tasks.filter(t=>IDX[t.status]<IDX['QC']);
+  const openT=S.tasks.filter(t=>IDX[t.status]<IDX['Ready']);
   const byDate=k=>(a,b)=>(a[k]||'9').localeCompare(b[k]||'9')||(b.locked?1:0)-(a.locked?1:0)||prioOf(a)-prioOf(b);
   /* 1. syuting */
   const moveS=[];
-  openT.filter(t=>IDX[t.status]<=1).sort(byDate('shootPlan')).forEach(t=>{const d=t.shootPlan;if(!d||d<start){moveS.push({t,from:start});return}
+  openT.filter(t=>IDX[t.status]<=0).sort(byDate('shootPlan')).forEach(t=>{const d=t.shootPlan;if(!d||d<start){moveS.push({t,from:start});return}
     const h=SHOOT_H[t.type]||0.5;
     const fits=(p,tal)=>!isOff(toT(d))&&avail(p,d)&&getH(st.sh,d,p)+h<=(SHOOT_CAP[p]||0)+1e-9&&(!tal||(tal!==p&&avail(tal,d)&&getH(st.sh,d,tal)+h<=(SHOOT_CAP[tal]||0)+1e-9));
     if(t.locked||(getH(st.ty,d,t.type)<TYPE_CAP[t.type]&&fits(t.producer,t.talent))){addH(st.sh,d,t.producer,SHOOT_H[t.type]||0.5);if(t.talent)addH(st.sh,d,t.talent,h);addH(st.ty,d,t.type,1);return}
@@ -1029,7 +1226,7 @@ function computeBalance(){const now=new Date(),td=today(),start=now.getHours()>=
   /* 2. editing */
   const moveE=[];
   openT.slice().sort((a,b)=>(cur(a,'editPlan')||'9').localeCompare(cur(b,'editPlan')||'9')||prioOf(a)-prioOf(b)).forEach(t=>{
-    const sd=IDX[t.status]<=1?cur(t,'shootPlan'):start;const min=sd&&sd>start?sd:start;const d=t.editPlan;
+    const sd=IDX[t.status]<=0?cur(t,'shootPlan'):start;const min=sd&&sd>start?sd:start;const d=t.editPlan;
     if(!d||d<min){moveE.push({t,from:min});return}
     const h=EDIT_H[t.type]||0.5;
     if(t.locked||(!isOff(toT(d))&&avail(t.editor,d)&&getH(st.ed,d,t.editor)+h<=(EDIT_CAP[t.editor]||0)+1e-9)){addH(st.ed,d,t.editor,h);return}
@@ -1040,7 +1237,7 @@ function computeBalance(){const now=new Date(),td=today(),start=now.getHours()>=
   const use=slotUse();
   openT.forEach(t=>{const e=cur(t,'editPlan');if(!e)return;if(e>t.due)get(t).due=e;
     if(POSTED.includes(t.type)&&t.type!=='evt'&&t.postAt&&t.postAt<addDays(e,2)){releaseSlot(use,t);
-      get(t).postAt=t.type==='idc'?pickIdcc(addDays(e,2),t.itemId,use):pickPost(kindOf(t.type),addDays(e,2),t.itemId,use,t.cat,t.source==='lama')}});
+      get(t).postAt=t.type==='idc'?pickIdcc(addDays(e,2),t.itemId,use):pickPost(kindOf(t.type),addDays(e,2),t.itemId,use,t.cat,t.source==='lama',t.type);if(t.postTime)get(t).postTime=''}});
   return Object.keys(P).map(id=>{const t=S.tasks.find(x=>x.id===id);const patch={};Object.keys(P[id]).forEach(k=>{if((t[k]||'')!==(P[id][k]||''))patch[k]=P[id][k]});return{t,patch}}).filter(c=>Object.keys(c.patch).length)}
 let balTimer=null,balBusy=false;const clientId=Math.random().toString(36).slice(2);
 function queueBalance(){clearTimeout(balTimer);balTimer=setTimeout(()=>runBalance(false),1500)}
@@ -1068,7 +1265,7 @@ function planBatch(rows,base,order){const st=capState();const use=slotUse();cons
     const sh=scheduleShoot(st,t,from);if(t==='igf')it.igfDay=sh.d;
     const ed=scheduleEdit(st,t,sh.d);
     const T=TYPES[t],sla=addWork(base,T.sla);const due=ed.d>sla?ed.d:sla;
-    const post=POSTED.includes(t)?pickPost(kindOf(t),addDays(ed.d,2),it.key,use,r.cat):'';  /* siap H-2 sebelum tayang */
+    const post=POSTED.includes(t)?pickPost(kindOf(t),addDays(ed.d,2),it.key,use,r.cat,false,t):'';  /* siap H-2 sebelum tayang */
     it.tasks.push({type:t,due,late:ed.d>sla,target:T.target==null?'':T.target===0?b0:addWork(base,T.target),producer:sh.prod,editor:ed.ed,talent:sh.tal,shootPlan:sh.d,editPlan:ed.d,postAt:post});}));
   return items}
 function preview(){const base=$('fDate').value||today();const it=planBatch([{name:'',cat:$('fCat').value,hot:$('fHot').checked}],base)[0];
@@ -1182,12 +1379,12 @@ function planTables(items){
   if(posts.length){const ds=posts.map(p=>p.t.postAt).sort();const from=ds[0],to=ds[ds.length-1];let tr='';
     for(let d=from;d<=to;d=addDays(d,1)){const old=S.tasks.filter(t=>t.postAt===d&&POSTED.includes(t.type));const nw=posts.filter(p=>p.t.postAt===d);
       const cell=k=>{let c=old.filter(t=>kindOf(t.type)===k).map(t=>'<span class="old">Terisi: '+esc(t.title)+'</span>').join('');
-        if(k==='vrv'){eventOn(d).forEach(ev=>{if(!old.some(t=>t.eventKey===ev.key))c+='<span class="old">Slot '+esc(ev.short)+'</span>'});if(isIdccDay(d)&&!old.some(t=>t.type==='idc'))c+='<span class="old">Slot IDCC</span>'}
+        if(k==='video'){eventOn(d).forEach(ev=>{if(!old.some(t=>t.eventKey===ev.key))c+='<span class="old">Slot '+esc(ev.short)+'</span>'});if(isIdccDay(d)&&!old.some(t=>t.type==='idc'))c+='<span class="old">Slot IDCC</span>'}
         c+=nw.filter(p=>kindOf(p.t.type)===k).map(p=>pill(p.t,p.lbl)).join('');return c||'<span class="status">—</span>'};
-      const used=k=>old.filter(t=>kindOf(t.type)===k).length+nw.filter(p=>kindOf(p.t.type)===k).length+(k==='vrv'?unfilled(d):0);
-      const full=used('foto')>=2&&used('vpr')>=1&&used('vrv')>=1;
-      tr+='<tr class="'+(full?'full':'')+'"><td class="date">'+esc(fmt(d))+(isOff(toT(d))?' <span class="status">(tim libur)</span>':'')+'</td><td>'+cell('foto')+'</td><td>'+cell('vpr')+'</td><td>'+cell('vrv')+'</td></tr>'}
-    html+='<h3 style="margin-top:16px">Jadwal tayang Instagram</h3><div class="tw"><table class="t plan-t"><thead><tr><th>Tanggal</th><th>Foto Instagram (2)</th><th>Video produk (1)</th><th>Video review (1)</th></tr></thead><tbody>'+tr+'</tbody></table></div>'}
+      const used=k=>old.filter(t=>kindOf(t.type)===k).length+nw.filter(p=>kindOf(p.t.type)===k).length+(k==='video'?unfilled(d):0);
+      const full=used('foto')>=2&&used('video')>=2;
+      tr+='<tr class="'+(full?'full':'')+'"><td class="date">'+esc(fmt(d))+(isOff(toT(d))?' <span class="status">(tim libur)</span>':'')+'</td><td>'+cell('foto')+'</td><td>'+cell('video')+'</td></tr>'}
+    html+='<h3 style="margin-top:16px">Jadwal tayang Instagram</h3><div class="tw"><table class="t plan-t"><thead><tr><th>Tanggal</th><th>Foto Instagram (2: 09.00 &amp; 15.00)</th><th>Video jenis apa pun (2: 12.00 &amp; 18.00)</th></tr></thead><tbody>'+tr+'</tbody></table></div>'}
   /* produksi */
   const shoots={};items.forEach(it=>it.tasks.forEach(t=>{(shoots[t.shootPlan]=shoots[t.shootPlan]||[]).push({t,lbl:rowLbl(it.row)})}));
   const sd=Object.keys(shoots).sort();
@@ -1220,7 +1417,7 @@ function planOld(rows,start,order){const st=capState();const use=slotUse();const
     const from=t==='vpr'&&it.igfDay?it.igfDay:s0;
     const sh=scheduleShoot(st,t,from);if(t==='igf')it.igfDay=sh.d;
     const ed=scheduleEdit(st,t,sh.d);
-    const post=t==='idc'?pickIdcc(addDays(ed.d,2),it.key,use):pickPost(kindOf(t),addDays(ed.d,2),it.key,use,r.cat,true);
+    const post=t==='idc'?pickIdcc(addDays(ed.d,2),it.key,use):pickPost(kindOf(t),addDays(ed.d,2),it.key,use,r.cat,true,t);
     it.tasks.push({type:t,due:ed.d,target:'',producer:sh.prod,editor:ed.ed,talent:sh.tal,script:t==='vrv'?'S':t==='idc'?'A':'',shootPlan:sh.d,editPlan:ed.d,postAt:post,source:'lama',reason:r.reason})}));
   return items}
 S.old={start:addDays(today(),1),rows:[],order:[],plan:[]};
@@ -1279,7 +1476,7 @@ $('oSave').addEventListener('click',async()=>{if(!S.db){toast('Data belum tersam
 function newTask(type,o){const now=Date.now();const ex=EXTRA[type]||['',''];
   return{itemId:o.itemId||'',title:o.title,cat:o.cat||'',type,prio:TYPES[type].prio,due:o.due,target:o.target||'',producer:o.producer,editor:o.editor,
     talent:o.talent!==undefined?o.talent:ex[0],script:o.script!==undefined?o.script:ex[1],
-    status:'Rencana',shootPlan:o.shootPlan||'',editPlan:o.editPlan||'',shotAt:'',readyAt:'',postAt:o.postAt||'',eventKey:o.eventKey||'',source:o.source||'baru',reason:o.reason||'',createdAt:now,updatedAt:now}}
+    status:'Terdata',shootPlan:o.shootPlan||'',editPlan:o.editPlan||'',shotAt:'',readyAt:'',postAt:o.postAt||'',eventKey:o.eventKey||'',source:o.source||'baru',reason:o.reason||'',createdAt:now,updatedAt:now}}
 function eventTask(ev,upload,st){st=st||capState();let from=addDays(upload,-10);if(from<today())from=today();
   const sh=scheduleShoot(st,'evt',from);const ed=scheduleEdit(st,'evt',sh.d);const due=subWork(upload,3);
   return newTask('evt',{title:ev.title,eventKey:ev.key,postAt:upload,due:ed.d>due?ed.d:due,shootPlan:sh.d,editPlan:ed.d,producer:sh.prod,editor:ed.ed,talent:sh.tal,script:'A'})}
@@ -1288,9 +1485,9 @@ $('taskForm').addEventListener('submit',async e=>{e.preventDefault();if(!S.db){t
   const title=$('tTitle').value.trim();if(!title)return;const type=$('tType').value,due=$('tDue').value;
   const prod=$('tProd').value,tal=$('tTalent').value,edr=$('tEdit').value;
   const st=capState();const sh=scheduleShoot(st,type,today(),[prod],tal?[tal]:[]);const ed=scheduleEdit(st,type,sh.d,[edr]);
-  let post=$('tPost').value;if(!post)post=type==='idc'?pickIdcc(addDays(ed.d,2),null,slotUse()):pickPost(kindOf(type),addDays(ed.d,2),null,slotUse());
+  let post=$('tPost').value;if(!post)post=type==='idc'?pickIdcc(addDays(ed.d,2),null,slotUse()):pickPost(kindOf(type),addDays(ed.d,2),null,slotUse(),'',false,type);
   try{await S.db.collection('tasks').add(newTask(type,{title,due,producer:prod,editor:edr,talent:tal,script:$('tScript').value,postAt:post,shootPlan:sh.d,editPlan:ed.d}));
-    $('tTitle').value='';toast('Konten ditambahkan ke pipeline.');queueBalance()}catch(err){toast(errMsg(err))}});
+    $('tTitle').value='';toast('Konten ditambahkan ke Workflow Hub.');queueBalance()}catch(err){toast(errMsg(err))}});
 
 $('itemSearch').addEventListener('input',e=>{S.search=e.target.value.toLowerCase();renderItems()});
 $('personSeg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S.person=b.dataset.p;
@@ -1299,7 +1496,7 @@ $('showDone').addEventListener('change',e=>{S.showDone=e.target.checked;renderBo
 
 /* ---------- helpers ---------- */
 const open=t=>t.status!=='Tayang';
-const ready=t=>IDX[t.status]>=IDX['QC'];
+const ready=t=>IDX[t.status]>=IDX['Ready'];
 const late=t=>!ready(t)&&t.due&&t.due<today();
 function dueChip(t){if(ready(t))return'<span class="chip good">Siap</span>';const td=today();
   if(t.target&&td<=t.due){if(td<=t.target)return'<span class="chip warn">Target '+(t.target===td?'hari ini':esc(fmt(t.target)))+' · maks '+esc(fmt(t.due))+'</span>';
@@ -1307,14 +1504,14 @@ function dueChip(t){if(ready(t))return'<span class="chip good">Siap</span>';cons
   const d=workBetween(td,t.due);
   if(d<0)return'<span class="chip crit">Terlambat '+(-d)+' hari kerja</span>';if(d===0)return'<span class="chip warn">Hari ini</span>';
   if(d<=2)return'<span class="chip warn">'+esc(fmt(t.due))+' · '+d+' hari lagi</span>';return'<span class="chip">'+esc(fmt(t.due))+'</span>'}
-function fileName(t){const date=t.shotAt||'YYYY-MM-DD';const cat=CATS[t.cat]||'umum';const end=IDX[t.status]>=IDX['QC']?'_final':'';return date+'_'+t.type+'_'+cat+'_'+(slug(t.title)||'judul')+end}
+function fileName(t){const date=t.shotAt||'YYYY-MM-DD';const cat=CATS[t.cat]||'umum';const end=IDX[t.status]>=IDX['Ready']?'_final':'';return date+'_'+t.type+'_'+cat+'_'+(slug(t.title)||'judul')+end}
 
 /* ---------- render: items ---------- */
 function renderItems(){const el=$('itemList');
   if(!S.db&&!S.itemsLoaded){return}
   let items=[...S.items].sort((a,b)=>(b.arrived||'').localeCompare(a.arrived||'')||(b.createdAt||0)-(a.createdAt||0));
   if(S.search)items=items.filter(i=>(i.name+' '+(i.color||'')+' '+i.cat+' '+(GENDERS[i.gender]||'')).toLowerCase().includes(S.search));
-  if(!items.length){el.innerHTML='<div class="empty">'+(S.search?'Tidak ada barang yang cocok.':'Belum ada barang. Catat barang pertama lewat formulir, dan tugas kontennya langsung muncul di Pipeline.')+'</div>';return}
+  if(!items.length){el.innerHTML='<div class="empty">'+(S.search?'Tidak ada barang yang cocok.':'Belum ada barang. Catat barang pertama lewat formulir, dan tugas kontennya langsung muncul di Workflow Hub.')+'</div>';return}
   const byItem={};S.tasks.forEach(t=>{if(t.itemId)(byItem[t.itemId]=byItem[t.itemId]||[]).push(t)});
   el.innerHTML=items.map(i=>{const ts=(byItem[i.id]||[]).sort((a,b)=>a.prio-b.prio);const a=age(i.arrived);
     const idcc=i.qty>=S.settings.idccQty&&a>=S.settings.idccDays;
@@ -1338,28 +1535,43 @@ $('itemList').addEventListener('click',async e=>{const b=e.target.closest('[data
 
 /* ---------- render: board ---------- */
 function renderBoard(){const el=$('board');
-  const ae=document.activeElement;if(ae&&ae.tagName==='TEXTAREA'&&el.contains(ae)){S.boardDirty=true;return}S.boardDirty=false;
+  const ae=document.activeElement;if(ae&&(ae.tagName==='TEXTAREA'||(ae.tagName==='INPUT'&&ae.type==='url'))&&el.contains(ae)){S.boardDirty=true;return}S.boardDirty=false;
   const nOpen=S.tasks.filter(t=>open(t)&&(S.isAdmin||mine(t))).length;$('cntOpen').textContent=nOpen?'('+nOpen+')':'';
-  if(!S.tasksLoaded){el.innerHTML='<div class="empty">Memuat pipeline…</div>';return}
+  if(!S.tasksLoaded){el.innerHTML='<div class="empty">Memuat Workflow Hub…</div>';return}
   fillSearchOptions();
   const searching=!!(S.pq||S.pm||S.ps);$('pClear').hidden=!searching;
-  let ts=(S.pm?(S.allTasks||S.tasks):S.tasks).filter(t=>searching||S.showDone||open(t));   /* pilih bulan = arsip bulan itu, termasuk yang sudah hangus */
+  const wk7=addDays(today(),-7);let ts=(S.pm?(S.allTasks||S.tasks):S.tasks).filter(t=>searching||S.showDone||open(t)||(t.status==='Tayang'&&(t.postAt||'')>=wk7));   /* pilih bulan = arsip bulan itu, termasuk yang sudah hangus */
   if(!S.isAdmin)ts=ts.filter(mine);
-  if(S.person!=='all')ts=ts.filter(t=>t.producer===S.person||t.editor===S.person||t.talent===S.person||t.script===S.person||(S.person==='Z'&&t.status==='QC'));
+  if(S.person!=='all')ts=ts.filter(t=>t.producer===S.person||t.editor===S.person||t.talent===S.person||t.script===S.person||(S.person==='Z'&&(t.status==='Ready'&&!t.metaAt)));
   if(S.pq){const words=S.pq.split(/\s+/).filter(Boolean);ts=ts.filter(t=>{const h=hay(t);return words.every(w=>h.includes(w))})}
   if(S.pm)ts=ts.filter(t=>createdDay(t).startsWith(S.pm));   /* bulan = bulan konten dibuat di pipeline */
   if(S.ps)ts=ts.filter(t=>t.status===S.ps);
   renderSummary(ts,searching);
-  if(!ts.length){el.innerHTML='<div class="empty">'+(searching?'Tidak ada konten yang cocok. Coba kata lain, atau pilih "Semua bulan".':S.tasks.length?'Tidak ada konten aktif untuk filter ini.':'Pipeline masih kosong. Catat barang di tab Barang Masuk, atau tambah konten event/IDCC/campaign di atas.')+'</div>';return}
-  const stages=(searching||S.showDone)?STAGES:STAGES.slice(0,-1);
-  el.innerHTML=stages.map(st=>{const g=ts.filter(t=>t.status===st).sort((a,b)=>a.prio-b.prio||(a.due||'').localeCompare(b.due||''));if(!g.length)return'';
-    return '<div class="stage"><div class="stage-head"><h2>'+esc(st)+'</h2><span class="n num">'+g.length+'</span></div><div class="cards">'+g.map(card).join('')+'</div></div>'}).join('');}
+  if(!ts.length){el.innerHTML='<div class="empty">'+(searching?'Tidak ada konten yang cocok. Coba kata lain, atau pilih "Semua bulan".':S.tasks.length?'Tidak ada konten aktif untuk filter ini.':'Workflow Hub masih kosong. Catat barang di tab Barang Masuk, atau tambah konten event/IDCC/campaign di atas.')+'</div>';return}
+  const wk=addDays(today(),-7);
+  el.innerHTML='<div class="kanban" id="kanban">'+STAGES.map(st=>{let g=ts.filter(t=>t.status===st);
+      if(st==='Tayang'&&!searching&&!S.showDone)g=g.filter(t=>(t.postAt||'')>=wk);   /* Tayang: tampilkan 7 hari terakhir */
+      g.sort((a,b)=>(deadlineFor(a).d||'9999').localeCompare(deadlineFor(b).d||'9999')||(a.prio-b.prio));const U=STAGE_UI[st];
+      return'<section class="kcol" data-st="'+esc(st)+'" style="--sc:'+U.c+'"><header class="kch"><span class="kic">'+U.ic+'</span><span><b>'+esc(st)+'</b><small>'+esc(U.sub)+'</small></span><span class="kn num">'+g.length+'</span></header>'+
+        '<div class="kbody">'+(g.length?g.map(card).join(''):'<div class="kempty">Kosong</div>')+'</div></section>'}).join('')+'</div>';
+  const kb=$('kanban');if(kb&&S.kScroll)kb.scrollLeft=S.kScroll;}
 /* ---------- masa aktif pipeline: 1 bulan sejak konten dibuat, setelah itu hangus ---------- */
 const createdDay=t=>{if(!t.createdAt)return'';const c=new Date(t.createdAt);return c.getFullYear()+'-'+pad(c.getMonth()+1)+'-'+pad(c.getDate())};
 function expiryOf(t){const c=createdDay(t);if(!c)return'';let y=Number(c.slice(0,4)),m=Number(c.slice(5,7))+1,d=Number(c.slice(8));if(m>12){m=1;y++}
   const last=new Date(Date.UTC(y,m,0)).getUTCDate();return y+'-'+pad(m)+'-'+pad(Math.min(d,last))}
 const isExpired=t=>{const e=expiryOf(t);return !!e&&today()>=e};
-function splitTasks(){S.tasks=(S.allTasks||[]).filter(t=>!isExpired(t))}
+function splitTasks(){(S.allTasks||[]).forEach(t=>{if(OLD_STATUS[t.status]){if(t.status==='Terjadwal'&&!t.metaAt)t.metaAt=t.updatedAt||1;t._old=t.status;t.status=OLD_STATUS[t.status]}});
+  S.tasks=(S.allTasks||[]).filter(t=>!isExpired(t));if(S.isAdmin&&S.canWrite)setTimeout(maintainStatuses,800)}
+/* admin: simpan status baru untuk data lama, dan pindahkan otomatis ke Tayang setelah jam tayang di Meta lewat */
+let maintBusy=false;
+async function maintainStatuses(){if(maintBusy||!S.db||!S.isAdmin)return;maintBusy=true;const now=new Date();const nowKey=today()+' '+pad(now.getHours())+':'+pad(now.getMinutes());
+  try{for(const t of (S.allTasks||[])){const up={};
+      if(t._old){up.status=t.status;if(t._old==='Terjadwal')up.metaAt=t.metaAt;if(t._old==='Terjadwal'||t._old==='QC')up.checked=t._old==='Terjadwal'}
+      if(t.status==='Ready'&&t.metaAt&&t.postAt){const tm=t.postTime||timeOf(t)||'23:59';if(t.postAt+' '+tm<=nowKey){up.status='Tayang';
+        up.history=(t.history||[]).concat([{at:Date.now(),by:'auto',name:'Otomatis',from:'Ready',to:'Tayang'}]).slice(-30)}}
+      if(Object.keys(up).length){up.updatedAt=Date.now();try{await S.db.collection('tasks').doc(t.id).update(up);delete t._old}catch(e){}}}}
+  finally{maintBusy=false}}
+setInterval(()=>{if(S.isAdmin&&S.tasksLoaded)maintainStatuses()},60000);
 /* ---------- pencarian pipeline ---------- */
 S.pq='';S.pm='';S.ps='';
 function hay(t){return[t.title,GENDERS[(itemOf(t.itemId)||{}).gender]||'',(TYPES[t.type]||{}).label,CATLBL[t.cat],t.status,nm(t.producer),nm(t.editor),t.talent?nm(t.talent):'',t.script?nm(t.script):'',
@@ -1377,7 +1589,7 @@ function renderSummary(ts,searching){const el=$('pSummary');if(!searching){el.in
     h+='<div class="box" style="padding:10px 12px"><h3 style="margin-bottom:6px">Ringkasan per barang ('+keys.length+')</h3><div class="tw"><table class="t sumt"><thead><tr><th>Barang</th><th>Konten &amp; status</th><th>Syuting</th><th>Tayang</th></tr></thead><tbody>'+
       keys.map(k=>{const L=by[k].sort((a,b)=>a.prio-b.prio);
         return'<tr><td><div class="ihead">'+thumbHtml(L[0].itemId,44,k)+'<div><b>'+esc(k)+'</b>'+(L[0].cat?'<br><span class="status">'+esc(CATLBL[L[0].cat]||'')+(L[0].source==='lama'?' · stok lama':'')+'</span>':'')+'</div></div></td><td>'+
-          L.map(t=>'<span class="mini"><span class="chip ty ty-'+esc(t.type)+'">'+esc(TYPES[t.type].label)+'</span><span class="chip'+(t.status==='Tayang'||t.status==='Terjadwal'?' good':late(t)?' crit':'')+'">'+esc(t.status)+'</span></span>').join('<br>')+'</td><td>'+
+          L.map(t=>'<span class="mini"><span class="chip ty ty-'+esc(t.type)+'">'+esc(TYPES[t.type].label)+'</span><span class="chip'+(t.status==='Tayang'||(t.status==='Ready'&&!!t.metaAt)?' good':late(t)?' crit':'')+'">'+esc(t.status)+'</span></span>').join('<br>')+'</td><td>'+
           L.map(t=>'<span class="mini status">'+esc(t.shotAt?'✓ '+fmt(t.shotAt):fmt(t.shootPlan))+'</span>').join('<br>')+'</td><td>'+
           L.map(t=>'<span class="mini status">'+esc(t.postAt?fmt(t.postAt):'—')+'</span>').join('<br>')+'</td></tr>'}).join('')+'</tbody></table></div></div>'}
   el.innerHTML=h}
@@ -1388,62 +1600,122 @@ $('pStatus').addEventListener('change',e=>{S.ps=e.target.value;renderBoard()});
 $('pClear').addEventListener('click',()=>{S.pq=S.pm=S.ps='';$('pSearch').value='';$('pMonth').value='';$('pStatus').value='';renderBoard();$('pSearch').focus()});
 function card(t){let h=cardInner(t);if(isExpired(t))h=h.replace('class="card ','class="card expired ').replace(/<select /g,'<select disabled ').replace(/<input /g,'<input disabled ');return h}
 function lifeChip(t){const e=expiryOf(t);if(!e)return'';if(isExpired(t))return'<span class="chip crit">Hangus '+esc(fmt(e))+'</span>';const n=Math.round((toT(e)-toT(today()))/DAY);
-  return'<span class="chip'+(n<=3?' warn':'')+'" title="Konten di pipeline aktif 1 bulan sejak dibuat">'+(n<=3?'Hangus '+n+' hari lagi':'Aktif s.d. '+esc(fmt(e)))+'</span>'}
+  return'<span class="chip'+(n<=3?' warn':'')+'" title="Konten di Workflow Hub aktif 1 bulan sejak dibuat">'+(n<=3?'Hangus '+n+' hari lagi':'Aktif s.d. '+esc(fmt(e)))+'</span>'}
 const mine=t=>!!S.me&&!!S.me.code&&[t.producer,t.editor,t.talent,t.script].includes(S.me.code);
-const MEMBER_STAGES=['Rencana','Siap Produksi','Diproduksi','Editing','QC'];
+const MEMBER_STAGES=['Terdata','Diproduksi','Editing','Ready'];
 function histHtml(t){const H=(t.history||[]).slice().reverse();if(!H.length)return'';
   const when=ms=>{const d=new Date(ms);return fmt(d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()))+' '+pad(d.getHours())+'.'+pad(d.getMinutes())};
   return'<details class="hist"><summary>Riwayat status ('+H.length+')</summary><ul>'+H.map(h=>'<li>'+esc(when(h.at))+' · <b>'+esc(h.name||h.by||'-')+'</b>: '+esc(h.from||'-')+' → '+esc(h.to)+'</li>').join('')+'</ul></details>'}
 function noteHtml(t,canEdit){return canEdit?'<label class="l">Catatan / kendala<textarea class="note" data-act="note" maxlength="1000" placeholder="mis. talent belum konfirmasi, file mentah sudah di 01_Raw">'+esc(t.note||'')+'</textarea></label>'
   :(t.note?'<div class="status" style="font-size:13px"><b style="color:var(--ink)">Catatan:</b> '+esc(t.note)+'</div>':'')}
-function memberCard(t){const me=S.me.code;const who=(k,c)=>c?'<span>'+k+' <b class="'+(c===me?'me':'')+'">'+esc(nm(c))+'</b></span>':'';
-  const canStatus=mine(t)&&MEMBER_STAGES.includes(t.status)&&!isExpired(t);
-  const dl=(l,v)=>v?'<span>'+l+' <b>'+esc(fmt(v))+'</b></span>':'';
-  return '<article class="card ty ty-'+esc(t.type)+(late(t)?' late':'')+'" data-id="'+esc(t.id)+'">'+
-   '<div class="row"><span style="display:flex;gap:6px;align-items:center"><span class="prio">P'+t.prio+'</span><span class="chip ty ty-'+esc(t.type)+'">'+esc(TYPES[t.type].label)+'</span></span>'+dueChip(t)+'</div>'+
-   '<div class="tline">'+thumbHtml(t.itemId,56,t.title)+'<div class="title">'+esc(t.title)+(t.cat?' <span class="status">· '+esc(CATLBL[t.cat]||t.cat)+'</span>':'')+genderChip((itemOf(t.itemId)||{}).gender)+(t.source==='lama'?' <span class="chip src">'+esc(REASONS[t.reason]?REASONS[t.reason].short:'Stok lama')+'</span>':'')+'</div></div>'+
-   '<div class="rolestxt">'+who('Produksi',t.producer)+who('Edit',t.editor)+who('Talent',t.talent)+who('Skrip',t.script)+'</div>'+
-   (canStatus?'<label class="l">Status<select data-act="status">'+MEMBER_STAGES.map(s=>'<option'+(s===t.status?' selected':'')+'>'+s+'</option>').join('')+'</select></label>'
-     :'<div class="status">Status: <b style="color:var(--ink)">'+esc(t.status)+'</b>'+(IDX[t.status]>=IDX['Terjadwal']?' (diatur admin)':'')+'</div>')+
-   '<div class="rolestxt">'+(IDX[t.status]<=1?dl('Syuting',t.shootPlan):'')+(IDX[t.status]<IDX['QC']?dl('Edit',t.editPlan):'')+dl(IDX[t.status]>=IDX['Terjadwal']?'Tayang':'Rencana tayang',t.postAt)+'</div>'+
-   noteHtml(t,canStatus)+
-   '<div class="fname"><code>'+esc(fileName(t))+'</code><button class="ghost" data-act="copy">Salin</button></div>'+
-   histHtml(t)+
-   '<div class="row"><span class="status">'+(t.target?'Target '+esc(fmt(t.target))+' · maks '+esc(fmt(t.due)):'Batas siap '+esc(fmt(t.due)))+'</span>'+lifeChip(t)+'</div></article>'}
-function cardInner(t){if(!S.isAdmin)return memberCard(t);const armed=S.armed==='t:'+t.id;
-  const LBL={producer:'Produksi',editor:'Editing',talent:'Talent',script:'Skrip'};
-  const sel=(name,val,none)=>'<select data-act="'+name+'" aria-label="'+LBL[name]+'">'+(none?'<option value=""'+(!val?' selected':'')+'>-</option>':'')+PEOPLE.map(p=>'<option value="'+p+'"'+(p===val?' selected':'')+'>'+NAMES[p]+'</option>').join('')+'</select>';
-  const extra=(HAS_TALENT(t.type)||t.talent?'<span>Talent</span>'+sel('talent',t.talent||'',true):'')+(HAS_SCRIPT(t.type)||t.script?'<span>Skrip</span>'+sel('script',t.script||'',true):'');
-  const showPost=POSTED.includes(t.type);const showShoot=IDX[t.status]<=1;
-  const offWho=t.shootPlan?[t.producer,t.talent].filter(p=>p&&!avail(p,t.shootPlan)).map(nm):[];
-  const dates='<div class="dates">'+(showShoot?'<label class="l">Rencana syuting<input type="date" data-act="shootPlan" value="'+esc(t.shootPlan||'')+'"></label>':'')+
-    (IDX[t.status]<IDX['QC']?'<label class="l">Rencana edit<input type="date" data-act="editPlan" value="'+esc(t.editPlan||'')+'"></label>':'')+
-    (showPost?'<label class="l">'+(IDX[t.status]>=IDX['Terjadwal']?'Tanggal tayang':'Rencana tayang')+'<input type="date" data-act="postAt" value="'+esc(t.postAt||'')+'"></label>':'')+'</div>'+
-    (showShoot&&offWho.length?'<span class="chip crit">'+esc(offWho.join(' & '))+' libur di hari syuting</span>':'')+
-    (IDX[t.status]<IDX['QC']?'<label class="check" style="font-size:13px"><input type="checkbox" data-act="locked"'+(t.locked?' checked':'')+'> Kunci jadwal (tidak dipindah otomatis)</label>':'');
-  return '<article class="card ty ty-'+esc(t.type)+(late(t)?' late':'')+'" data-id="'+esc(t.id)+'">'+
-   '<div class="row"><span style="display:flex;gap:6px;align-items:center"><span class="prio">P'+t.prio+'</span><span class="chip ty ty-'+esc(t.type)+'">'+esc(TYPES[t.type].label)+'</span></span>'+dueChip(t)+'</div>'+
-   '<div class="tline">'+thumbHtml(t.itemId,56,t.title)+'<div class="title">'+esc(t.title)+(t.cat?' <span class="status">· '+esc(CATLBL[t.cat]||t.cat)+'</span>':'')+genderChip((itemOf(t.itemId)||{}).gender)+(t.source==='lama'?' <span class="chip src">'+esc(REASONS[t.reason]?REASONS[t.reason].short:'Stok lama')+'</span>':'')+'</div></div>'+
-   '<div class="roles"><span>Produksi</span>'+sel('producer',t.producer)+'<span>Edit</span>'+sel('editor',t.editor)+extra+'</div>'+
-   '<label class="l">Status<select data-act="status">'+STAGES.map(s=>'<option'+(s===t.status?' selected':'')+'>'+s+'</option>').join('')+'</select></label>'+
-   dates+
-   noteHtml(t,true)+
-   '<div class="fname"><code>'+esc(fileName(t))+'</code><button class="ghost" data-act="copy">Salin</button></div>'+
-   histHtml(t)+
-   '<div class="row"><span class="status">'+(t.target?'Target '+esc(fmt(t.target))+' · maks '+esc(fmt(t.due)):'Batas siap '+esc(fmt(t.due)))+'</span>'+lifeChip(t)+'<button class="ghost danger" data-act="delTask">'+(armed?'Yakin hapus?':'Hapus')+'</button></div></article>'}
+function driveHtml(t,canEdit){if(!POSTED.includes(t.type))return'';
+  if(canEdit)return'<label class="l">Link file final (Google Drive)<input type="url" data-act="driveUrl" inputmode="url" placeholder="Tempel link Drive setelah file final diunggah" value="'+esc(t.driveUrl||'')+'"></label>';
+  return t.driveUrl?'<div class="caprow"><a class="ghost sm" href="'+esc(t.driveUrl)+'" target="_blank" rel="noopener">Buka file final di Drive</a></div>':''}
+function capHtml(t){if(!POSTED.includes(t.type))return'';const it=itemOf(t.itemId)||{};const src=t.srcDesc!=null?t.srcDesc:(it.desc||'');const open=t.caption||S.capOpen.has(t.id);
+  return'<details class="cap" data-cap="'+esc(t.id)+'"'+(open?' open':'')+'><summary>Caption Instagram '+(t.caption?'<span class="chip good">Siap</span>':'<span class="chip">Belum</span>')+'</summary>'+
+    '<label class="l">Deskripsi barang dari toko online<textarea data-act="srcDesc" maxlength="4000" placeholder="Tempel deskripsi produk dari toko online">'+esc(src)+'</textarea></label>'+
+    '<div class="caprow"><button type="button" class="btn sm" data-act="aiCap">'+(t.caption?'Buat ulang dengan AI':'Buat caption dengan AI')+'</button><span class="status" data-capmsg></span></div>'+
+    '<label class="l">Caption final (sudah memakai template Tirtonic)<textarea class="capfinal" data-act="caption" maxlength="2200" placeholder="Hasil AI muncul di sini, boleh diedit">'+esc(t.caption||'')+'</textarea></label>'+
+    '<div class="caprow"><button type="button" class="ghost sm" data-act="copyCap"'+(t.caption?'':' disabled')+'>Salin caption</button><span class="status">'+(t.caption?(t.caption.length+'/2200 karakter'):'')+'</span></div></details>'}
+S.capOpen=new Set();
+const IC=p=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+p+'</svg>';
+const STAGE_UI={
+  Terdata:{c:'var(--st-1)',sub:'Masuk pantauan',ic:IC('<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h6M9 14h6M9 18h3"/>')},
+  Diproduksi:{c:'var(--st-2)',sub:'Sedang syuting',ic:IC('<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>')},
+  Editing:{c:'var(--st-3)',sub:'Sedang diedit',ic:IC('<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.6 7.6L20 18M8.6 16.4L20 6"/>')},
+  Ready:{c:'var(--st-4)',sub:'File final di Drive',ic:IC('<path d="M7 18a5 5 0 1 1 1.2-9.9A6 6 0 0 1 19.5 10 4 4 0 0 1 18 18z"/><path d="M9.5 13l2 2 3.5-4"/>')},
+  Tayang:{c:'var(--st-5)',sub:'Sudah di Instagram',ic:IC('<path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/>')}};
+const STAGE_SHORT={Terdata:'Terdata',Diproduksi:'Produksi',Editing:'Edit',Ready:'Ready',Tayang:'Tayang'};
+const ROLE_IC={producer:'Produksi',editor:'Edit',talent:'Talent',script:'Skrip'};
+/* deadline per orang: tahap aktif menentukan siapa yang sedang ditunggu */
+function deadlinesOf(t){const st=t.status,L=[];
+  if(st==='Terdata'){if(t.script&&HAS_SCRIPT(t.type))L.push({lbl:'Skrip',d:t.shootPlan?scriptDay(t.script,t.shootPlan):'',who:t.script});
+    L.push({lbl:'Syuting',d:t.shootPlan,who:t.producer});if(t.talent)L.push({lbl:'Talent',d:t.shootPlan,who:t.talent})}
+  if(st==='Terdata'||st==='Diproduksi'||st==='Editing')L.push({lbl:'Edit',d:t.due||t.editPlan,who:t.editor,later:st==='Terdata'});
+  if(st==='Ready'&&POSTED.includes(t.type)){if(!t.metaAt)L.push({lbl:t.checked?'Jadwalkan di Meta':'Cek & jadwalkan',d:t.postAt?addDays(t.postAt,-1):'',who:'Z'});
+    else L.push({lbl:'Tayang '+fmtTime(t.postTime||timeOf(t)),d:t.postAt,who:'Z',info:true})}
+  return L.filter(x=>x.d)}
+function deadlineFor(t){const L=deadlinesOf(t);const view=S.isAdmin?(S.person!=='all'?S.person:''):(S.me&&S.me.code);
+  if(view){const m=L.find(x=>x.who===view&&!x.later)||L.find(x=>x.who===view);return m||{}}
+  return L.find(x=>!x.later)||L[0]||{}}
+function dlHtml(t){const x=deadlineFor(t);if(!x.d)return t.status==='Tayang'&&t.postAt?'<span class="kdl ok">Tayang '+esc(fmt(t.postAt))+'</span>':'';
+  const td=today();const n=Math.round((toT(x.d)-toT(td))/DAY);const rel=n<0?'terlambat '+(-n)+' hari':n===0?'hari ini':n===1?'besok':'';
+  const who=(S.isAdmin&&S.person==='all'&&x.who)?' · '+nm(x.who):'';
+  return'<span class="kdl'+(x.info?' ok':n<0?' late':'')+'" title="Deadline '+esc(x.lbl)+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg><span>'+esc(x.lbl)+who+' · '+esc(fmt(x.d))+(rel?' <b>('+rel+')</b>':'')+'</span></span>'}
+function peopleHtml(t){const me=S.me&&S.me.code;return'<div class="kpeople">'+['producer','editor','talent','script'].filter(k=>t[k]).map(k=>'<span class="av'+(t[k]===me?' me':'')+'" title="'+ROLE_IC[k]+': '+esc(nm(t[k]))+'"><i>'+esc(nm(t[k]).slice(0,1))+'</i>'+ROLE_IC[k]+'</span>').join('')+'</div>'}
+function canMove(t){if(isExpired(t))return false;if(S.isAdmin)return true;return mine(t)&&!t.metaAt&&MEMBER_STAGES.includes(t.status)}
+function stagesHtml(t){const can=canMove(t);const ci=IDX[t.status];
+  return'<div class="ksteps" role="group" aria-label="Pindah tahap">'+STAGES.map((s2,i)=>{const ok=can&&s2!==t.status&&(S.isAdmin||MEMBER_STAGES.includes(s2));
+    return'<button type="button" class="kst'+(i<ci?' done':'')+(i===ci?' cur':'')+'" data-stage="'+esc(s2)+'" style="--sc:'+STAGE_UI[s2].c+'"'+(ok?'':' disabled')+' aria-pressed="'+(i===ci)+'" title="'+esc(s2)+'"><span>'+esc(STAGE_SHORT[s2])+'</span></button>'}).join('')+'</div>'}
+function flagsHtml(t){if(t.status!=='Ready'||!POSTED.includes(t.type))return'';
+  return'<div class="kflags">'+(S.isAdmin&&!t.metaAt?'<button type="button" class="kflag'+(t.checked?' on':'')+'" data-act="check" aria-pressed="'+!!t.checked+'">'+(t.checked?'✓ Dicek Zaki':'Tandai sudah dicek')+'</button>':(t.checked?'<span class="kflag on">✓ Dicek Zaki</span>':''))+
+    (t.metaAt?'<span class="kflag meta">Terjadwal di Meta · '+esc(fmt(t.postAt))+' '+fmtTime(t.postTime||timeOf(t))+'</span>':'')+'</div>'}
+function photoHtml(t){const i=t.itemId&&itemOf(t.itemId);if(i&&i.thumb)return thumbHtml(t.itemId,60,t.title);
+  if(S.isAdmin&&i)return'<button type="button" class="ph none addph2" style="--s:60px" data-act="cardPhoto" title="Tambah foto barang" aria-label="Tambah foto barang">'+CAM+'</button>';
+  return'<span class="ph none" style="--s:60px">'+CAM+'</span>'}
+function cardInner(t){const me=S.me&&S.me.code;const adm=S.isAdmin;const canNote=adm||(mine(t)&&!isExpired(t)&&!t.metaAt);
+  const it=itemOf(t.itemId)||{};const showPost=POSTED.includes(t.type);
+  let more='';
+  if(adm){const LBL={producer:'Produksi',editor:'Editing',talent:'Talent',script:'Skrip'};
+    const sel=(name,val,none)=>'<label class="l">'+LBL[name]+'<select data-act="'+name+'">'+(none?'<option value=""'+(!val?' selected':'')+'>-</option>':'')+PEOPLE.map(p=>'<option value="'+p+'"'+(p===val?' selected':'')+'>'+NAMES[p]+'</option>').join('')+'</select></label>';
+    more+='<div class="kgrid">'+sel('producer',t.producer)+sel('editor',t.editor)+((HAS_TALENT(t.type)||t.talent)?sel('talent',t.talent||'',true):'')+((HAS_SCRIPT(t.type)||t.script)?sel('script',t.script||'',true):'')+'</div>'+
+      '<div class="kgrid">'+(IDX[t.status]<=0?'<label class="l">Rencana syuting<input type="date" data-act="shootPlan" value="'+esc(t.shootPlan||'')+'"></label>':'')+
+      (IDX[t.status]<IDX['Ready']?'<label class="l">Rencana edit<input type="date" data-act="editPlan" value="'+esc(t.editPlan||'')+'"></label>':'')+
+      (showPost?'<label class="l">Tanggal tayang<input type="date" data-act="postAt" value="'+esc(t.postAt||'')+'"></label><label class="l">Jam tayang<select data-act="postTime"><option value="">Otomatis'+(t.postTime?'':(timeOf(t)?' ('+fmtTime(timeOf(t))+')':''))+'</option>'+SLOT_TIMES[kindOf(t.type)].map(x=>'<option value="'+x+'"'+(x===t.postTime?' selected':'')+'>'+fmtTime(x)+'</option>').join('')+'</select></label>':'')+'</div>'+
+      (IDX[t.status]<IDX['Ready']?'<label class="check" style="font-size:13px"><input type="checkbox" data-act="locked"'+(t.locked?' checked':'')+'> Kunci jadwal (tidak dipindah otomatis)</label>':'');
+  }else{const dl=(l,v)=>v?'<span>'+l+' <b>'+esc(fmt(v))+'</b></span>':'';
+    more+='<div class="rolestxt">'+(IDX[t.status]<=0?dl('Syuting',t.shootPlan):'')+(IDX[t.status]<IDX['Ready']?dl('Edit selesai',t.due||t.editPlan):'')+dl('Tayang',t.postAt)+(timeOf(t)?'<span>pukul <b>'+fmtTime(timeOf(t))+'</b></span>':'')+'</div>'}
+  more+=noteHtml(t,canNote)+driveHtml(t,canNote)+(adm?capHtml(t):'')+
+    '<div class="fname"><code>'+esc(fileName(t))+'</code><button class="ghost" data-act="copy">Salin</button></div>'+histHtml(t)+
+    (adm?'<div class="krow">'+lifeChip(t)+'<button class="ghost danger" data-act="delTask">'+(S.armed==='t:'+t.id?'Yakin hapus?':'Hapus')+'</button></div>':'');
+  const hasNote=!!(t.note||t.driveUrl);const open=S.moreOpen.has(t.id);
+  return'<article class="card k ty ty-'+esc(t.type)+(late(t)?' late':'')+'" data-id="'+esc(t.id)+'">'+
+    '<div class="khead"><h4 class="ktype">'+esc(TYPES[t.type].label)+'</h4>'+dlHtml(t)+'</div>'+
+    '<div class="kmain">'+photoHtml(t)+'<div style="min-width:0"><div class="ktitle">'+esc(t.title)+'</div><div class="kmeta">'+(t.cat?'<span>'+esc(CATLBL[t.cat]||t.cat)+'</span>':'')+genderChip(it.gender)+(t.source==='lama'?'<span class="chip src">'+esc(REASONS[t.reason]?REASONS[t.reason].short:'Stok lama')+'</span>':'')+(t.note?'<span class="chip warn" title="'+esc(t.note)+'">Ada catatan</span>':'')+(t.driveUrl?'<a class="chip good" href="'+esc(t.driveUrl)+'" target="_blank" rel="noopener">File Drive</a>':'')+'</div></div></div>'+
+    peopleHtml(t)+stagesHtml(t)+flagsHtml(t)+
+    '<details class="kmore" data-more="'+esc(t.id)+'"'+(open?' open':'')+'><summary>Detail'+(hasNote?' ·':'')+'</summary>'+more+'</details></article>'}
+S.moreOpen=new Set();
+async function setStatus(t,s2,c){if(s2===t.status)return;
+  if(s2==='Ready'&&POSTED.includes(t.type)&&!t.driveUrl){const inp=c&&c.querySelector('[data-act="driveUrl"]');if(c){S.moreOpen.add(t.id);const d=c.querySelector('details.kmore');if(d)d.open=true}
+    toast('Tempel dulu link Google Drive file final, lalu pindahkan ke Ready.');if(inp)setTimeout(()=>inp.focus(),50);return}
+  if(s2==='Tayang'&&!S.isAdmin)return;
+  const patch={status:s2,updatedAt:Date.now(),updatedBy:S.me?S.me.name:''};
+  if(IDX[s2]>=IDX['Diproduksi']&&!t.shotAt)patch.shotAt=today();if(IDX[s2]>=IDX['Ready']&&!t.readyAt)patch.readyAt=today();
+  patch.history=(t.history||[]).concat([{at:Date.now(),by:S.me?(S.me.code||S.me.email):'',name:S.me?S.me.name:'',from:t.status,to:s2}]).slice(-30);
+  try{await S.db.collection('tasks').doc(t.id).update(patch);queueBalance()}catch(err){toast(errMsg(err))}}
 $('board').addEventListener('change',async e=>{const el=e.target;const act=el.dataset.act;const c=el.closest('.card');if(!c||!act)return;const id=c.dataset.id;const t=S.tasks.find(x=>x.id===id);if(!t)return;
   const patch={updatedAt:Date.now(),updatedBy:S.me?S.me.name:''};
-  if(act==='status'){const s=el.value;if(s===t.status)return;patch.status=s;if(IDX[s]>=IDX['Diproduksi']&&!t.shotAt)patch.shotAt=today();if(IDX[s]>=IDX['QC']&&!t.readyAt)patch.readyAt=today();
+  if(act==='status'){const s=el.value;if(s===t.status)return;patch.status=s;if(IDX[s]>=IDX['Diproduksi']&&!t.shotAt)patch.shotAt=today();if(IDX[s]>=IDX['Ready']&&!t.readyAt)patch.readyAt=today();
     patch.history=(t.history||[]).concat([{at:Date.now(),by:S.me?(S.me.code||S.me.email):'',name:S.me?S.me.name:'',from:t.status,to:s}]).slice(-30)}
   else if(act==='note'){if((t.note||'')===el.value)return;patch.note=el.value.slice(0,1000)}
   else if(act==='producer'||act==='editor'||act==='talent'||act==='script')patch[act]=el.value;
   else if(act==='postAt'||act==='shootPlan'||act==='editPlan')patch[act]=el.value;
-  else if(act==='locked')patch.locked=el.checked;else return;
+  else if(act==='locked')patch.locked=el.checked;
+  else if(act==='postTime')patch.postTime=el.value;
+  else if(act==='driveUrl'){const v=el.value.trim();if(v===(t.driveUrl||''))return;if(v&&!/^https?:\/\//i.test(v)){toast('Link harus diawali https://');return}patch.driveUrl=v.slice(0,500)}
+  else if(act==='caption'){if((t.caption||'')===el.value)return;patch.caption=el.value.slice(0,2200)}
+  else if(act==='srcDesc'){if((t.srcDesc||'')===el.value)return;patch.srcDesc=el.value.slice(0,4000);if(t.itemId&&S.isAdmin)S.db.collection('items').doc(t.itemId).update({desc:patch.srcDesc}).catch(()=>{})}
+  else return;
   try{await S.db.collection('tasks').doc(id).update(patch);queueBalance()}catch(err){toast(errMsg(err))}});
-$('board').addEventListener('focusout',e=>{if(e.target.tagName==='TEXTAREA'&&S.boardDirty)setTimeout(()=>{if(!(document.activeElement&&document.activeElement.tagName==='TEXTAREA'))renderBoard()},50)});
-$('board').addEventListener('click',async e=>{const b=e.target.closest('button[data-act]');if(!b)return;const c=b.closest('.card');const id=c.dataset.id;
+$('board').addEventListener('toggle',e=>{const d=e.target;if(d.matches&&d.matches('details.cap')){if(d.open)S.capOpen.add(d.dataset.cap);else S.capOpen.delete(d.dataset.cap)}if(d.matches&&d.matches('details.kmore')){if(d.open)S.moreOpen.add(d.dataset.more);else S.moreOpen.delete(d.dataset.more)}},true);
+$('board').addEventListener('scroll',e=>{if(e.target.id==='kanban')S.kScroll=e.target.scrollLeft},true);
+$('board').addEventListener('focusout',e=>{if((e.target.tagName==='TEXTAREA'||e.target.type==='url')&&S.boardDirty)setTimeout(()=>{if(!(document.activeElement&&document.activeElement.tagName==='TEXTAREA'))renderBoard()},50)});
+$('board').addEventListener('click',async e=>{const sb=e.target.closest('button[data-stage]');if(sb&&!sb.disabled){const c=sb.closest('.card');const t=(S.allTasks||S.tasks).find(x=>x.id===c.dataset.id);if(t)setStatus(t,sb.dataset.stage,c);return}
+  const b=e.target.closest('button[data-act]');if(!b)return;const c=b.closest('.card');const id=c.dataset.id;
+  if(b.dataset.act==='check'){const t=S.tasks.find(x=>x.id===id);if(!t)return;try{await S.db.collection('tasks').doc(id).update({checked:!t.checked,checkedBy:S.me?S.me.name:'',updatedAt:Date.now()})}catch(err){toast(errMsg(err))}return}
+  if(b.dataset.act==='cardPhoto'){const t=S.tasks.find(x=>x.id===id);if(!t||!t.itemId)return;S.photoTarget=t.itemId;$('photoPick').click();return}
   if(b.dataset.act==='copy'){const code=c.querySelector('code');const txt=code.textContent;
     try{await navigator.clipboard.writeText(txt);toast('Nama file disalin.')}catch(err){const r=document.createRange();r.selectNodeContents(code);const s=getSelection();s.removeAllRanges();s.addRange(r);toast('Teks dipilih. Salin dengan Ctrl/Cmd+C.')}return}
+  if(b.dataset.act==='copyCap'){const tx=c.querySelector('[data-act="caption"]').value;try{await navigator.clipboard.writeText(tx);toast('Caption disalin.')}catch(err){const ta=c.querySelector('[data-act="caption"]');ta.select();toast('Teks dipilih. Salin dengan Ctrl/Cmd+C.')}return}
+  if(b.dataset.act==='aiCap'){const t=S.tasks.find(x=>x.id===id)||(S.allTasks||[]).find(x=>x.id===id);if(!t)return;const desc=c.querySelector('[data-act="srcDesc"]').value.trim();
+    if(desc.length<20){toast('Tempel dulu deskripsi barang dari toko online (minimal 1–2 kalimat).');return}
+    const msg=c.querySelector('[data-capmsg]');b.disabled=true;msg.textContent='AI sedang menulis caption…';
+    try{const it=itemOf(t.itemId)||{};const r=await aiCall({mode:'caption',nama:t.title,jenis_konten:TYPES[t.type].label,kategori:CATLBL[t.cat]||t.cat||'',gender:GENDERS[it.gender]||'',deskripsi:desc,catatan:t.note||''});
+      const cap=fillTemplate(r.caption||'',r.hashtag||[],t,it);
+      await S.db.collection('tasks').doc(id).update({caption:cap.slice(0,2200),srcDesc:desc.slice(0,4000),updatedAt:Date.now(),updatedBy:S.me?S.me.name:''});
+      if(t.itemId)S.db.collection('items').doc(t.itemId).update({desc:desc.slice(0,4000)}).catch(()=>{});S.capOpen.add(id);toast('Caption dibuat. Periksa dan edit bila perlu.')}
+    catch(err){msg.textContent='';toast(/401|403|izin/i.test(err.message)?'Akun ini belum diizinkan memakai AI.':/ANTHROPIC|kunci|key/i.test(err.message)?'Layanan AI belum diatur di Netlify (ANTHROPIC_API_KEY).':'AI tidak bisa dihubungi: '+err.message)}
+    finally{b.disabled=false}return}
   if(b.dataset.act==='delTask'){if(S.armed!=='t:'+id){S.armed='t:'+id;renderBoard();setTimeout(()=>{if(S.armed==='t:'+id){S.armed=null;renderBoard()}},4000);return}
     S.armed=null;try{await S.db.collection('tasks').doc(id).delete();toast('Konten dihapus.')}catch(err){toast(errMsg(err))}}});
 
@@ -1457,15 +1729,15 @@ function renderMeeting(){const el=$('meeting');
   const pct=recent.length?Math.round(onTime/recent.length*100):null;
   const newItems=S.items.filter(i=>i.arrived>wk).length;
   // 7-day strip
-  const days=[];for(let i=0;i<7;i++){const d=addDays(td,i);const n=S.tasks.filter(t=>POSTED.includes(t.type)&&t.postAt===d&&IDX[t.status]>=IDX['Terjadwal']).length;days.push({d,n})}
+  const days=[];for(let i=0;i<7;i++){const d=addDays(td,i);const n=S.tasks.filter(t=>POSTED.includes(t.type)&&t.postAt===d&&sched(t)).length;days.push({d,n})}
   const full=days.filter(x=>x.n>=4).length;
   // stage counts
-  const st=STAGES.slice(0,5).map(s=>({s,n:S.tasks.filter(t=>t.status===s).length}));const stMax=Math.max(1,...st.map(x=>x.n));
-  const worst=st.filter(x=>x.s!=='Rencana').reduce((a,b)=>b.n>a.n?b:a,{s:'',n:0});
+  const st=STAGES.slice(0,4).map(s=>({s,n:S.tasks.filter(t=>t.status===s).length}));const stMax=Math.max(1,...st.map(x=>x.n));
+  const worst=st.filter(x=>x.s!=='Terdata').reduce((a,b)=>b.n>a.n?b:a,{s:'',n:0});
   // per person
-  const load=PEOPLE.map(p=>{const prod=S.tasks.filter(t=>t.producer===p&&IDX[t.status]<=1).length;const edit=S.tasks.filter(t=>t.editor===p&&(t.status==='Diproduksi'||t.status==='Editing')).length;
-    const scr=S.tasks.filter(t=>t.script===p&&t.status==='Rencana').length;const tal=S.tasks.filter(t=>t.talent===p&&IDX[t.status]<=1).length;
-    const qc=p==='Z'?S.tasks.filter(t=>t.status==='QC').length:0;return{p,prod,edit,scr,tal,qc,tot:prod+edit+scr+tal+qc}});
+  const load=PEOPLE.map(p=>{const prod=S.tasks.filter(t=>t.producer===p&&IDX[t.status]<=0).length;const edit=S.tasks.filter(t=>t.editor===p&&(t.status==='Diproduksi'||t.status==='Editing')).length;
+    const scr=S.tasks.filter(t=>t.script===p&&t.status==='Terdata').length;const tal=S.tasks.filter(t=>t.talent===p&&IDX[t.status]<=0).length;
+    const qc=p==='Z'?S.tasks.filter(t=>(t.status==='Ready'&&!t.metaAt)).length:0;return{p,prod,edit,scr,tal,qc,tot:prod+edit+scr+tal+qc}});
   const lMax=Math.max(1,...load.map(x=>x.tot));
   // IDCC
   const idcc=S.items.filter(i=>i.qty>=S.settings.idccQty&&age(i.arrived)>=S.settings.idccDays).sort((a,b)=>b.qty-a.qty);
@@ -1482,7 +1754,7 @@ function renderMeeting(){const el=$('meeting');
      return '<div class="day'+(off?' off':'')+'"><span class="d">'+esc(fmt(x.d).split(' ').slice(0,2).join(' '))+'</span><span class="c">'+x.n+'</span><span class="meter"><i style="width:'+Math.min(100,x.n/4*100)+'%"></i></span><small>'+(off?'tim libur':'dari 4')+'</small></div>'}).join('')+
      '</div><p class="status" style="margin:10px 0 0">Dihitung dari konten berstatus Terjadwal/Tayang yang punya tanggal tayang. Target 4 posting per hari (2 foto, 2 video), di luar story.</p></div>'+
    '<div class="grid2">'+
-    '<div class="box"><h3>Lewat batas waktu</h3>'+(overdue.length?'<ul class="list">'+overdue.slice(0,10).map(t=>'<li><span><span class="chip ty ty-'+esc(t.type)+'">'+esc(TYPES[t.type].label)+'</span> '+esc(t.title)+'</span><span style="display:flex;gap:6px;align-items:center"><span class="status">'+esc(t.status)+' · '+esc(nm(t.status==='Rencana'&&t.script?t.script:IDX[t.status]<=1?t.producer:t.editor))+'</span>'+dueChip(t)+'</span></li>').join('')+'</ul>':'<div class="empty">Tidak ada konten yang terlambat.</div>')+'</div>'+
+    '<div class="box"><h3>Lewat batas waktu</h3>'+(overdue.length?'<ul class="list">'+overdue.slice(0,10).map(t=>'<li><span><span class="chip ty ty-'+esc(t.type)+'">'+esc(TYPES[t.type].label)+'</span> '+esc(t.title)+'</span><span style="display:flex;gap:6px;align-items:center"><span class="status">'+esc(t.status)+' · '+esc(nm(t.status==='Terdata'&&t.script?t.script:IDX[t.status]<=0?t.producer:t.editor))+'</span>'+dueChip(t)+'</span></li>').join('')+'</ul>':'<div class="empty">Tidak ada konten yang terlambat.</div>')+'</div>'+
     '<div class="box"><h3>Jumlah konten per tahap</h3><div class="bars">'+st.map(x=>'<div class="bar"><span>'+esc(x.s)+'</span><span class="t"><i class="'+(x.s===worst.s&&x.n>0?'max':'')+'" style="width:'+(x.n/stMax*100)+'%"></i></span><span class="num">'+x.n+'</span></div>').join('')+'</div>'+
       (worst.n>0?'<p class="status" style="margin:10px 0 0">Tahap paling menumpuk (selain Rencana): <b>'+esc(worst.s)+'</b>.</p>':'')+
      '<h3 style="margin-top:18px">Beban aktif per orang</h3><div class="bars">'+load.map(x=>'<div class="bar"><span><b>'+nm(x.p)+'</b><br><span class="status">'+[x.prod&&x.prod+' prod',x.edit&&x.edit+' edit',x.scr&&x.scr+' skrip',x.tal&&x.tal+' talent',x.qc&&x.qc+' QC'].filter(Boolean).join(' · ')+'</span></span><span class="t"><i style="width:'+(x.tot/lMax*100)+'%"></i></span><span class="num">'+x.tot+'</span></div>').join('')+'</div></div>'+
@@ -1492,7 +1764,7 @@ function renderMeeting(){const el=$('meeting');
      '<label class="l" for="sDays">Umur minimal (hari)<input id="sDays" type="number" min="1" value="'+esc(S.settings.idccDays)+'"></label>'+
      '<label class="l" for="sDay">Hari tayang IDCC<select id="sDay">'+[1,2,3,5,6,0].map(d=>'<option value="'+d+'"'+(Number(S.settings.idccDay)===d?' selected':'')+'>'+HARI_FULL[d]+'</option>').join('')+'</select></label></div>'+
      '<p class="status" style="margin:-4px 0 12px">IDCC tayang 1 video per minggu di hari ini dan memakai 1 dari 2 slot video. Jika bentrok dengan video event, IDCC bergeser ke hari berikutnya.</p>'+
-     (idcc.length?'<ul class="list">'+idcc.map(i=>'<li data-id="'+esc(i.id)+'"><span><b>'+esc(i.name)+'</b>'+(i.color?' '+esc(i.color):'')+' <span class="status">· stok '+i.qty+' · '+age(i.arrived)+' hari</span></span>'+(hasIdcTask(i.id)?'<span class="chip good">Sudah di pipeline</span>':'<button class="ghost" data-act="mkIdc">Buat konten IDCC</button>')+'</li>').join('')+'</ul>':'<div class="empty">Belum ada barang yang memenuhi syarat. Perbarui jumlah stok di tab Barang Masuk agar daftar ini akurat.</div>')+
+     (idcc.length?'<ul class="list">'+idcc.map(i=>'<li data-id="'+esc(i.id)+'"><span><b>'+esc(i.name)+'</b>'+(i.color?' '+esc(i.color):'')+' <span class="status">· stok '+i.qty+' · '+age(i.arrived)+' hari</span></span>'+(hasIdcTask(i.id)?'<span class="chip good">Sudah di Workflow Hub</span>':'<button class="ghost" data-act="mkIdc">Buat konten IDCC</button>')+'</li>').join('')+'</ul>':'<div class="empty">Belum ada barang yang memenuhi syarat. Perbarui jumlah stok di tab Barang Masuk agar daftar ini akurat.</div>')+
    '</div>';}
 function kpi(v,k,cls){return'<div class="kpi '+cls+'"><div class="v">'+esc(v)+'</div><div class="k">'+esc(k)+'</div></div>'}
 $('meeting').addEventListener('change',async e=>{if(!['sQty','sDays','sDay'].includes(e.target.id))return;
@@ -1503,7 +1775,7 @@ $('meeting').addEventListener('click',async e=>{const b=e.target.closest('[data-
   b.disabled=true;try{await S.db.collection('tasks').add(newTask('idc',{itemId:i.id,title:i.name+(i.color?' '+i.color:''),cat:i.cat,due:ed.d,producer:sh.prod,editor:ed.ed,talent:sh.tal,postAt:pickIdcc(addDays(ed.d,2),i.id,slotUse()),shootPlan:sh.d,editPlan:ed.d}));toast('Konten IDCC ditambahkan dan dijadwalkan di slot IDCC.');queueBalance()}catch(err){b.disabled=false;toast(errMsg(err))}});
 
 /* ---------- render: kalender ---------- */
-function dot(t){return'<i class="dot ty ty-'+esc(t.type)+(IDX[t.status]>=IDX['Terjadwal']?'':' plan')+'" title="'+esc(TYPES[t.type].label+': '+t.title)+'"></i>'}
+function dot(t){return'<i class="dot ty ty-'+esc(t.type)+(sched(t)?'':' plan')+'" title="'+esc(TYPES[t.type].label+': '+t.title)+'"></i>'}
 function srow(lbl,arr,cap){return'<div class="slotrow'+(arr.length>=cap?' full':'')+(arr.length>cap?' over':'')+'"><span class="lbl">'+lbl+'</span><span class="n num">'+arr.length+'/'+cap+'</span>'+arr.map(dot).join('')+'</div>'}
 function renderCal(){if(!S.cal.month){S.cal.month=today().slice(0,7);S.cal.sel=today()}
   const el=$('cal');const y=Number(S.cal.month.slice(0,4)),m=Number(S.cal.month.slice(5,7));$('calTitle').textContent=BULAN_FULL[m-1]+' '+y;
@@ -1514,37 +1786,50 @@ function renderCal(){if(!S.cal.month){S.cal.month=today().slice(0,7);S.cal.sel=t
     const tags=eventOn(d).map(ev=>'<span class="tag ev">'+esc(ev.short)+'</span>').join('')+(isIdccDay(d)?'<span class="tag idcc">IDCC</span>':'');
     let body;
     if(mode==='post'){const ts=S.tasks.filter(t=>t.postAt===d&&POSTED.includes(t.type));
-      body=srow('Foto',ts.filter(t=>kindOf(t.type)==='foto'),2)+srow('Produk',ts.filter(t=>kindOf(t.type)==='vpr'),1)+srow('Review',ts.filter(t=>kindOf(t.type)==='vrv'),1);}
-    else{const sh=S.tasks.filter(t=>(t.shootPlan===d&&IDX[t.status]<=1)||t.shotAt===d);
-      const edn=S.tasks.filter(t=>t.editPlan===d&&IDX[t.status]<IDX['QC']).length;
+      body=srow('Foto',ts.filter(t=>kindOf(t.type)==='foto'),2)+srow('Video',ts.filter(t=>kindOf(t.type)==='video'),2);}
+    else{const sh=S.tasks.filter(t=>(t.shootPlan===d&&IDX[t.status]<=0)||t.shotAt===d);
+      const edn=S.tasks.filter(t=>t.editPlan===d&&IDX[t.status]<IDX['Ready']).length;
       body=thu?'<span class="lbl n">Libur</span>':'<div class="slotrow">'+sh.map(dot).join('')+'</div>'+(sh.length?'<span class="n num">'+sh.length+' syuting</span>':'')+(edn?'<span class="n num">'+edn+' edit</span>':'')+
         (sh.some(conflict)?'<span class="tag crit">Bentrok libur</span>':'')+(overloaded(st,d).length?'<span class="tag crit">Beban lebih</span>':'');}
     h+='<button type="button" class="cell'+(inM?'':' out')+(d===td?' today':'')+(d===S.cal.sel?' sel':'')+(thu?' thu':'')+'" data-d="'+d+'" aria-label="'+esc(fmtLong(d))+'" aria-pressed="'+(d===S.cal.sel)+'"><span class="dn">'+Number(d.slice(8))+'</span>'+tags+'<div class="slots">'+body+'</div></button>';}
-  el.innerHTML=h;renderDay();}
-function liT(t,pre){return'<li><span>'+(pre?'<span class="status">'+esc(pre)+' · </span>':'')+thumbHtml(t.itemId,30,t.title)+'<span class="chip ty ty-'+esc(t.type)+'">'+esc(TYPES[t.type].label)+'</span> '+esc(t.title)+'</span><span class="chip'+(IDX[t.status]>=IDX['Terjadwal']?' good':'')+'">'+esc(IDX[t.status]>=IDX['Terjadwal']?t.status:'Rencana tayang · '+t.status)+'</span></li>'}
+  el.innerHTML=h;renderDay();renderMetaQueue();}
+function renderMetaQueue(){const box=$('metaBox');if(!box)return;box.hidden=!S.isAdmin;if(!S.isAdmin)return;const td=today();let h='';let n=0,ready=0;
+  for(let i=0;i<7;i++){const d=addDays(td,i);const P=dayPlan(d);const order=[['09:00','foto',0],['12:00','video',0],['15:00','foto',1],['18:00','video',1]];
+    const rows=order.map(([tm,k,j])=>P[k][j]?slotLi(P[k][j],tm,k):'').join('')+P.extra.map(t=>slotLi(t,'',kindOf(t.type))).join('');
+    const all=[...P.foto,...P.video,...P.extra].filter(Boolean);n+=all.length;ready+=all.filter(t=>(t.status==='Ready'&&!t.metaAt)).length;
+    if(rows)h+='<h4 class="qday">'+esc(fmtLong(d))+(i===0?' · hari ini':i===1?' · besok':'')+'</h4><ul class="list tl">'+rows+'</ul>'}
+  $('metaQueue').innerHTML='<p class="status" style="margin:-4px 0 10px">'+n+' konten dalam 7 hari ke depan · <b style="color:var(--warn)">'+ready+' siap dijadwalkan</b> (Ready).</p>'+(h||'<div class="empty">Belum ada konten yang dijadwalkan tayang 7 hari ke depan.</div>')}
+async function metaAction(e){const b=e.target.closest('[data-meta]');if(!b)return;const t=(S.allTasks||S.tasks).find(x=>x.id===b.dataset.tid);if(!t)return;
+  if(b.dataset.meta==='copy'){try{await navigator.clipboard.writeText(t.caption||'');toast('Caption disalin. Tempel di Meta Business Suite.')}catch(err){toast('Tidak bisa menyalin otomatis. Buka kartunya di Workflow Hub lalu salin manual.')}return}
+  if(b.dataset.meta==='done'){b.disabled=true;try{await S.db.collection('tasks').doc(t.id).update({postTime:b.dataset.tm,metaAt:Date.now(),checked:true,checkedBy:S.me?S.me.name:'',updatedAt:Date.now(),updatedBy:S.me?S.me.name:''});
+      toast('Terjadwal di Meta, '+fmt(t.postAt)+' pukul '+fmtTime(b.dataset.tm)+'. Kartu pindah ke Tayang otomatis setelah jam itu.')}
+    catch(err){toast(errMsg(err));b.disabled=false}}}
+$('metaQueue').addEventListener('click',metaAction);$('calDay').addEventListener('click',metaAction);
+function liT(t,pre){return'<li><span>'+(pre?'<span class="status">'+esc(pre)+' · </span>':'')+thumbHtml(t.itemId,30,t.title)+'<span class="chip ty ty-'+esc(t.type)+'">'+esc(TYPES[t.type].label)+'</span> '+esc(t.title)+'</span><span class="chip'+(sched(t)?' good':'')+'">'+esc(sched(t)?t.status:'Rencana tayang · '+t.status)+'</span></li>'}
+function metaState(t){if(t.status==='Tayang')return'<span class="chip good">Tayang</span>';if(t.status==='Ready'&&t.metaAt)return'<span class="chip good">Terjadwal di Meta</span>';
+  if(t.status==='Ready')return'<span class="chip warn">Ready'+(t.checked?' · dicek Zaki':'')+' · siap dijadwalkan</span>';return'<span class="chip">'+esc(t.status)+'</span>'}
+function slotLi(t,tm,k){const T=tm?'<b class="time num">'+fmtTime(tm)+'</b>':'<b class="time over">Lebih</b>';
+  if(!t)return'<li class="emptyslot"><span>'+T+'<span class="status">Slot kosong · '+(k==='foto'?'foto Instagram':'video jenis apa pun')+'</span></span><span class="status">Isi dari stok lama / IDCC</span></li>';
+  return'<li data-tid="'+esc(t.id)+'"><span>'+T+thumbHtml(t.itemId,30,t.title)+'<span class="chip ty ty-'+esc(t.type)+'">'+esc(TYPES[t.type].label)+'</span> '+esc(t.title)+genderChip((itemOf(t.itemId)||{}).gender)+'</span><span class="acts2">'+metaState(t)+metaBtns(t,tm)+'</span></li>'}
+function metaBtns(t,tm){if(!S.isAdmin)return t.driveUrl?'<a class="ghost sm" href="'+esc(t.driveUrl)+'" target="_blank" rel="noopener">File</a>':'';
+  if(IDX[t.status]<IDX['Ready'])return t.driveUrl?'<a class="ghost sm" href="'+esc(t.driveUrl)+'" target="_blank" rel="noopener">Buka file</a>':'';   /* belum QC: cukup status */
+  return(t.driveUrl?'<a class="ghost sm" href="'+esc(t.driveUrl)+'" target="_blank" rel="noopener">Buka file</a>':'<span class="chip nophoto">Belum ada link file</span>')+
+    (t.caption?'<button type="button" class="ghost sm" data-meta="copy" data-tid="'+esc(t.id)+'">Salin caption</button>':'<span class="chip nophoto">Caption belum ada</span>')+
+    ((t.status==='Ready'&&!t.metaAt)&&tm?'<button type="button" class="btn sm" data-meta="done" data-tid="'+esc(t.id)+'" data-tm="'+tm+'">Sudah dijadwalkan di Meta</button>':'')}
 function emptyLi(k){return'<li class="emptyslot"><span class="status">Slot kosong · '+esc(k)+'</span><span class="status">Isi dari stok konten</span></li>'}
 function renderDay(){const d=S.cal.sel;if(!d)return;const el=$('calDay');const thu=isOff(toT(d));const evs=eventOn(d);
   let h='<h3>'+esc(fmtLong(d))+'</h3><p class="status" style="margin:-4px 0 14px">'+(thu?'Tim libur. Konten yang sudah dijadwalkan tetap tayang otomatis.':'Masuk: '+PEOPLE.filter(p=>avail(p,d)).map(nm).join(', '))+'</p>';
-  if(S.cal.mode==='post'){const ts=S.tasks.filter(t=>t.postAt===d&&POSTED.includes(t.type));
-    const fotos=ts.filter(t=>kindOf(t.type)==='foto'),prods=ts.filter(t=>kindOf(t.type)==='vpr'),vids=ts.filter(t=>kindOf(t.type)==='vrv');
-    const rowsV=[];
-    evs.forEach(ev=>{const t=S.tasks.find(x=>x.eventKey===ev.key);
-      if(t&&t.postAt===d)rowsV.push(liT(t,'Slot event'));
-      else rowsV.push('<li><span><span class="tag ev">'+esc(ev.short)+'</span> '+esc(ev.title)+' <span class="status">· '+esc(ev.note)+'</span></span>'+(t?'<span class="chip warn">Di pipeline, tayang '+esc(fmt(t.postAt))+'</span>':(S.isAdmin?'<button class="ghost" data-act="addEv" data-key="'+esc(ev.key)+'" data-d="'+d+'">Tambah ke pipeline</button>':''))+'</li>')});
-    vids.filter(t=>t.type==='evt'&&!evs.some(ev=>ev.key===t.eventKey)).forEach(t=>rowsV.push(liT(t)));
-    const idT=vids.filter(t=>t.type==='idc');
-    if(isIdccDay(d)&&!idT.length)rowsV.push('<li><span><span class="tag idcc">IDCC</span> Slot video IDCC mingguan</span><span class="status">Pilih barang di Laporan Admin → Planning</span></li>');
-    idT.forEach(t=>rowsV.push(liT(t,isIdccDay(d)?'Slot IDCC':'')));
-    vids.filter(t=>t.type!=='evt'&&t.type!=='idc').forEach(t=>rowsV.push(liT(t)));
-    while(rowsV.length<1)rowsV.push(emptyLi('video review'));
-    const rowsF=fotos.map(t=>liT(t));while(rowsF.length<2)rowsF.push(emptyLi('foto Instagram'));
-    const rowsP=prods.map(t=>liT(t));while(rowsP.length<1)rowsP.push(emptyLi('video produk'));
-    h+='<div class="grid2 even"><div><h3>Foto Instagram · <span class="num">'+fotos.length+'/2</span></h3><ul class="list">'+rowsF.join('')+'</ul></div>'+
-      '<div><h3>Video produk · <span class="num">'+prods.length+'/1</span></h3><ul class="list">'+rowsP.join('')+'</ul>'+
-      '<h3 style="margin-top:14px">Video review'+(evs.length||isIdccDay(d)?' / event / IDCC':'')+' · <span class="num">'+vids.length+'/1</span></h3><ul class="list">'+rowsV.join('')+'</ul></div></div>';
-  }else{const sh=S.tasks.filter(t=>t.shootPlan===d&&IDX[t.status]<=1),done=S.tasks.filter(t=>t.shotAt===d),due=S.tasks.filter(t=>!ready(t)&&(t.due===d||t.target===d));
+  if(S.cal.mode==='post'){const P=dayPlan(d);const rowsE=[];
+    evs.forEach(ev=>{const t=S.tasks.find(x=>x.eventKey===ev.key);if(t&&t.postAt===d)return;
+      rowsE.push('<li><span><span class="tag ev">'+esc(ev.short)+'</span> '+esc(ev.title)+' <span class="status">· '+esc(ev.note)+'</span></span>'+(t?'<span class="chip warn">Di Workflow Hub, tayang '+esc(fmt(t.postAt))+'</span>':(S.isAdmin?'<button class="ghost" data-act="addEv" data-key="'+esc(ev.key)+'" data-d="'+d+'">Tambah ke Workflow Hub</button>':''))+'</li>')});
+    if(isIdccDay(d)&&!P.video.some(t=>t&&t.type==='idc'))rowsE.push('<li><span><span class="tag idcc">IDCC</span> Slot video IDCC mingguan</span><span class="status">Pilih barang di Analisis IDCC atau Laporan Admin</span></li>');
+    const order=[['09:00','foto',0],['12:00','video',0],['15:00','foto',1],['18:00','video',1]];
+    h+='<h3>Jadwal tayang Instagram</h3><ul class="list tl">'+order.map(([tm,k,i])=>slotLi(P[k][i],tm,k)).join('')+P.extra.map(t=>slotLi(t,'',kindOf(t.type))).join('')+'</ul>'+
+      (rowsE.length?'<h3 style="margin-top:14px">Event &amp; IDCC</h3><ul class="list">'+rowsE.join('')+'</ul>':'')+
+      '<p class="status" style="margin:10px 0 0">Jam video diacak supaya jam yang sama tidak diisi jenis video yang sama berturut-turut. Jam yang sudah dijadwalkan di Meta Business Suite terkunci.</p>';
+  }else{const sh=S.tasks.filter(t=>t.shootPlan===d&&IDX[t.status]<=0),done=S.tasks.filter(t=>t.shotAt===d),due=S.tasks.filter(t=>!ready(t)&&(t.due===d||t.target===d));
     const shLi=t=>'<li><span><span class="chip ty ty-'+esc(t.type)+'">'+esc(TYPES[t.type].label)+'</span> '+esc(t.title)+'</span><span style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><span class="status">'+esc(nm(t.producer))+(t.talent?' · talent '+esc(nm(t.talent)):'')+'</span>'+(conflict(t)?'<span class="chip crit">Ada yang libur</span>':'')+'</span></li>';
-    const eds=S.tasks.filter(t=>t.editPlan===d&&IDX[t.status]<IDX['QC']);const st=capState();
+    const eds=S.tasks.filter(t=>t.editPlan===d&&IDX[t.status]<IDX['Ready']);const st=capState();
     const edLi=t=>'<li><span><span class="chip ty ty-'+esc(t.type)+'">'+esc(TYPES[t.type].label)+'</span> '+esc(t.title)+'</span><span class="status">'+esc(nm(t.editor))+' · ±'+(EDIT_H[t.type]||0.5)+' jam</span></li>';
     const bar=(v,cap)=>'<span class="t"><i class="'+(v>cap+1e-9?'over':'')+'" style="width:'+(cap?Math.min(100,v/cap*100):0)+'%"></i></span>';
     h+=(thu?'':'<h3>Beban hari ini</h3><div class="loadgrid">'+PEOPLE.filter(p=>avail(p,d)).map(p=>{const s=getH(st.sh,d,p),e=getH(st.ed,d,p);
@@ -1560,7 +1845,7 @@ $('calNext').addEventListener('click',()=>{const [y,m]=S.cal.month.split('-').ma
 $('calToday').addEventListener('click',()=>{S.cal.month=today().slice(0,7);S.cal.sel=today();renderCal()});
 $('calMode').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S.cal.mode=b.dataset.m;$('calMode').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));renderCal()});
 $('calDay').addEventListener('click',async e=>{const b=e.target.closest('[data-act="addEv"]');if(!b||!S.db)return;const ev=eventOn(b.dataset.d).find(x=>x.key===b.dataset.key);if(!ev)return;
-  b.disabled=true;try{await S.db.collection('tasks').add(eventTask(ev,b.dataset.d));toast('Video event ditambahkan ke pipeline.');queueBalance()}catch(err){b.disabled=false;toast(errMsg(err))}});
+  b.disabled=true;try{await S.db.collection('tasks').add(eventTask(ev,b.dataset.d));toast('Video event ditambahkan ke Workflow Hub.');queueBalance()}catch(err){b.disabled=false;toast(errMsg(err))}});
 /* syuting yang belum dikerjakan dan tanggalnya sudah lewat (atau hari ini setelah jam aktif) dipindah ke hari kerja berikutnya sesuai kapasitas */
 $('calResched').addEventListener('click',()=>runBalance(true));
 const JOB_TYPES=['ktl','igf','vpr','vrv','idf','idc','evt','khs','cmp'];
@@ -1591,10 +1876,10 @@ function renderBalLog(){const el=$('balLog');if(!el)return;const L=(S.balLog||[]
   el.innerHTML='<ul class="list">'+L.map(e=>'<li><span><span class="chip ty ty-'+esc(e.type)+'">'+esc((TYPES[e.type]||{}).label||e.type)+'</span> '+esc(e.title)+'<br><span class="status">'+esc(diff(e))+'</span></span><span class="status">'+esc(when(e.at))+'</span></li>').join('')+'</ul>'}
 $('calEvents').addEventListener('click',async()=>{if(!S.db){toast('Data belum tersambung.');return}
   const first=S.cal.month+'-01';const add=[];const st=capState();for(let i=0;i<31;i++){const d=addDays(first,i);if(d.slice(0,7)!==S.cal.month)break;eventOn(d).forEach(ev=>{if(!S.tasks.some(t=>t.eventKey===ev.key))add.push(eventTask(ev,d,st))})}
-  if(!add.length){toast('Semua video event bulan ini sudah ada di pipeline.');return}
-  const b=$('calEvents');b.disabled=true;try{await Promise.all(add.map(t=>S.db.collection('tasks').add(t)));toast(add.length+' video event ditambahkan ke pipeline.');queueBalance()}catch(err){toast(errMsg(err))}finally{b.disabled=false}});
+  if(!add.length){toast('Semua video event bulan ini sudah ada di Workflow Hub.');return}
+  const b=$('calEvents');b.disabled=true;try{await Promise.all(add.map(t=>S.db.collection('tasks').add(t)));toast(add.length+' video event ditambahkan ke Workflow Hub.');queueBalance()}catch(err){toast(errMsg(err))}finally{b.disabled=false}});
 
-function renderAll(){renderItems();renderBoard();renderCal();renderMeeting();renderJob();renderBalLog();renderTeam();renderReports();preview();if(!$('batchBox').hidden)renderBatchPlan();
+function renderAll(){PLAN_MEMO={};renderItems();renderWatch();renderBoard();renderCal();renderMeeting();renderJob();renderBalLog();renderTeam();renderReports();preview();if(!$('batchBox').hidden)renderBatchPlan();
   if(!$('oldBox').hidden){if(!document.activeElement||!$('oRows').contains(document.activeElement))renderOldRows();renderOldPlan()}}
 
 /* ---------- boot ---------- */
@@ -1616,10 +1901,10 @@ function saveRep(id,patch){const cur=Object.assign({},S.reports[id]||{});return 
 function lv(l){return l==='crit'?'<span class="chip crit">Penting</span>':l==='good'?'<span class="chip good">Baik</span>':'<span class="chip warn">Perhatikan</span>'}
 
 function recommend(W,c){const R=[];const nf=addDays(W,1);const use=slotUse();
-  const short=weekDays(nf,7).map(d=>{const u=use[d]||{foto:0,vpr:0,vrv:0};return{d,need:Math.max(0,2-u.foto)+Math.max(0,1-u.vpr)+Math.max(0,1-(u.vrv+unfilled(d)))}}).filter(x=>x.need>0);
+  const short=weekDays(nf,7).map(d=>{const u=use[d]||newUse();return{d,need:Math.max(0,2-u.foto)+Math.max(0,2-(u.video+unfilled(d)))}}).filter(x=>x.need>0);
   if(short.length)R.push({lv:'warn',t:(short.length===7?'Semua 7 hari ke depan':short.length+' dari 7 hari ke depan')+' belum terisi penuh ('+short.reduce((a,x)=>a+x.need,0)+' slot kosong: '+short.slice(0,4).map(x=>fmt(x.d)).join(', ')+(short.length>4?', …':'')+'). Isi dengan stok lama, foto IDCC, atau barang baru.'});
   else R.push({lv:'good',t:'Semua slot tayang 7 hari ke depan sudah punya rencana konten.'});
-  if(c.late.length){const by={};c.late.forEach(t=>{const w=IDX[t.status]<=1?t.producer:t.editor;by[w]=(by[w]||0)+1});
+  if(c.late.length){const by={};c.late.forEach(t=>{const w=IDX[t.status]<=0?t.producer:t.editor;by[w]=(by[w]||0)+1});
     R.push({lv:'crit',t:c.late.length+' konten lewat batas siap. Terbanyak di '+Object.entries(by).sort((a,b)=>b[1]-a[1]).slice(0,2).map(([p,n])=>nm(p)+' ('+n+')').join(' dan ')+'. Selesaikan dulu sebelum produksi baru, atau alihkan ke pengganti.'})}
   if(c.done.length){const p=Math.round(c.onTime/c.done.length*100);R.push(p<80?{lv:'warn',t:'Ketepatan waktu '+p+'% (target 80%). Periksa tahap yang paling sering tertahan.'}:{lv:'good',t:'Ketepatan waktu '+p+'%, sesuai target.'})}
   if(c.stuck.length)R.push({lv:'warn',t:c.stuck.length+' konten tidak bergerak lebih dari 3 hari. Tanyakan kendalanya ke penanggung jawab.'});
@@ -1635,19 +1920,19 @@ function recommend(W,c){const R=[];const nf=addDays(W,1);const use=slotUse();
 
 function computeWeekly(W){const from=addDays(W,-6),startMs=dateMs(from),cutMs=dateMs(W,'20:00');
   const T=allT().filter(t=>!t.createdAt||t.createdAt<=cutMs);const inD=d=>!!d&&d>=from&&d<=W;
-  const L=t=>({type:t.type,title:t.title,itemId:t.itemId||'',status:t.status,due:t.due||'',who:IDX[t.status]<=1?t.producer:t.editor,note:t.note||''});
+  const L=t=>({type:t.type,title:t.title,itemId:t.itemId||'',status:t.status,due:t.due||'',who:IDX[t.status]<=0?t.producer:t.editor,note:t.note||''});
   const items=S.items.filter(i=>inD(i.arrived));
   const shot=T.filter(t=>inD(t.shotAt)),done=T.filter(t=>inD(t.readyAt));
-  const posted=T.filter(t=>POSTED.includes(t.type)&&inD(t.postAt)&&(t.status==='Tayang'||t.status==='Terjadwal'));
+  const posted=T.filter(t=>POSTED.includes(t.type)&&inD(t.postAt)&&(t.status==='Tayang'||(t.status==='Ready'&&!!t.metaAt)));
   const onTime=done.filter(t=>t.due&&t.readyAt<=t.due).length;
   const late=T.filter(t=>t.due&&t.due<=W&&!(t.readyAt&&t.readyAt<=W)&&!isExpired(t));
   const ev=[];T.forEach(t=>(t.history||[]).forEach(h=>{if(h.at>=startMs&&h.at<=cutMs)ev.push({h,t})}));
-  const days=weekDays(from,7).map(d=>{const P=posted.filter(t=>t.postAt===d);return{d,foto:P.filter(t=>kindOf(t.type)==='foto').length,vpr:P.filter(t=>kindOf(t.type)==='vpr').length,vrv:P.filter(t=>kindOf(t.type)==='vrv').length}});
+  const days=weekDays(from,7).map(d=>{const P=posted.filter(t=>t.postAt===d);return{d,foto:P.filter(t=>kindOf(t.type)==='foto').length,video:P.filter(t=>kindOf(t.type)==='video').length}});
   const types={};Object.keys(TYPES).forEach(ty=>{const r={shot:shot.filter(t=>t.type===ty).length,done:done.filter(t=>t.type===ty).length,posted:posted.filter(t=>t.type===ty).length};if(r.shot||r.done||r.posted)types[ty]=r});
   const people=PEOPLE.map(p=>({p,shot:shot.filter(t=>t.producer===p).length,talent:shot.filter(t=>t.talent===p).length,edit:done.filter(t=>t.editor===p).length,moves:ev.filter(e=>e.h.by===p).length,late:late.filter(t=>involved(t,p)).length}));
   const lastAt=t=>Math.max(t.createdAt||0,...(t.history||[]).map(h=>h.at));
-  const stuck=T.filter(t=>!isExpired(t)&&IDX[t.status]>=1&&IDX[t.status]<IDX['QC']&&lastAt(t)<cutMs-3*DAY);
-  const notes=T.filter(t=>t.note&&!isExpired(t)&&IDX[t.status]<IDX['Terjadwal']);
+  const stuck=T.filter(t=>!isExpired(t)&&IDX[t.status]>=1&&IDX[t.status]<IDX['Ready']&&lastAt(t)<cutMs-3*DAY);
+  const notes=T.filter(t=>t.note&&!isExpired(t)&&!sched(t));
   return{week:W,from,generatedAt:Date.now(),kpi:{items:items.length,hot:items.filter(i=>i.hot).length,shot:shot.length,done:done.length,posted:posted.length,target:28,onTime,late:late.length,moves:ev.length},
     days,types,people,late:late.slice(0,15).map(L),stuck:stuck.slice(0,10).map(L),notes:notes.slice(0,10).map(L),recs:recommend(W,{late,stuck,done,onTime})}}
 
@@ -1659,7 +1944,7 @@ function renderWeekly(){const el=$('repWeekly');if(!S.rep.week)S.rep.week=latest
   else if(!stored.seenAt&&viewing&&!S.savingRep[id+'s']){S.savingRep[id+'s']=1;saveRep(id,{seenAt:Date.now()}).catch(()=>{})}
   const k=R.kpi,pct=k.done?Math.round(k.onTime/k.done*100):null,nx=addDays(latestWeek(),8);
   const gen=new Date(R.generatedAt);const genTxt=fmt(dayOfMs(R.generatedAt))+' '+pad(gen.getHours())+'.'+pad(gen.getMinutes());
-  const dayRow=x=>{const t=x.foto+x.vpr+x.vrv;return'<tr><td>'+esc(fmt(x.d))+(isOff(toT(x.d))?' <span class="status">(tim libur)</span>':'')+'</td><td class="num">'+x.foto+'/2</td><td class="num">'+x.vpr+'/1</td><td class="num">'+x.vrv+'/1</td><td class="num"><b>'+t+'/4</b></td></tr>'};
+  const dayRow=x=>{const v=x.video!=null?x.video:(x.vpr||0)+(x.vrv||0);const t=x.foto+v;return'<tr><td>'+esc(fmt(x.d))+(isOff(toT(x.d))?' <span class="status">(tim libur)</span>':'')+'</td><td class="num">'+x.foto+'/2</td><td class="num">'+v+'/2</td><td class="num"><b>'+t+'/4</b></td></tr>'};
   el.innerHTML='<div class="rep">'+
    '<div class="reph"><div><h3>Laporan mingguan · '+esc(fmtRange(R.from,W))+'</h3><div class="status">Data sampai Rabu '+esc(fmt(W))+' pukul 20.00 · dibuat '+esc(genTxt)+' · laporan berikutnya terbit '+esc(fmtLong2(nx))+' pukul 06.00</div></div>'+
    '<div class="acts noprint"><select id="weekSel" aria-label="Pilih minggu">'+weekOptions().map(w=>'<option value="'+w+'"'+(w===W?' selected':'')+'>'+esc(fmtRange(addDays(w,-6),w))+'</option>').join('')+'</select>'+
@@ -1668,7 +1953,7 @@ function renderWeekly(){const el=$('repWeekly');if(!S.rep.week)S.rep.week=latest
      kpi(pct==null?'–':pct+'%','tepat waktu',pct==null?'':pct>=80?'good':'warn')+kpi(k.late,'lewat batas',k.late?'crit':'good')+'</div>'+
    '<div class="box"><h3>Rekomendasi untuk minggu kerja Sabtu–Rabu</h3><ul class="recs">'+R.recs.map(r=>'<li>'+lv(r.lv)+'<span>'+esc(r.t)+'</span></li>').join('')+'</ul></div>'+
    '<div class="box"><h3>Catatan dan keputusan admin</h3><textarea class="note-area noprint" id="weekNote" data-rep="'+id+'" placeholder="Keputusan untuk minggu kerja Sabtu–Rabu, mis. fokus selesaikan review yang terlambat, Salma bantu skrip, isi slot kosong Selasa dengan stok lama.">'+esc((stored&&stored.note)||'')+'</textarea><div class="printonly pre">'+esc((stored&&stored.note)||'-')+'</div></div>'+
-   '<div class="grid2 even"><div class="box"><h3>Tayang per hari</h3><div class="tw"><table class="t"><thead><tr><th>Hari</th><th>Foto IG</th><th>Video produk</th><th>Review/event/IDCC</th><th>Total</th></tr></thead><tbody>'+R.days.map(dayRow).join('')+'</tbody></table></div></div>'+
+   '<div class="grid2 even"><div class="box"><h3>Tayang per hari</h3><div class="tw"><table class="t"><thead><tr><th>Hari</th><th>Foto IG</th><th>Video (semua jenis)</th><th>Total</th></tr></thead><tbody>'+R.days.map(dayRow).join('')+'</tbody></table></div></div>'+
    '<div class="box"><h3>Per jenis konten</h3>'+(Object.keys(R.types).length?'<div class="tw"><table class="t"><thead><tr><th>Jenis</th><th>Diproduksi</th><th>Selesai edit</th><th>Tayang</th></tr></thead><tbody>'+Object.entries(R.types).map(([ty,r])=>'<tr><td><span class="chip ty ty-'+esc(ty)+'">'+esc(tlabel(ty))+'</span></td><td class="num">'+r.shot+'</td><td class="num">'+r.done+'</td><td class="num">'+r.posted+'</td></tr>').join('')+'</tbody></table></div>':'<div class="empty">Belum ada konten yang bergerak minggu ini.</div>')+'</div></div>'+
    '<div class="box"><h3>Kinerja tim</h3><div class="tw"><table class="t"><thead><tr><th>Nama</th><th>Syuting (produser)</th><th>Talent</th><th>Selesai edit</th><th>Update status</th><th>Terlambat</th></tr></thead><tbody>'+R.people.map(x=>'<tr><td><b>'+esc(nm(x.p))+'</b></td><td class="num">'+x.shot+'</td><td class="num">'+x.talent+'</td><td class="num">'+x.edit+'</td><td class="num">'+x.moves+'</td><td class="num">'+(x.late?'<span class="chip crit">'+x.late+'</span>':'0')+'</td></tr>').join('')+'</tbody></table></div></div>'+
    '<div class="grid2 even"><div class="box"><h3>Lewat batas waktu</h3>'+tlist(R.late,'Tidak ada konten yang terlambat.')+'</div><div class="box"><h3>Tidak bergerak lebih dari 3 hari</h3>'+tlist(R.stuck,'Semua konten bergerak normal.')+'</div></div>'+
@@ -1679,10 +1964,10 @@ function scriptDay(p,shoot){let d=addDays(shoot,-1);for(let i=0;i<10;i++,d=addDa
 function planFor(p,sat){const T=S.tasks.filter(t=>!isExpired(t));const ord={Syuting:0,Talent:1,Skrip:2,Edit:3,Tayang:4};
   return weekDays(sat,5).map(d=>{if(isOff(toT(d))||!avail(p,d))return{d,off:true,rows:[]};const rows=[];
     T.forEach(t=>{const lb=tlabel(t.type);
-      if(IDX[t.status]<=1&&t.shootPlan===d){if(t.producer===p)rows.push({k:'Syuting',t,txt:lb+' – '+t.title+(t.talent&&t.talent!==p?' (talent '+nm(t.talent)+')':'')});else if(t.talent===p)rows.push({k:'Talent',t,txt:lb+' – '+t.title+' (bersama '+nm(t.producer)+')'})}
-      if(t.script===p&&t.status==='Rencana'&&t.shootPlan&&scriptDay(p,t.shootPlan)===d)rows.push({k:'Skrip',t,txt:lb+' – '+t.title+' (syuting '+fmt(t.shootPlan)+')'});
-      if(IDX[t.status]<IDX['QC']&&t.editPlan===d&&t.editor===p)rows.push({k:'Edit',t,txt:lb+' – '+t.title+' (siap '+fmt(t.due)+')'})});
-    if(p==='Z'){const n=T.filter(t=>t.postAt===d&&POSTED.includes(t.type)).length;if(n)rows.push({k:'Tayang',txt:n+' konten dijadwalkan tayang, pastikan sudah lolos QC dan terjadwal'})}
+      if(IDX[t.status]<=0&&t.shootPlan===d){if(t.producer===p)rows.push({k:'Syuting',t,txt:lb+' – '+t.title+(t.talent&&t.talent!==p?' (talent '+nm(t.talent)+')':'')});else if(t.talent===p)rows.push({k:'Talent',t,txt:lb+' – '+t.title+' (bersama '+nm(t.producer)+')'})}
+      if(t.script===p&&t.status==='Terdata'&&t.shootPlan&&scriptDay(p,t.shootPlan)===d)rows.push({k:'Skrip',t,txt:lb+' – '+t.title+' (syuting '+fmt(t.shootPlan)+')'});
+      if(IDX[t.status]<IDX['Ready']&&t.editPlan===d&&t.editor===p)rows.push({k:'Edit',t,txt:lb+' – '+t.title+' (siap '+fmt(t.due)+')'})});
+    if(p==='Z'){const n=T.filter(t=>t.postAt===d&&POSTED.includes(t.type)).length;if(n)rows.push({k:'Tayang',txt:n+' konten dijadwalkan tayang, pastikan sudah Ready dan terjadwal di Meta'})}
     rows.sort((a,b)=>ord[a.k]-ord[b.k]);return{d,off:false,rows}})}
 function memberByCode(p){return S.members.find(m=>m.code===p)}
 function waNumber(ph){let d=String(ph||'').replace(/\D/g,'');if(!d)return'';if(d.startsWith('0'))d='62'+d.slice(1);else if(d.startsWith('8'))d='62'+d;return d.length>=10?d:''}
@@ -1716,8 +2001,8 @@ function renderPlan(){const el=$('planBox');if(!S.rep.sat)S.rep.sat=upcomingSat(
 function monthOptions(){const s=new Set([today().slice(0,7)]);allT().forEach(t=>[t.postAt,t.readyAt,t.shotAt].forEach(d=>{if(d)s.add(d.slice(0,7))}));S.items.forEach(i=>{if(i.arrived)s.add(i.arrived.slice(0,7))});return[...s].sort().reverse()}
 function computeMonthly(M){const y=Number(M.slice(0,4)),m=Number(M.slice(5,7)),n=new Date(Date.UTC(y,m,0)).getUTCDate(),first=M+'-01',last=M+'-'+pad(n);
   const inM=d=>!!d&&d>=first&&d<=last,T=allT(),td=today(),startMs=dateMs(first),endMs=dateMs(addDays(last,1));
-  const posted=T.filter(t=>POSTED.includes(t.type)&&inM(t.postAt)&&(t.status==='Tayang'||(t.status==='Terjadwal'&&t.postAt<=td)));
-  const scheduled=T.filter(t=>POSTED.includes(t.type)&&inM(t.postAt)&&t.status==='Terjadwal'&&t.postAt>td);
+  const posted=T.filter(t=>POSTED.includes(t.type)&&inM(t.postAt)&&(t.status==='Tayang'||((t.status==='Ready'&&!!t.metaAt)&&t.postAt<=td)));
+  const scheduled=T.filter(t=>POSTED.includes(t.type)&&inM(t.postAt)&&(t.status==='Ready'&&!!t.metaAt)&&t.postAt>td);
   const done=T.filter(t=>inM(t.readyAt)),shot=T.filter(t=>inM(t.shotAt)),items=S.items.filter(i=>inM(i.arrived)),ktl=T.filter(t=>t.type==='ktl'&&inM(t.readyAt));
   const onTime=done.filter(t=>t.due&&t.readyAt<=t.due).length;
   const weeks=[[1,7],[8,14],[15,21],[22,28],[29,n]].filter(w=>w[0]<=n).map(([a,b])=>({a,b,c:posted.filter(t=>{const d=Number(t.postAt.slice(8));return d>=a&&d<=b}).length}));
@@ -1752,7 +2037,7 @@ function renderMonthly(){const el=$('repMonthly');if(!S.rep.month)S.rep.month=to
 
 /* ---------- jadwal saya (anggota) ---------- */
 function renderMySchedule(){const el=$('mySchedule');if(!el)return;if(S.isAdmin||!S.me||!S.me.code){el.hidden=true;return}const sat=upcomingSat(),pl=planFor(S.me.code,sat);
-  el.hidden=false;el.innerHTML='<details class="box" open><summary style="cursor:pointer;font-weight:700">Jadwal saya · '+esc(fmtRange(sat,addDays(sat,4)))+'</summary><div class="pcards" style="margin-top:10px">'+
+  el.hidden=false;el.innerHTML='<details class="box"'+(innerWidth>820?' open':'')+'><summary style="cursor:pointer;font-weight:700">Jadwal saya · '+esc(fmtRange(sat,addDays(sat,4)))+'</summary><div class="pcards" style="margin-top:10px">'+
    pl.map(x=>'<div class="pday" style="border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--surface)"><b>'+esc(fmtLong2(x.d))+'</b>'+(x.off?'<div class="off">Libur</div>':x.rows.length?'<ul>'+x.rows.map(r=>'<li><b>'+esc(r.k)+'</b>: '+esc(r.txt)+'</li>').join('')+'</ul>':'<div class="off">Belum ada tugas</div>')+'</div>').join('')+'</div></details>'}
 
 /* ---------- pengingat ---------- */
@@ -1793,6 +2078,18 @@ $('p-jumat').addEventListener('click',async e=>{const t=e.target;
   const sd=t.closest('[data-send]');if(sd)markSent(sd.dataset.send)});
 async function markSent(p){if(!S.db||!S.isAdmin)return;const id='p-'+S.rep.sat;const sent=Object.assign({},(S.reports[id]||{}).sent||{});sent[p]=Date.now();try{await saveRep(id,{kind:'plan',sat:S.rep.sat,sent})}catch(err){}}
 
+/* jam & tanggal live di header */
+const HARI_CK=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+function tick(){const d=new Date();$('ckTime').innerHTML=pad(d.getHours())+'.'+pad(d.getMinutes())+'<small>'+pad(d.getSeconds())+'</small>';
+  $('ckDate').innerHTML='<span class="lg">'+HARI_CK[d.getDay()]+', '+d.getDate()+' '+BULAN_FULL[d.getMonth()]+' '+d.getFullYear()+'</span><span class="sh">'+HARI_CK[d.getDay()].slice(0,3)+', '+d.getDate()+' '+BULAN[d.getMonth()]+' '+d.getFullYear()+'</span>'}
+tick();setInterval(tick,1000);
+/* HP: geser dari tepi kiri ke kanan untuk membuka menu, geser ke kiri untuk menutup */
+(function(){let sx=0,sy=0,mode='',tr=false;const EDGE=28;
+  addEventListener('touchstart',e=>{if(innerWidth>820||e.touches.length!==1||document.body.classList.contains('gate'))return;const t=e.touches[0];sx=t.clientX;sy=t.clientY;
+    const open=$('shell').classList.contains('drawer');mode=!open&&sx<=EDGE?'open':open?'close':'';tr=false},{passive:true});
+  addEventListener('touchmove',e=>{if(!mode)return;const t=e.touches[0];const dx=t.clientX-sx,dy=t.clientY-sy;if(Math.abs(dy)>Math.abs(dx)*1.2&&Math.abs(dy)>12){mode='';return}
+    if(mode==='open'&&dx>50){drawer(true);mode=''}else if(mode==='close'&&dx<-50){drawer(false);mode=''}},{passive:true});
+  addEventListener('touchend',()=>{mode=''},{passive:true})})();
 /* pilihan (seg): penanda navy yang bergeser ke pilihan aktif */
 function segPlace(seg,instant){let ind=seg.querySelector(':scope > .seg-ind');if(!ind){ind=document.createElement('span');ind.className='seg-ind';ind.setAttribute('aria-hidden','true');seg.prepend(ind);instant=true}
   const b=seg.querySelector(':scope > button[aria-pressed="true"]');if(!b||!b.offsetWidth){seg.classList.remove('ready');return}
@@ -1825,7 +2122,7 @@ document.addEventListener('click',e=>{if(!$('themePop').hidden&&!e.target.closes
 addEventListener('resize',()=>{if(!$('themePop').hidden)themePop(false)});
 /* label menu saat sidebar tertutup: muncul di samping ikon ketika disentuh kursor */
 const navTip=document.createElement('div');navTip.className='navtip';navTip.setAttribute('aria-hidden','true');document.body.appendChild(navTip);
-$('sideNav').querySelectorAll('button[role="tab"],#themeBtn').forEach(b=>{const lbl=b.querySelector('.lbl').textContent.trim();b.setAttribute('aria-label',lbl);b.removeAttribute('title');
+$('sideNav').querySelectorAll('button[role="tab"],#themeBtn,#signOut').forEach(b=>{const lbl=b.querySelector('.lbl').textContent.trim();b.setAttribute('aria-label',lbl);b.removeAttribute('title');
   b.addEventListener('mouseenter',()=>{if(!$('shell').classList.contains('collapsed')||innerWidth<=820)return;const r=b.getBoundingClientRect();const cn=b.querySelector('#cntOpen');navTip.textContent=lbl+(cn&&cn.textContent.trim()?' '+cn.textContent.trim():'');navTip.style.left=(r.right+10)+'px';navTip.style.top=(r.top+r.height/2-14)+'px';navTip.classList.add('show')});
   b.addEventListener('mouseleave',()=>navTip.classList.remove('show'));b.addEventListener('click',()=>navTip.classList.remove('show'))});
 /* ---------- ANALISIS IDCC: baca PDF "Umur Persediaan" (ACCURATE) + rekomendasi AI ---------- */
@@ -1907,7 +2204,7 @@ function renderIdccResult(){const R=S.idcc.res;const el=$('idccResult');if(!R){e
    '<p style="margin:12px 0;max-width:85ch" class="pre">'+esc(R.ringkasan||autoSummary(R))+'</p>'+
    '<div class="tw"><table class="t"><thead><tr><th></th><th>Barang</th><th>Stok</th><th>&gt;90 hari</th><th>&gt;120 hari</th><th>Umur rata</th><th>Varian</th><th>Skor</th><th>Rekomendasi</th><th>Alasan &amp; ide konten (AI)</th></tr></thead><tbody>'+
    R.items.slice().sort((a,b)=>(a.rec==='pantau')-(b.rec==='pantau')||a.prio-b.prio||b.score-a.score).map(r=>'<tr data-id="'+r.id+'"><td><input type="checkbox" data-pick aria-label="Pilih '+esc(r.name)+'"'+(r.pick?' checked':'')+(r.inPipe?' disabled':'')+'></td>'+
-     '<td style="min-width:200px"><b>'+esc(r.name)+'</b><div class="status">'+esc(CATLBL[r.cat]||r.cat)+(r.inPipe?' · <span class="chip good">Sudah di pipeline</span>':'')+'</div><details><summary class="status" style="cursor:pointer">'+r.nv+' varian</summary><div class="status">'+r.variants.map(v=>esc(v.v)+' ('+v.stock+(v.old?', '+v.old+' lama':'')+')').join(', ')+'</div></details></td>'+
+     '<td style="min-width:200px"><b>'+esc(r.name)+'</b><div class="status">'+esc(CATLBL[r.cat]||r.cat)+(r.inPipe?' · <span class="chip good">Sudah di Workflow Hub</span>':'')+'</div><details><summary class="status" style="cursor:pointer">'+r.nv+' varian</summary><div class="status">'+r.variants.map(v=>esc(v.v)+' ('+v.stock+(v.old?', '+v.old+' lama':'')+')').join(', ')+'</div></details></td>'+
      '<td class="num">'+r.stock+'</td><td class="num"><b>'+r.old+'</b></td><td class="num">'+r.vold+'</td><td class="num">'+r.avg+' hr</td><td class="num">'+r.nv+'</td><td class="num"><b style="color:var('+(r.score>=70?'--good':r.score>=50?'--warn':'--muted')+')">'+r.score+'</b></td>'+
      '<td><select data-rec aria-label="Rekomendasi '+esc(r.name)+'">'+Object.entries(REC_LBL).map(([k,l])=>'<option value="'+k+'"'+(k===r.rec?' selected':'')+'>'+l+'</option>').join('')+'</select><div class="status">Prioritas '+r.prio+'</div></td>'+
      '<td class="status" style="min-width:240px">'+esc(r.why||'-')+(r.idea?'<br><b style="color:var(--ink)">Ide:</b> '+esc(r.idea):'')+'</td></tr>').join('')+'</tbody></table></div>'+
@@ -1924,7 +2221,7 @@ $('idccResult').addEventListener('click',async e=>{
     try{for(const it of plan){const r=it.row;let id=r.itemId;
         if(!id){const ref=await S.db.collection('items').add({name:r.name,color:'',cat:r.cat,hot:HOTCATS.includes(r.cat),qty:r.qty||0,arrived:'',old:true,idccReport:S.idcc.res.date||'',createdAt:Date.now()});id=ref.id}
         await Promise.all(it.tasks.map(p=>S.db.collection('tasks').add(newTask(p.type,{itemId:id,title:r.name,cat:r.cat,due:p.due,producer:p.producer,editor:p.editor,talent:p.talent,script:p.script,shootPlan:p.shootPlan,editPlan:p.editPlan,postAt:p.postAt,source:'lama',reason:'idcc'}))));n++}
-      toast(n+' barang IDCC masuk ke Pipeline dan kalender.');S.idcc.plan=null;S.idcc.res.items.forEach(r=>{if(r.pick){r.inPipe=true;r.pick=false}});renderIdccResult();queueBalance()}
+      toast(n+' barang IDCC masuk ke Workflow Hub dan kalender.');S.idcc.plan=null;S.idcc.res.items.forEach(r=>{if(r.pick){r.inPipe=true;r.pick=false}});renderIdccResult();queueBalance()}
     catch(err){toast((n?n+' barang sudah tersimpan. ':'')+errMsg(err))}finally{b.disabled=false}}});
 /* riwayat */
 function renderIdccHistory(){const el=$('idccHistory');const H=S.idcc.history;
@@ -1943,13 +2240,70 @@ function makeDb(fs){
 
 /* ---------- peran ---------- */
 function applyRole(){const a=S.isAdmin;
-  $('whoName').textContent=S.me.name||S.me.email;$('whoRole').textContent=a?'Admin':'Anggota';$('whoRole').className='role'+(a?' admin':'');
+  $('whoName').textContent=S.me.name||S.me.email;$('whoAv').textContent=(S.me.name||S.me.email||'?').slice(0,1).toUpperCase();$('prof').title=(S.me.name||S.me.email)+(a?' · Admin':' · Anggota');$('whoRole').textContent=a?'Admin':'Anggota';$('whoRole').className='role'+(a?' admin':'');
   ['tab-masuk','tab-jumat'].forEach(id=>$(id).hidden=!a);$('tab-tim').hidden=!a;
   document.querySelector('#p-pipeline details.add').hidden=!a;$('personSeg').hidden=!a;$('personSeg').previousElementSibling.hidden=!a;
   $('calResched').hidden=!a;$('jobHintAdmin').hidden=!a;$('jobHintMember').hidden=a;$('calEvents').hidden=!a;
-  if(!a){const l=document.querySelector('#p-pipeline .pop');l.textContent='Tugas konten milik Anda: tempat Anda menjadi produser, editor, talent, atau penulis skrip. Ubah status setiap kali pekerjaan berpindah tahap (sampai QC) dan tulis catatan bila ada kendala. Tanggal dan penanggung jawab diatur admin.'}
+  if(!a){const l=document.querySelector('#p-pipeline .pop');l.textContent='Tugas konten milik Anda: tempat Anda menjadi produser, editor, talent, atau penulis skrip. Klik nama tahap di kartu setiap kali pekerjaan berpindah (Terdata → Diproduksi → Editing → Ready). Untuk pindah ke Ready, tempel dulu link Google Drive file final di Detail. Tulisan merah adalah deadline Anda. Tanggal dan penanggung jawab diatur admin.'}
   if(!a&&['masuk','jumat','tim'].includes(S.tab))setTab('pipeline');
   $('tab-idcc').hidden=!(a||S.me.idcc);if(S.tab==='idcc'&&$('tab-idcc').hidden)setTab('pipeline');setHH();}
+
+/* ---------- template caption Instagram (diatur admin di Tim & Aktivitas) ---------- */
+const DEFAULT_CAP_TPL='{caption}\n\n📍 Tirtonic Tennis Store Jogja\n💬 Info & order: DM atau WhatsApp (link di bio)\n\n{hashtag} #tirtonic #tirtonictennisstore #tenisjogja';
+const capTpl=()=>(S.settings&&S.settings.captionTemplate)||DEFAULT_CAP_TPL;
+function fillTemplate(caption,tags,t,it){const tg=(tags||[]).map(x=>'#'+String(x).replace(/^#/,'').replace(/\s+/g,'')).filter(x=>x.length>1).join(' ');
+  return capTpl().replace(/\{caption\}/g,caption.trim()).replace(/\{hashtag\}/g,tg).replace(/\{nama\}/g,(it&&it.name)||t.title||'').replace(/\{warna\}/g,(it&&it.color)||'')
+    .replace(/\{kategori\}/g,CATLBL[t.cat]||'').replace(/\{gender\}/g,GENDERS[(it||{}).gender]||'').replace(/\n{3,}/g,'\n\n').trim()}
+function renderCapTpl(){const ta=$('capTpl');if(!ta||document.activeElement===ta)return;ta.value=capTpl()}
+$('capTplSave').addEventListener('click',async()=>{const v=$('capTpl').value.trim();if(!v.includes('{caption}')){toast('Template harus berisi {caption}.');return}
+  try{await S.db.doc('settings/main').set(Object.assign({},S.settings,{captionTemplate:v.slice(0,3000)}));toast('Template caption disimpan.')}catch(err){toast(errMsg(err))}});
+$('capTplReset').addEventListener('click',()=>{$('capTpl').value=DEFAULT_CAP_TPL});
+
+/* ---------- Watchlist: layar pantauan semua barang (hanya baca) ---------- */
+S.wq='';S.wcat='';S.wdone=false;
+const TYPE_SHORT=t=>(TYPES[t]||{}).label||t;
+function renderWatch(){const el=$('wGrid');if(!el)return;
+  const groups=new Map();(S.tasks||[]).forEach(t=>{const k=t.itemId||('task:'+t.id);if(!groups.has(k))groups.set(k,[]);groups.get(k).push(t)});
+  const wk=addDays(today(),-7);let list=[...groups.entries()].map(([k,ts])=>{const it=k.startsWith('task:')?null:itemOf(k);
+      ts.sort((a,b)=>(a.prio||9)-(b.prio||9));const open=ts.filter(t=>t.status!=='Tayang');
+      const dl=open.map(t=>deadlinesOf(t).find(x=>!x.later)||{}).map(x=>x.d).filter(Boolean).sort()[0]||'9999';
+      return{k,it,ts,open,dl,name:it?it.name:ts[0].title,color:it?it.color:'',cat:it?it.cat:(ts[0].cat||''),gender:it?it.gender:'',arrived:it?it.arrived:'',
+        allDone:!open.length,recent:ts.some(t=>t.status!=='Tayang'||(t.postAt||'')>=wk)}});
+  const cats=[...new Set(list.map(g=>g.cat).filter(Boolean))];const cs=$('wCat');const want='<option value="">Semua kategori</option>'+cats.map(c=>'<option value="'+c+'"'+(c===S.wcat?' selected':'')+'>'+esc(CATLBL[c]||c)+'</option>').join('');if(cs.innerHTML!==want)cs.innerHTML=want;
+  if(!S.wdone)list=list.filter(g=>!g.allDone||g.recent&&g.ts.some(t=>(t.postAt||'')>=today()));
+  if(S.wcat)list=list.filter(g=>g.cat===S.wcat);
+  if(S.wq)list=list.filter(g=>(g.name+' '+g.color+' '+(CATLBL[g.cat]||'')).toLowerCase().includes(S.wq));
+  list.sort((a,b)=>(a.allDone-b.allDone)||a.dl.localeCompare(b.dl)||(b.arrived||'').localeCompare(a.arrived||''));
+  const cnt={};STAGES.forEach(s2=>cnt[s2]=0);list.forEach(g=>g.ts.forEach(t=>{if(cnt[t.status]!=null)cnt[t.status]++}));
+  $('wSum').innerHTML='<span style="--sc:var(--navy)"><b>'+list.length+'</b> barang</span>'+STAGES.map(s2=>'<span style="--sc:'+STAGE_UI[s2].c+'"><b>'+cnt[s2]+'</b>'+esc(s2)+'</span>').join('');
+  const d=new Date();$('wUpd').textContent='· diperbarui '+pad(d.getHours())+'.'+pad(d.getMinutes())+'.'+pad(d.getSeconds());
+  if(!list.length){el.innerHTML='<div class="empty">'+(S.wq||S.wcat?'Tidak ada barang yang cocok dengan filter.':'Belum ada barang yang sedang diproses. Barang yang dicatat di Barang Masuk otomatis muncul di sini.')+'</div>';return}
+  const td=today();
+  el.innerHTML=list.map(g=>{const pics=[...new Set(g.ts.flatMap(t=>[t.producer,t.editor,t.talent,t.script]).filter(Boolean))];
+    const ph=g.it?thumbHtml(g.k,52,g.name):'';
+    return'<article class="witem'+(g.allDone?' alldone':'')+'"><div class="whead">'+(ph||'<span class="ph none" style="--s:52px">'+CAM+'</span>')+'<div style="min-width:0"><div class="wn">'+esc(g.name)+(g.color?' <span style="font-weight:500;color:var(--muted)">· '+esc(g.color)+'</span>':'')+'</div>'+
+      '<div class="wm">'+(g.cat?'<span>'+esc(CATLBL[g.cat]||g.cat)+'</span>':'')+genderChip(g.gender)+(g.arrived?'<span>datang '+esc(fmt(g.arrived))+'</span>':'')+'</div>'+
+      '<div class="wpic">PIC '+pics.map(p=>'<b title="'+esc(nm(p))+'">'+esc(nm(p))+'</b>').join(' · ')+'</div></div></div>'+
+      '<ul class="wrows">'+g.ts.map(t=>{const i=IDX[t.status]??0;const U=STAGE_UI[t.status]||STAGE_UI.Terdata;const x=deadlinesOf(t).find(y=>!y.later);
+        const late=x&&x.d&&x.d<td&&!x.info;
+        const who=t.status==='Tayang'?'Tayang '+esc(fmt(t.postAt||''))+(t.postTime?' '+fmtTime(t.postTime):''):x?('Sekarang: <b>'+esc(nm(x.who))+'</b> · '+esc(x.lbl)+' <span class="'+(late?'late':'')+'">'+esc(fmt(x.d))+(late?' (terlambat)':'')+'</span>'):'';
+        return'<li class="wrow ty-'+esc(t.type)+'" style="--sc:'+U.c+';--sc2:'+U.c+'"><span class="wt">'+esc(TYPE_SHORT(t.type))+'</span><span class="ws"><i aria-hidden="true"></i>'+esc(t.status)+'</span>'+
+          '<span class="wbar5" aria-label="Tahap '+(i+1)+' dari 5: '+esc(t.status)+'">'+STAGES.map((s2,j)=>'<span class="'+(j<i?'done':j===i?'cur':'')+'"></span>').join('')+'</span>'+
+          (who?'<span class="wwho">'+who+'</span>':'')+'</li>'}).join('')+'</ul></article>'}).join('')}
+$('wSearch').addEventListener('input',e=>{S.wq=e.target.value.toLowerCase().trim();renderWatch()});
+$('wCat').addEventListener('change',e=>{S.wcat=e.target.value;renderWatch()});
+$('wDone').addEventListener('change',e=>{S.wdone=e.target.checked;renderWatch()});
+/* Mode TV: layar penuh + gulir otomatis */
+let tvRaf=0,tvDir=1,tvPause=0,tvClockT=0;
+function tvMode(on){document.body.classList.toggle('tv',on);$('wTv').textContent=on?'Keluar Mode TV':'Mode TV';cancelAnimationFrame(tvRaf);clearInterval(tvClockT);
+  if(on){try{const r=document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();if(r&&r.catch)r.catch(()=>{})}catch(e){}
+    const ck=()=>{const d=new Date();$('tvClock').textContent=pad(d.getHours())+'.'+pad(d.getMinutes())};ck();tvClockT=setInterval(ck,10000);
+    if(!matchMedia('(prefers-reduced-motion: reduce)').matches){let last=0;const step=ts=>{if(!document.body.classList.contains('tv'))return;if(ts-last>40){last=ts;
+        if(tvPause>0)tvPause--;else{scrollBy(0,tvDir);const end=innerHeight+scrollY>=document.documentElement.scrollHeight-2;if(end||scrollY<=0&&tvDir<0){tvDir=end?-6:1;tvPause=end?60:60}}}tvRaf=requestAnimationFrame(step)};tvRaf=requestAnimationFrame(step)}}
+  else{try{if(document.fullscreenElement)document.exitFullscreen()}catch(e){}}}
+$('wTv').addEventListener('click',()=>tvMode(!document.body.classList.contains('tv')));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.classList.contains('tv'))tvMode(false)});
+document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement&&document.body.classList.contains('tv'))tvMode(false)});
 
 /* ---------- tab Tim & Aktivitas: track per minggu ---------- */
 S.wk={month:'',idx:-1};
@@ -1974,13 +2328,13 @@ function renderWeeks(){if(!S.isAdmin||!$('wkTable'))return;if(!S.wk.month)S.wk.m
       return'<tr><td><b>'+esc(nm(p))+'</b></td>'+row.map((x,i)=>{const fut=W[i].a>td;return'<td><button type="button" class="cellbtn'+(i===S.wk.idx?' on':'')+'" data-wk="'+i+'" aria-label="'+esc(nm(p))+' minggu '+(i+1)+'">'+
         (fut?'<span class="status">'+x.planned+' rencana</span>':'<span class="big">'+x.fin+'</span><span class="status">selesai</span>'+(x.late.length?'<span class="chip crit" style="justify-self:center">'+x.late.length+' telat</span>':''))+'</button></td>'}).join('')+
         '<td><span class="big" style="font:800 17px/1 var(--display)">'+tot.fin+'</span><div class="status">'+(tot.fin?Math.round(100*tot.ontime/tot.fin)+'% tepat waktu':'—')+(tot.late?' · '+tot.late+' telat':'')+'</div></td></tr>'}).join('')+'</tbody></table>'+
-    '<p class="status" style="margin:8px 0 0">Selesai = konten yang ia kerjakan dan lolos ke QC pada minggu itu. Klik angka untuk melihat rinciannya.</p>';
+    '<p class="status" style="margin:8px 0 0">Selesai = konten yang ia kerjakan dan mencapai Ready pada minggu itu. Klik angka untuk melihat rinciannya.</p>';
   const segH=W.map((w,i)=>'<button type="button" data-wk="'+i+'" aria-pressed="'+(i===S.wk.idx)+'">Minggu '+(i+1)+' · '+rng(w)+'</button>').join('');if($('wkSeg').dataset.h!==segH+S.wk.month){$('wkSeg').innerHTML=segH;$('wkSeg').dataset.h=segH+S.wk.month}
   else $('wkSeg').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(+x.dataset.wk===S.wk.idx)));
   const w=W[S.wk.idx];
   $('wkCards').innerHTML=PEOPLE.map((p,pi)=>{const x=stats[pi][S.wk.idx];const fut=w.a>td;
     return'<div class="tcard"><h4>'+esc(nm(p))+(fut?'<span class="chip">Akan datang</span>':x.late.length?'<span class="chip crit">'+x.late.length+' telat</span>':x.fin?'<span class="chip good">Baik</span>':'<span class="chip">Belum ada</span>')+'</h4>'+
-      '<div class="kv"><span>Dijadwalkan (syuting/edit)</span><b>'+x.planned+'</b><span>Syuting selesai</span><b>'+x.shoot+'</b><span>Editing selesai</span><b>'+x.edit+'</b><span>Lolos ke QC</span><b>'+x.fin+'</b>'+
+      '<div class="kv"><span>Dijadwalkan (syuting/edit)</span><b>'+x.planned+'</b><span>Syuting selesai</span><b>'+x.shoot+'</b><span>Editing selesai</span><b>'+x.edit+'</b><span>Mencapai Ready</span><b>'+x.fin+'</b>'+
       '<span>Tepat waktu</span><b>'+(x.pct===null?'—':x.pct+'%')+'</b><span>Tayang</span><b>'+x.posted+'</b><span>Perubahan status</span><b>'+x.moves+'</b></div>'+
       (x.late.length?'<div class="status"><b style="color:var(--crit)">Terlambat:</b> '+x.late.slice(0,4).map(t=>esc(t.title)+' ('+esc((TYPES[t.type]||{}).label||t.type)+')').join(', ')+(x.late.length>4?', +'+(x.late.length-4)+' lainnya':'')+'</div>':'')+'</div>'}).join('')}
 $('wkPrev').addEventListener('click',()=>{const[y,m]=S.wk.month.split('-').map(Number);S.wk.month=fromT(Date.UTC(y,m-2,1)).slice(0,7);S.wk.idx=-1;renderWeeks()});
@@ -1988,13 +2342,13 @@ $('wkNext').addEventListener('click',()=>{const[y,m]=S.wk.month.split('-').map(N
 $('weekBox').addEventListener('click',e=>{const b=e.target.closest('[data-wk]');if(!b)return;S.wk.idx=+b.dataset.wk;renderWeeks()});
 
 /* ---------- tab Tim & Aktivitas ---------- */
-function renderTeam(){if(!S.isAdmin||!$('teamProgress'))return;renderWeeks();const all=S.tasks;const td=today();
+function renderTeam(){if(!S.isAdmin||!$('teamProgress'))return;renderWeeks();renderCapTpl();const all=S.tasks;const td=today();
   $('teamProgress').innerHTML=PEOPLE.map(p=>{const L=all.filter(t=>[t.producer,t.editor,t.talent,t.script].includes(p));const o=L.filter(open);
     const cnt=s=>o.filter(t=>t.status===s).length;const lt=o.filter(late).length;const wk=addDays(td,-7);
     const done=all.filter(t=>(t.history||[]).some(h=>h.by===p&&h.at>=toT(wk)-7*36e5)).length;
     const acc=S.members.find(m=>m.code===p);
     return'<div class="tcard"><h4>'+esc(nm(p))+(lt?'<span class="chip crit">'+lt+' terlambat</span>':'<span class="chip good">Aman</span>')+'</h4>'+
-      '<div class="row2">'+STAGES.slice(0,5).map(s=>'<span class="chip">'+esc(s)+' <b class="num">'+cnt(s)+'</b></span>').join('')+'</div>'+
+      '<div class="row2">'+STAGES.slice(0,4).map(s=>'<span class="chip">'+esc(s)+' <b class="num">'+cnt(s)+'</b></span>').join('')+'</div>'+
       '<div class="status">'+o.length+' tugas aktif · '+done+' konten diperbarui 7 hari terakhir</div>'+
       '<div class="status">'+(acc?'Akun: '+esc(acc.email):'<span style="color:var(--warn)">Belum punya akun</span>')+'</div></div>'}).join('');
   const sel=$('actWho');const want='<option value="">Semua orang</option>'+S.members.map(m=>'<option value="'+esc(m.name)+'"'+(m.name===S.actWho?' selected':'')+'>'+esc(m.name)+'</option>').join('');if(sel.innerHTML!==want)sel.innerHTML=want;
@@ -2047,7 +2401,7 @@ function start(db,me){S.db=db;S.me=me;S.isAdmin=me.role==='admin';S.canWrite=S.i
   if(S.isAdmin)db.collection('members').onSnapshot(s=>{S.members=s.docs.map(d=>Object.assign({id:d.id},d.data())).sort((a,b)=>(a.name||'').localeCompare(b.name||''));renderTeam()},fail);
   S.dayKey=today()+(new Date().getHours()>=15?'b':'a');
   setInterval(()=>{const k=today()+(new Date().getHours()>=15?'b':'a');if(k!==S.dayKey){S.dayKey=k;splitTasks();renderAll();renderTeam();queueBalance()}},5*60*1000);
-  db.doc('settings/main').onSnapshot(s=>{if(s.exists)S.settings=Object.assign({idccQty:10,idccDays:90,idccDay:3},s.data());renderItems();renderCal();renderMeeting();renderJob()},fail);}
+  db.doc('settings/main').onSnapshot(s=>{if(s.exists)S.settings=Object.assign({idccQty:10,idccDays:90,idccDay:3},s.data());renderItems();renderCal();renderMeeting();renderJob();renderCapTpl()},fail);}
 async function boot(){renderBoard();renderCal();renderMeeting();
   const cfg=window.MEDIA_DESK_CONFIG;
   if(!window.firebase){showLogin('Gagal memuat Firebase. Periksa koneksi internet lalu muat ulang.',false);return}
