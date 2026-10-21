@@ -76,7 +76,28 @@ const TOOL_RINGKAS = {
   input_schema: { type: 'object', properties: { ringkasan: { type: 'string' } }, required: ['ringkasan'] }
 };
 
-async function askClaude(tool, userText, maxTokens) {
+const SYSTEM_CAPTION = `Anda copywriter media sosial untuk Tirtonic, toko perlengkapan tenis di Yogyakarta.
+Tulis isi caption Instagram berbahasa Indonesia yang santai, akrab, dan tetap informatif untuk satu postingan.
+Struktur: satu kalimat pembuka yang menarik perhatian, lalu 2-4 baris keunggulan barang berdasarkan deskripsi (boleh diawali emoji yang relevan, secukupnya), lalu satu ajakan singkat.
+Sesuaikan gaya dengan jenis konten: foto produk menonjolkan tampilan dan detail, video produk menonjolkan cara pakai/tampilan bergerak, video review mengajak menonton ulasan lengkap.
+Jika gender ukuran diketahui (Men/Women/Unisex), sebutkan secara wajar.
+Aturan penting: jangan mengarang spesifikasi, harga, diskon, stok, atau garansi yang tidak tertulis di deskripsi. Jangan menulis hashtag di dalam caption. Jangan menulis alamat, kontak, atau info toko karena sudah ada di template. Maksimal 900 karakter.
+Berikan juga 5-8 hashtag spesifik barang (brand, seri, kategori, olahraga) tanpa tanda # dan tanpa spasi.`;
+
+const TOOL_CAPTION = {
+  name: 'caption_instagram',
+  description: 'Isi caption dan hashtag untuk satu postingan.',
+  input_schema: {
+    type: 'object',
+    properties: {
+      caption: { type: 'string' },
+      hashtag: { type: 'array', items: { type: 'string' } }
+    },
+    required: ['caption', 'hashtag']
+  }
+};
+
+async function askClaude(tool, userText, maxTokens, system = SYSTEM) {
   const ctl = new AbortController();
   const timer = setTimeout(() => ctl.abort(), 55000);
   try {
@@ -84,7 +105,7 @@ async function askClaude(tool, userText, maxTokens) {
       method: 'POST', signal: ctl.signal,
       headers: { 'content-type': 'application/json', 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
       body: JSON.stringify({
-        model: MODEL, max_tokens: maxTokens, system: SYSTEM,
+        model: MODEL, max_tokens: maxTokens, system,
         tools: [tool], tool_choice: { type: 'tool', name: tool.name },
         messages: [{ role: 'user', content: userText }]
       })
@@ -124,6 +145,14 @@ export default async (req) => {
       const text = `Hasil penilaian barang IDCC dari laporan per ${body.tanggal_laporan || '-'} (JSON):\n${JSON.stringify(hasil)}\n\nTulis ringkasan 3-5 kalimat untuk admin media: berapa barang direkomendasikan per kategori, 3-5 barang paling mendesak dan alasannya, serta saran urutan pengerjaan minggu ini. Tanpa poin-poin, tanpa markdown.`;
       const out = await askClaude(TOOL_RINGKAS, text, 1200);
       return json(200, { ringkasan: out.ringkasan || '' });
+    }
+    if (body.mode === 'caption') {
+      const clip = (v, n) => String(v || '').slice(0, n);
+      const desc = clip(body.deskripsi, 4000);
+      if (desc.trim().length < 20) return json(400, { error: 'Deskripsi barang terlalu pendek.' });
+      const text = `Nama barang: ${clip(body.nama, 200)}\nJenis konten: ${clip(body.jenis_konten, 60)}\nKategori: ${clip(body.kategori, 40)}\nGender ukuran: ${clip(body.gender, 20) || '-'}\nCatatan tim: ${clip(body.catatan, 500) || '-'}\n\nDeskripsi dari toko online:\n${desc}`;
+      const out = await askClaude(TOOL_CAPTION, text, 1500, SYSTEM_CAPTION);
+      return json(200, { caption: String(out.caption || '').slice(0, 1500), hashtag: Array.isArray(out.hashtag) ? out.hashtag.slice(0, 10).map(String) : [] });
     }
     return json(400, { error: 'Mode tidak dikenal.' });
   } catch (e) {
