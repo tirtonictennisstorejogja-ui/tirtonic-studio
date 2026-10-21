@@ -47,7 +47,8 @@ website/config.js             Konfigurasi Firebase (apiKey Firebase memang publi
 website/logo.png, favicon*, apple-touch-icon.png, icon-*.png, manifest.webmanifest
 netlify/functions/idcc-ai.mjs Fungsi server untuk AI (Claude API): mode nilai/ringkas (Analisis IDCC) dan caption
 netlify.toml                  publish = "website", functions = "netlify/functions", /api/* → fungsi
-firestore.rules               Aturan keamanan Firestore (TIDAK otomatis terpasang, lihat §6)
+firestore.rules               Aturan keamanan Firestore (TIDAK otomatis terpasang saat push, lihat §6)
+firebase.json, .firebaserc    Konfigurasi Firebase CLI (hanya untuk Publish rules ke proyek tirtonic-studio)
 tools/                        Alat uji lokal (fake Firebase + data contoh), tidak dipakai produksi
 PANDUAN.md                    Panduan untuk manusia (pemasangan & pemakaian)
 ```
@@ -88,7 +89,7 @@ python3 -m http.server 8765 --directory _test        # buka http://localhost:876
 
 ## 6. Yang tidak bisa dilakukan dari repo (harus dikerjakan pengguna)
 
-- **Publish `firestore.rules`**: Firebase Console → Firestore Database → Rules → tempel → Publish. Setiap kali file ini berubah, beri tahu Zaki dengan jelas.
+- **Publish `firestore.rules`**: setiap kali file ini berubah. Di laptop Zaki bisa dari Claude Code (minta izin Zaki dulu): `~/.local/bin/firebase deploy --only firestore:rules --dry-run` untuk cek, lalu tanpa `--dry-run` untuk Publish (Firebase CLI sudah login sebagai pemilik proyek). Cara manual: Firebase Console → Firestore Database → Rules → tempel → Publish.
 - Variabel Netlify (`ANTHROPIC_API_KEY`, opsional `AI_MODEL`), domain, dan Authorized domains di Firebase Authentication.
 - Akun tim dan izin IDCC diatur di website (Tim & Aktivitas), bukan di kode.
 

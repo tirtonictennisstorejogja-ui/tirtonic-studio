@@ -25,6 +25,7 @@ Website diambil Netlify langsung dari GitHub. Setiap **Commit changes** di GitHu
 
 **Setiap kali `firestore.rules` berubah**, pasang juga di Firebase:
 Firebase Console → proyek **tirtonic-studio** → **Firestore Database → Rules** → hapus isi lama → tempel isi baru → **Publish**.
+Di laptop Zaki, Claude Code juga bisa mem-Publish-nya langsung (Firebase CLI sudah login); cukup minta "publish firestore.rules".
 
 ## Pemasangan awal (sudah dilakukan, untuk referensi)
 
