@@ -62,23 +62,26 @@ service cloud.firestore {
           && d.get('source', '') == 'lama'
           && d.get('reason', '') == 'idcc'
           && d.get('type', '') in ['idc', 'idf']
-          && d.get('status', '') == 'Rencana';
+          && d.get('status', '') in ['Rencana', 'Terdata'];
       }
 
       // Anggota: hanya tugas tempat ia menjadi produser / editor / talent / penulis skrip,
-      // hanya status (Rencana s.d. QC), catatan, dan riwayat yang boleh berubah.
+      // hanya status (Terdata s.d. Ready), catatan, link file final, dan riwayat yang boleh berubah.
       function memberStatusUpdate() {
         let before = resource.data;
         let after = request.resource.data;
-        let early = ['Rencana', 'Siap Produksi', 'Diproduksi', 'Editing', 'QC'];
+        let early = ['Rencana', 'Siap Produksi', 'Diproduksi', 'Editing', 'QC', 'Terdata', 'Ready'];
+        let allowedTo = ['Terdata', 'Diproduksi', 'Editing', 'Ready'];
         let code = get(memberPath()).data.get('code', '');
         return hasMemberDoc()
           && code is string && code != ''
           && code in [before.get('producer', ''), before.get('editor', ''), before.get('talent', ''), before.get('script', '')]
-          && after.diff(before).affectedKeys().hasOnly(['status', 'shotAt', 'readyAt', 'note', 'history', 'updatedAt', 'updatedBy'])
+          && after.diff(before).affectedKeys().hasOnly(['status', 'shotAt', 'readyAt', 'note', 'driveUrl', 'history', 'updatedAt', 'updatedBy'])
           && before.status in early
-          && after.status in early
+          && before.get('metaAt', 0) == 0
+          && (after.status in allowedTo || after.status == before.status)
           && after.get('note', '') is string && after.get('note', '').size() <= 1000
+          && after.get('driveUrl', '') is string && after.get('driveUrl', '').size() <= 500
           && after.get('history', []) is list && after.get('history', []).size() <= 40;
       }
     }

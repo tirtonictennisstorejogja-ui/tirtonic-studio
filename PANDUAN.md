@@ -1,97 +1,95 @@
-# Tirtonic Studio v5: cara memasang
+# Panduan Tirtonic Studio
 
-Isi repo:
+Panduan untuk tim: cara memasang, memperbarui, dan memakai website Tirtonic Studio.
+Alamat website: **mediadesk-tirtonic.netlify.app**
+
+## Isi repo
 
 | Folder / file | Fungsi |
 |---|---|
-| `website/` | Website Tirtonic Studio (index.html, config.js, logo.png, favicon.png) |
-| `netlify/functions/idcc-ai.mjs` | Penghubung ke AI untuk Analisis IDCC. Kunci API disimpan di Netlify, tidak pernah di website |
+| `website/` | Website (index.html, config.js, logo, ikon) |
+| `netlify/functions/idcc-ai.mjs` | Penghubung ke AI (Analisis IDCC dan caption Instagram). Kunci API disimpan di Netlify, tidak pernah di repo |
 | `netlify.toml` | Memberi tahu Netlify letak website dan fungsi AI |
-| `firestore.rules` | Aturan keamanan database (versi baru, wajib di-Publish ulang) |
-
-Mulai v5, website tidak lagi diunggah dengan Netlify Drop, karena fungsi AI hanya bisa berjalan jika Netlify mengambil file dari GitHub. Setelah langkah ini, setiap pembaruan cukup diunggah ke GitHub dan Netlify memperbarui website sendiri.
-
----
-
-## 1. Pasang aturan database baru (5 menit)
-
-1. Buka console.firebase.google.com → proyek **tirtonic-studio** → **Firestore Database** → tab **Rules**.
-2. Hapus semua isinya, tempel seluruh isi `firestore.rules`, klik **Publish**.
-
-Aturan baru menambahkan: gambar latar login, riwayat Analisis IDCC, dan izin terbatas untuk anggota IDCC (hanya menambah barang stok lama dan konten IDCC, tidak bisa mengubah atau menghapus data lain).
-
-## 2. Unggah ke GitHub (10 menit)
-
-1. Masuk github.com → tombol **+** kanan atas → **New repository**.
-2. Nama: `tirtonic-studio`. Pilih **Private**. Klik **Create repository**.
-3. Di halaman repo baru, klik tautan **uploading an existing file**.
-4. Ekstrak zip ini di komputer. Buka folder `tirtonic-studio-v5`, pilih **semua isinya** (folder `website`, folder `netlify`, `netlify.toml`, `firestore.rules`, `PANDUAN.md`), lalu tarik ke halaman GitHub.
-   Pastikan struktur folder ikut (GitHub menampilkan `website/index.html`, `netlify/functions/idcc-ai.mjs`).
-5. Klik **Commit changes**.
-
-## 3. Sambungkan Netlify ke GitHub (10 menit)
-
-Pakai proyek Netlify yang sudah ada supaya alamat website tetap sama:
-
-1. app.netlify.com → pilih proyek Tirtonic Studio → **Project configuration** → **Build & deploy** → **Link repository** (atau **Link to Git provider**).
-2. Pilih **GitHub**, izinkan akses, pilih repo `tirtonic-studio`.
-3. Isian build: **Base directory** kosong, **Build command** kosong, **Publish directory** `website`, **Functions directory** `netlify/functions` (biasanya sudah terisi otomatis dari `netlify.toml`).
-4. Klik **Deploy**.
-
-Jika menu Link repository tidak muncul, buat proyek baru: **Add new project → Import an existing project → GitHub**, lalu tambahkan domain baru itu di Firebase (**Authentication → Settings → Authorized domains**).
-
-## 4. Buat kunci API AI (5 menit)
-
-1. Buka **console.anthropic.com**, daftar/masuk dengan akun toko.
-2. **Billing**: isi saldo (pembayaran per pemakaian; satu analisis 40 barang biasanya hanya beberapa ribu rupiah).
-3. **API Keys → Create Key**, beri nama `tirtonic-studio`, salin kuncinya.
-
-**Jangan tempel kunci ini di chat, di file website, atau di GitHub.**
-
-## 5. Simpan kunci di Netlify
-
-1. Netlify → proyek → **Project configuration → Environment variables → Add a variable**.
-2. Key: `ANTHROPIC_API_KEY`, Value: kunci dari langkah 4. Simpan.
-3. **Deploys → Trigger deploy → Deploy project** supaya kunci terbaca.
-
-Opsional: variabel `AI_MODEL` untuk mengganti model AI (bawaan `claude-sonnet-5-5`).
-
-## 6. Beri Aulia akses Analisis IDCC
-
-Login sebagai admin → **Tim & Aktivitas → Akun tim** → edit Aulia → centang **Boleh memakai Analisis IDCC** → Simpan. Menu Analisis IDCC muncul di sidebar Aulia.
-
-## 7. Ganti gambar latar halaman login
-
-**Tim & Aktivitas → Tampilan halaman login → Unggah gambar**. Gambar otomatis dikecilkan. **Kembalikan bawaan** untuk kembali ke latar biru.
+| `firestore.rules` | Aturan keamanan database (dipasang manual di Firebase) |
+| `tools/` | Alat uji coba lokal dengan data contoh, tidak dipakai website asli |
+| `CLAUDE.md` | Penjelasan proyek untuk Claude Code |
+| `PANDUAN.md` | File ini |
 
 ---
 
-## Cara pakai Analisis IDCC
+## Memperbarui website
+
+Website diambil Netlify langsung dari GitHub. Setiap **Commit changes** di GitHub (manual atau oleh Claude Code) membuat Netlify memperbarui website sendiri dalam sekitar 1 menit (Netlify → Deploys → status **Published**).
+
+**Unggah manual:** buka folder tujuan di GitHub → **Add file → Upload files** → **choose your files** → **Commit changes**. File bernama sama otomatis ditimpa. Pastikan nama file tepat (misalnya `index.html`, bukan `index 2.html`).
+
+**Setiap kali `firestore.rules` berubah**, pasang juga di Firebase:
+Firebase Console → proyek **tirtonic-studio** → **Firestore Database → Rules** → hapus isi lama → tempel isi baru → **Publish**.
+
+## Pemasangan awal (sudah dilakukan, untuk referensi)
+
+1. **Firebase**: proyek `tirtonic-studio`, login Google aktif, Firestore dibuat, `firestore.rules` di-Publish, domain website ada di Authentication → Settings → Authorized domains.
+2. **GitHub**: repo Private `tirtonic-studio` berisi folder dan file di atas.
+3. **Netlify**: proyek `mediadesk-tirtonic` terhubung ke repo (Publish directory `website`, Functions directory `netlify/functions`). Jika muncul "unrecognized Git contributor", hubungkan akun GitHub lewat tombol **Link Git account** di halaman deploy.
+4. **Kunci AI**: buat di console.anthropic.com (API Keys), simpan di Netlify → Project configuration → Environment variables sebagai `ANTHROPIC_API_KEY`, lalu Deploys → Trigger deploy. **Jangan tempel kunci di chat, file, atau GitHub.** Opsional: `AI_MODEL` (bawaan `claude-sonnet-5-5`).
+5. **Akun tim**: login sebagai Zaki → Tim & Aktivitas → Akun tim. Centang **Boleh memakai Analisis IDCC** untuk Aulia.
+
+---
+
+## Menu
+
+| Menu | Isi | Admin (Zaki) | Aulia | Rayhan, Salma |
+|---|---|---|---|---|
+| **Beranda** | Sapaan, angka ringkas, Watchlist saya, jadwal tayang hari ini, Watchlist semua barang (Mode TV) | Ya | Ya | Ya |
+| **Barang Masuk** | Catat barang (satu, beberapa sekaligus, stok lama → konten) | Ya | – | – |
+| **Workflow Hub** | Papan kerja 5 tahap | Semua konten | Konten sendiri | Konten sendiri |
+| **Kalender** | Jadwal produksi, jadwal tayang, antrian upload Meta | Lihat & atur | Lihat | Lihat |
+| **Analisis IDCC** | Baca PDF umur persediaan dari finance + rekomendasi AI | Ya | Ya (jika dicentang) | – |
+| **Laporan Admin** | Laporan mingguan, planning + WhatsApp, laporan bulanan CEO | Ya | – | – |
+| **Panduan** | Aturan kerja, jobdesk, penyesuaian otomatis | Lihat & ubah jobdesk | Lihat | Lihat |
+| **Tim & Aktivitas** | Beban kerja, track per minggu, template caption, akun tim, latar login | Ya | – | – |
+
+Di laptop menu berupa kolom ikon di kanan; di HP berupa bilah di bawah layar. Pengaturan **Tampilan** (5 tema) berlaku per perangkat.
+
+## Alur kerja konten
+
+| Tahap | Artinya | Siapa yang memindahkan |
+|---|---|---|
+| **Terdata** | Barang tercatat, masuk pantauan | otomatis saat barang dicatat |
+| **Diproduksi** | Sedang syuting hari itu | anggota / admin |
+| **Editing** | Sedang diedit | anggota / admin |
+| **Ready** | File final sudah di Google Drive (link wajib ditempel) | anggota / admin |
+| **Tayang** | Sudah di Instagram | otomatis setelah jam tayang di Meta lewat, atau admin |
+
+1. Editor mengunggah file final ke Google Drive dengan nama file dari kartu, menempel link Drive di **Detail** kartu, lalu memindahkan kartu ke **Ready**.
+2. Zaki mengecek file dan klik **Tandai sudah dicek**. Di **Detail → Caption Instagram**, tempel deskripsi dari toko online lalu klik **Buat caption dengan AI** (template diatur di Tim & Aktivitas).
+3. Zaki membuka **Kalender → Antrian upload Meta Business Suite**: **Buka file**, unduh, **Salin caption**, jadwalkan di Meta Business Suite pada tanggal & jam yang tertera, lalu klik **Sudah dijadwalkan di Meta**.
+4. Setelah jam tayang lewat, kartu pindah ke **Tayang** sendiri.
+
+Tulisan merah di kartu adalah deadline orang yang sedang ditunggu. Konten aktif 1 bulan sejak dibuat, setelah itu menjadi arsip.
+
+## Jadwal tayang
+
+- **09.00 foto · 12.00 video · 15.00 foto · 18.00 video** setiap hari. Video boleh jenis apa pun; website mengacak supaya jenis yang sama tidak tayang dua kali sehari dan jam yang sama tidak diisi jenis yang sama berturut-turut.
+- Payday tayang tanggal 23, tanggal kembar tayang H-2, IDCC satu video per minggu (bawaan Rabu).
+- Jadwal syuting dan editing mengikuti hari masuk dan kapasitas tiap orang. Jika penuh atau ada yang libur, website memindahkan tugas sendiri (lihat Panduan → Penyesuaian otomatis terakhir).
+
+## Analisis IDCC
 
 1. Minta finance mengekspor laporan **Umur Persediaan** dari ACCURATE ke PDF (boleh terpisah: sepatu, raket, tas).
-2. Buka **Analisis IDCC** → **Pilih file PDF** → pilih semua file sekaligus.
-3. Cek tabel file: kolom **Cocok** berarti total stok hasil baca sama dengan baris total laporan.
-4. Atur kriteria (bawaan: stok umur > 90 hari minimal 5, total stok minimal 5). Klik **Analisis dengan AI**.
-5. AI memberi rekomendasi per barang: Video IDCC, Foto IDCC, Foto + video, atau Pantau, beserta alasan dan ide konten. Rekomendasi bisa diubah.
-6. Centang barang yang disetujui → **Pratinjau jadwal** → **Simpan & jadwalkan**. Konten masuk Pipeline dan kalender sesuai kapasitas tim.
+2. **Analisis IDCC → Pilih file PDF** → pilih semua file. Kolom **Cocok** berarti total stok sama dengan baris total laporan.
+3. Atur kriteria → **Analisis dengan AI** → centang barang yang disetujui → **Pratinjau jadwal** → **Simpan & jadwalkan**.
 
-Data yang dikirim ke AI hanya nama barang, varian, dan jumlah stok per umur (tanpa harga atau nilai rupiah). Website membaca PDF di browser; file PDF tidak diunggah ke mana pun.
+Yang dikirim ke AI hanya nama barang, varian, dan jumlah stok per umur (tanpa harga). File PDF dibaca di browser dan tidak diunggah.
 
 ## Masalah umum
 
-| Pesan | Solusi |
+| Masalah | Solusi |
 |---|---|
-| "Layanan AI belum diatur di server" | Langkah 5 belum dilakukan, atau belum deploy ulang setelah menambah kunci. |
-| "AI tidak bisa dihubungi: HTTP 404" | Netlify belum tersambung ke GitHub (langkah 3), atau masih memakai Netlify Drop. |
-| "Akun Anda belum diizinkan memakai AI" | Centang akses IDCC untuk akun itu (langkah 6). |
-| Kolom "Selisih, periksa PDF" | Format PDF berbeda dari laporan Umur Persediaan biasa. Kirim contohnya untuk disesuaikan. |
-| Gagal menyimpan konten IDCC (akses ditolak) | Aturan database baru belum di-Publish (langkah 1). |
-
-## Hak akses menu
-
-| Menu | Admin (Zaki) | Aulia (akses IDCC dicentang) | Anggota lain |
-|---|---|---|---|
-| Barang Masuk, Laporan Admin, Tim & Aktivitas | Ya | Tidak | Tidak |
-| Analisis IDCC | Ya | Ya | Tidak |
-| Pipeline, Kalender | Semua | Tugas sendiri + kalender tim | Tugas sendiri + kalender tim |
-| Panduan | Lihat & ubah jobdesk | Lihat saja | Lihat saja |
+| Perubahan tidak muncul di website | Cek Netlify → Deploys sudah **Published**. Buka website di jendela Private atau muat ulang (Cmd + Shift + R). |
+| Deploy **Failed**: unrecognized Git contributor | Klik **Link Git account** di halaman deploy, lalu Retry. |
+| "Layanan AI belum diatur di server" | `ANTHROPIC_API_KEY` belum diisi di Netlify, atau belum Trigger deploy setelah mengisi. |
+| "Akun Anda belum diizinkan memakai AI" | Centang akses IDCC untuk akun itu di Tim & Aktivitas. |
+| Anggota gagal memindahkan kartu / menyimpan link Drive | `firestore.rules` terbaru belum di-Publish di Firebase. |
+| "Domain website ini belum diizinkan" | Tambahkan domain di Firebase → Authentication → Settings → Authorized domains. |
+| Ikon di Safari masih huruf "N" | Hapus `~/Library/Safari/Touch Icons Cache` dan `Favicon Cache`, buka ulang website, buat ulang bookmark. |

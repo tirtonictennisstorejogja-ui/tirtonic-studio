@@ -1,0 +1,97 @@
+# CLAUDE.md — Tirtonic Studio
+
+Panduan untuk Claude Code saat mengerjakan repo ini. Baca seluruh file ini sebelum mengubah kode.
+Pemilik proyek: **Zaki** (kepala media / admin). Bahasa komunikasi dan seluruh teks di website: **Bahasa Indonesia** yang santai-profesional. Pengguna bukan programmer: jelaskan hasil dengan bahasa sederhana, tanpa istilah teknis yang tidak perlu.
+
+## 1. Apa ini
+
+Tirtonic Studio adalah website internal tim media **Tirtonic Tennis Store (Yogyakarta)** untuk mengelola produksi konten Instagram: barang masuk → produksi (foto/video) → editing → siap → tayang. Website ini dipakai setiap hari oleh 4 orang di laptop dan HP.
+
+Alamat: `https://mediadesk-tirtonic.netlify.app` (Netlify, terhubung ke repo GitHub ini, auto-deploy dari branch `main`).
+
+## 2. Tim dan aturan kerja (dipakai oleh mesin penjadwalan)
+
+| Kode | Nama | Peran utama | Libur |
+|---|---|---|---|
+| Z | Zaki | Admin, planning, cek file, upload/penjadwalan Meta, editor video produk & katalog, talent cadangan | Kamis |
+| R | Rayhan | Foto katalog & IG, syuting video produk, editor review/IG | Selasa, Kamis |
+| A | Aulia | Syuting review/event/IDCC, analis IDCC, penulis skrip | Kamis, Jumat |
+| S | Salma | Talent foto IG, video produk & review, penulis skrip | Kamis, Jumat |
+
+- Jam kerja: 10.00–11.30 dan 13.00–15.00. Kamis seluruh tim libur (`isOff`), konten tetap tayang lewat penjadwalan.
+- Kapasitas per hari: `SHOOT_CAP`, `EDIT_CAP` (jam per orang), `TYPE_CAP` (konten per jenis), durasi `SHOOT_H` / `EDIT_H`. Libur per orang: `OFF`.
+- Jobdesk utama + pengganti: `DEFAULT_JOB` (bisa diubah admin di tab Panduan, tersimpan di `settings/main.jobdesk`, dibaca lewat `job(type)`).
+- Batas siap: katalog target H (maks H+1), Foto IG H+1, Video produk H+2, Video review H+7 (hari kerja).
+- Jenis konten (`TYPES`): `ktl` katalog, `igf` foto IG, `vpr` video produk, `vrv` video review, `idf` foto IDCC, `idc` video IDCC, `evt` event, `khs` khusus, `cmp` campaign. Yang tayang di IG: `POSTED`.
+- Kategori: sepatu, raket, tas, baju, celana, aksesoris, lainnya (`CATS`, `CATLBL`). Sepatu/baju/celana punya gender ukuran Men/Women/Unisex (`GENDER_CATS`).
+
+### Jadwal tayang Instagram
+- 4 slot per hari: **09.00 foto, 12.00 video, 15.00 foto, 18.00 video** (`SLOT_TIMES`, `CAP={foto:2,video:2}`).
+- Video slot boleh jenis apa pun. **Pengacak variasi**: `findSlot`/`pickPost` menghindari jenis video yang sama dua kali sehari (boleh geser ≤3 hari), dan `dayPlan(d)` menyusun jam supaya jam yang sama tidak diisi jenis/kategori yang sama seperti 1–2 hari sebelumnya. `timeOf(t)` mengembalikan jam tayang. Jam yang sudah dikunci (`postTime`) tidak diacak.
+- Event: video payday tayang tgl 23 (untuk gajian tgl 25), tanggal kembar (11.11 dst.) tayang H-2. IDCC: 1 slot video per minggu (bawaan Rabu, `settings.idccDay`). Event/IDCC memakai satu slot video hari itu.
+
+### Tahap Workflow Hub (status konten)
+`STAGES = Terdata → Diproduksi → Editing → Ready → Tayang`
+- **Terdata**: tercatat, masuk pantauan. **Diproduksi**: sedang syuting. **Editing**. **Ready**: file final sudah di Google Drive (`driveUrl` wajib untuk jenis yang tayang). **Tayang**: sudah di Instagram.
+- Di tahap Ready, Zaki menandai `checked` (Dicek Zaki), membuat caption, lalu menjadwalkan di Meta Business Suite secara manual dan menekan "Sudah dijadwalkan di Meta" (`metaAt`, `postTime`). `maintainStatuses()` (berjalan di akun admin) memindahkan ke Tayang otomatis setelah jam tayang lewat.
+- Status lama (sebelum v5.2) dipetakan oleh `OLD_STATUS` di `splitTasks()`; jangan hapus pemetaan ini.
+- Anggota hanya boleh memindahkan sampai Ready (`MEMBER_STAGES`), tidak boleh mengubah kartu yang sudah `metaAt`.
+- Deadline per orang: `deadlinesOf(t)` / `deadlineFor(t)` (tulisan merah di kartu).
+- Konten hangus 1 bulan setelah dibuat (`expiryOf`, `isExpired`), tetap bisa dilihat sebagai arsip.
+
+## 3. Struktur repo
+
+```
+website/index.html            Seluruh aplikasi: HTML + CSS + JS dalam SATU file (tanpa build, tanpa framework)
+website/config.js             Konfigurasi Firebase (apiKey Firebase memang publik) + adminEmails
+website/logo.png, favicon*, apple-touch-icon.png, icon-*.png, manifest.webmanifest
+netlify/functions/idcc-ai.mjs Fungsi server untuk AI (Claude API): mode nilai/ringkas (Analisis IDCC) dan caption
+netlify.toml                  publish = "website", functions = "netlify/functions", /api/* → fungsi
+firestore.rules               Aturan keamanan Firestore (TIDAK otomatis terpasang, lihat §6)
+tools/                        Alat uji lokal (fake Firebase + data contoh), tidak dipakai produksi
+PANDUAN.md                    Panduan untuk manusia (pemasangan & pemakaian)
+```
+
+### Peta kode index.html (cari dengan nama fungsi)
+- Masuk & peran: `boot`, `start`, `applyRole`, `showLogin`, `loginReveal` (animasi login).
+- Navigasi: `setTab` (panel `p-home`, `p-masuk`, `p-pipeline` = Workflow Hub, `p-kalender`, `p-idcc`, `p-jumat` = Laporan Admin, `p-panduan`, `p-tim`), menu `nav.tabs` (kolom ikon kanan di laptop, bilah bawah di HP).
+- Render: `renderAll`, `renderHome`, `renderWatch` (+ `watchGroups`, `watchTile`), `renderBoard` + `cardInner` (kartu kanban), `renderCal`, `renderDay`, `renderMetaQueue`, `renderItems`, `renderReports`, `renderTeam`, `renderWeeks`.
+- Penjadwalan: `planBatch` (barang baru), `planOld` (stok lama/IDCC), `scheduleShoot`, `scheduleEdit`, `capState`, `slotUse`, `findSlot`, `pickPost`, `pickIdcc`, `dayPlan`, penyeimbang otomatis `computeBalance` / `runBalance` / `queueBalance`.
+- Data: `newTask`, `saveItem`, `setStatus`, `fileName` (format nama file), foto `makePhoto`/`savePhoto`/`thumbHtml`.
+- AI: `aiCall` → `/api/idcc-ai`; PDF finance dibaca di browser dengan pdf.js (`parseAccurate`, `aggregate`); caption `fillTemplate` + `settings.captionTemplate`.
+- Tema tampilan per perangkat: `applyTheme`, `THEMES` (localStorage `ts-theme`).
+
+### Firestore (koleksi)
+`members/{email}` (name, code, role, idcc, phone) · `items` · `photos/{itemId}` · `tasks` · `settings/main` · `logs/balance` · `locks` · `reports` · `idcc` · `public/login` (gambar latar login, dibaca sebelum login).
+
+## 4. Aturan penting (jangan dilanggar)
+
+1. **Jangan pernah menaruh rahasia di repo**: kunci API Anthropic hanya di Netlify env `ANTHROPIC_API_KEY`. Jangan minta pengguna menempelkan kunci di chat.
+2. **Hak akses dijaga di dua tempat**: tampilan (`applyRole`, `S.isAdmin`, `mine(t)`) DAN `firestore.rules`. Setiap perubahan siapa-boleh-apa harus mengubah keduanya, lalu ingatkan pengguna untuk **Publish** rules di Firebase Console.
+3. Tetap satu file `index.html`, tanpa build step, tanpa framework. Library eksternal hanya bila benar perlu (sekarang: Firebase compat 10.12.2 dari gstatic, pdf.js 3.11.174 dari cdnjs, Google Fonts Plus Jakarta Sans).
+4. Pertahankan gaya visual: token warna di `:root` (navy `--navy`, lime `--ball`, warna tahap `--st-1..5`, warna jenis `--t-*`), mode gelap, 5 tema. Semua warna lewat token, bukan warna literal yang hanya cocok di satu tema.
+5. Harus nyaman di **HP** (lebar ~390px) dan laptop: tidak boleh ada scroll menyamping di halaman.
+6. Data anggota tim adalah data nyata. Jangan menghapus atau menulis ulang data massal tanpa persetujuan Zaki. Migrasi data harus aman dijalankan berulang.
+7. Teks yang terlihat pengguna: Bahasa Indonesia, singkat, jelas. Nama menu: Beranda, Barang Masuk, Workflow Hub, Kalender, Analisis IDCC, Laporan Admin, Panduan, Tim & Aktivitas.
+
+## 5. Cara menguji sebelum commit
+
+```bash
+python3 tools/make-test-page.py                      # membuat _test/ dengan Firebase tiruan + data contoh
+python3 -m http.server 8765 --directory _test        # buka http://localhost:8765/ (Zaki) atau /#rayhan, /#aulia, /#salma
+```
+- `tools/fake-firebase.js` meniru Firebase di memori dan **mencatat pelanggaran aturan** di `window.__VIOLATIONS` (tiruan dari firestore.rules; perbarui juga bila rules berubah).
+- Cek minimal: tidak ada error di console, tidak ada scroll menyamping di 390px dan 1366px, mode terang & gelap, sebagai admin dan anggota.
+- Cek sintaks fungsi: `node --check netlify/functions/idcc-ai.mjs`.
+- Jangan commit folder `_test/`.
+
+## 6. Yang tidak bisa dilakukan dari repo (harus dikerjakan pengguna)
+
+- **Publish `firestore.rules`**: Firebase Console → Firestore Database → Rules → tempel → Publish. Setiap kali file ini berubah, beri tahu Zaki dengan jelas.
+- Variabel Netlify (`ANTHROPIC_API_KEY`, opsional `AI_MODEL`), domain, dan Authorized domains di Firebase Authentication.
+- Akun tim dan izin IDCC diatur di website (Tim & Aktivitas), bukan di kode.
+
+## 7. Rencana / ide yang pernah dibahas
+
+- n8n untuk otomasi terjadwal (WhatsApp planning Jumat 16.00, deteksi file baru di Google Drive → Ready). AI website tetap lewat Netlify function.
+- Upload otomatis ke Instagram lewat Meta API sengaja TIDAK dibuat; alurnya manual lewat Meta Business Suite dengan bantuan "Antrian upload".
