@@ -7,7 +7,7 @@ Pemilik proyek: **Zaki** (kepala media / admin). Bahasa komunikasi dan seluruh t
 
 Tirtonic Studio adalah website internal tim media **Tirtonic Tennis Store (Yogyakarta)** untuk mengelola produksi konten Instagram: barang masuk → produksi (foto/video) → editing → siap → tayang. Website ini dipakai setiap hari oleh 4 orang di laptop dan HP.
 
-Alamat: `https://mediadesk-tirtonic.netlify.app` (Netlify, terhubung ke repo GitHub ini, auto-deploy dari branch `main`).
+Alamat: `https://studio.tirtonichub.com` (Cloudflare Pages, terhubung ke repo GitHub ini, auto-deploy dari branch `main`; build command kosong, output `website`). Netlify (`mediadesk-tirtonic.netlify.app`) hanya cadangan selama masa pindah: kreditnya habis Oktober 2026 dan deploy produksinya dijeda. DNS domain tirtonichub.com dikelola di AntMedia Host.
 
 ## 2. Tim dan aturan kerja (dipakai oleh mesin penjadwalan)
 
@@ -45,8 +45,10 @@ Alamat: `https://mediadesk-tirtonic.netlify.app` (Netlify, terhubung ke repo Git
 website/index.html            Seluruh aplikasi: HTML + CSS + JS dalam SATU file (tanpa build, tanpa framework)
 website/config.js             Konfigurasi Firebase (apiKey Firebase memang publik) + adminEmails
 website/logo.png, favicon*, apple-touch-icon.png, icon-*.png, manifest.webmanifest
-netlify/functions/idcc-ai.mjs Fungsi server untuk AI (Claude API): mode nilai/ringkas (Analisis IDCC) dan caption
-netlify.toml                  publish = "website", functions = "netlify/functions", /api/* → fungsi
+lib/idcc-ai.mjs               Logika fungsi server AI (Claude API): mode nilai/ringkas (Analisis IDCC) dan caption; `handle(req, env)`
+functions/api/idcc-ai.js      Pintu masuk Cloudflare Pages Functions → POST /api/idcc-ai
+netlify/functions/idcc-ai.mjs Pintu masuk Netlify (cadangan) → lib/idcc-ai.mjs
+netlify.toml                  Konfigurasi Netlify (cadangan): publish = "website", /api/* → fungsi
 firestore.rules               Aturan keamanan Firestore (TIDAK otomatis terpasang saat push, lihat §6)
 firebase.json, .firebaserc    Konfigurasi Firebase CLI (hanya untuk Publish rules ke proyek tirtonic-studio)
 tools/                        Alat uji lokal (fake Firebase + data contoh), tidak dipakai produksi
@@ -71,7 +73,7 @@ PANDUAN.md                    Panduan untuk manusia (pemasangan & pemakaian)
 
 ## 4. Aturan penting (jangan dilanggar)
 
-1. **Jangan pernah menaruh rahasia di repo**: kunci API Anthropic hanya di Netlify env `ANTHROPIC_API_KEY`. Jangan minta pengguna menempelkan kunci di chat.
+1. **Jangan pernah menaruh rahasia di repo**: kunci API Anthropic hanya di variabel hosting `ANTHROPIC_API_KEY` (Cloudflare Pages → Settings → Variables and Secrets, tipe Secret). Jangan minta pengguna menempelkan kunci di chat.
 2. **Hak akses dijaga di dua tempat**: tampilan (`applyRole`, `S.isAdmin`, `mine(t)`) DAN `firestore.rules`. Setiap perubahan siapa-boleh-apa harus mengubah keduanya, lalu ingatkan pengguna untuk **Publish** rules di Firebase Console.
 3. Tetap satu file `index.html`, tanpa build step, tanpa framework. Library eksternal hanya bila benar perlu (sekarang: Firebase compat 10.12.2 dari gstatic, pdf.js 3.11.174 dari cdnjs, Google Fonts Plus Jakarta Sans).
 4. Pertahankan gaya visual: token warna di `:root` (navy `--navy`, lime `--ball`, warna tahap `--st-1..5`, warna jenis `--t-*`), mode gelap, 5 tema. Semua warna lewat token, bukan warna literal yang hanya cocok di satu tema.
@@ -87,16 +89,16 @@ python3 -m http.server 8765 --directory _test        # buka http://localhost:876
 ```
 - `tools/fake-firebase.js` meniru Firebase di memori dan **mencatat pelanggaran aturan** di `window.__VIOLATIONS` (tiruan dari firestore.rules; perbarui juga bila rules berubah).
 - Cek minimal: tidak ada error di console, tidak ada scroll menyamping di 390px dan 1366px, mode terang & gelap, sebagai admin dan anggota.
-- Cek sintaks fungsi: `node --check netlify/functions/idcc-ai.mjs`.
+- Cek sintaks fungsi: `~/.local/node/bin/node --check lib/idcc-ai.mjs` (Node.js terpasang di `~/.local/node`). Simulasi Cloudflare Pages lengkap dengan fungsi AI: `npx wrangler@4 pages dev website --port 8788` (folder `.wrangler/` jangan di-commit).
 - Jangan commit folder `_test/`.
 
 ## 6. Yang tidak bisa dilakukan dari repo (harus dikerjakan pengguna)
 
 - **Publish `firestore.rules`**: setiap kali file ini berubah. Di laptop Zaki bisa dari Claude Code (minta izin Zaki dulu): `~/.local/bin/firebase deploy --only firestore:rules --dry-run` untuk cek, lalu tanpa `--dry-run` untuk Publish (Firebase CLI sudah login sebagai pemilik proyek). Cara manual: Firebase Console → Firestore Database → Rules → tempel → Publish.
-- Variabel Netlify (`ANTHROPIC_API_KEY`, opsional `AI_MODEL`), domain, dan Authorized domains di Firebase Authentication.
+- Variabel hosting di Cloudflare Pages (`ANTHROPIC_API_KEY` sebagai Secret, opsional `AI_MODEL`), catatan DNS `studio` di AntMedia, dan Authorized domains di Firebase Authentication.
 - Akun tim dan izin IDCC diatur di website (Tim & Aktivitas), bukan di kode.
 
 ## 7. Rencana / ide yang pernah dibahas
 
-- n8n untuk otomasi terjadwal (WhatsApp planning Jumat 16.00, deteksi file baru di Google Drive → Ready). AI website tetap lewat Netlify function.
+- n8n untuk otomasi terjadwal (WhatsApp planning Jumat 16.00, deteksi file baru di Google Drive → Ready). AI website tetap lewat fungsi server (`/api/idcc-ai`).
 - Upload otomatis ke Instagram lewat Meta API sengaja TIDAK dibuat; alurnya manual lewat Meta Business Suite dengan bantuan "Antrian upload".

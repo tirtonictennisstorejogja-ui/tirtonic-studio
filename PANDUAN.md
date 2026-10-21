@@ -1,15 +1,15 @@
 # Panduan Tirtonic Studio
 
 Panduan untuk tim: cara memasang, memperbarui, dan memakai website Tirtonic Studio.
-Alamat website: **mediadesk-tirtonic.netlify.app**
+Alamat website: **studio.tirtonichub.com** (hosting Cloudflare Pages)
 
 ## Isi repo
 
 | Folder / file | Fungsi |
 |---|---|
 | `website/` | Website (index.html, config.js, logo, ikon) |
-| `netlify/functions/idcc-ai.mjs` | Penghubung ke AI (Analisis IDCC dan caption Instagram). Kunci API disimpan di Netlify, tidak pernah di repo |
-| `netlify.toml` | Memberi tahu Netlify letak website dan fungsi AI |
+| `lib/idcc-ai.mjs`, `functions/` | Penghubung ke AI (Analisis IDCC dan caption Instagram). Kunci API disimpan di Cloudflare, tidak pernah di repo |
+| `netlify/`, `netlify.toml` | Pengaturan hosting lama (Netlify), disimpan sebagai cadangan |
 | `firestore.rules` | Aturan keamanan database (dipasang manual di Firebase) |
 | `tools/` | Alat uji coba lokal dengan data contoh, tidak dipakai website asli |
 | `CLAUDE.md` | Penjelasan proyek untuk Claude Code |
@@ -19,7 +19,7 @@ Alamat website: **mediadesk-tirtonic.netlify.app**
 
 ## Memperbarui website
 
-Website diambil Netlify langsung dari GitHub. Setiap **Commit changes** di GitHub (manual atau oleh Claude Code) membuat Netlify memperbarui website sendiri dalam sekitar 1 menit (Netlify → Deploys → status **Published**).
+Website diambil Cloudflare Pages langsung dari GitHub. Setiap **Commit changes** di GitHub (manual atau oleh Claude Code) membuat Cloudflare memperbarui website sendiri dalam sekitar 1 menit (dash.cloudflare.com → Workers & Pages → proyek website → Deployments → status **Success**).
 
 **Unggah manual:** buka folder tujuan di GitHub → **Add file → Upload files** → **choose your files** → **Commit changes**. File bernama sama otomatis ditimpa. Pastikan nama file tepat (misalnya `index.html`, bukan `index 2.html`).
 
@@ -31,8 +31,8 @@ Di laptop Zaki, Claude Code juga bisa mem-Publish-nya langsung (Firebase CLI sud
 
 1. **Firebase**: proyek `tirtonic-studio`, login Google aktif, Firestore dibuat, `firestore.rules` di-Publish, domain website ada di Authentication → Settings → Authorized domains.
 2. **GitHub**: repo Private `tirtonic-studio` berisi folder dan file di atas.
-3. **Netlify**: proyek `mediadesk-tirtonic` terhubung ke repo (Publish directory `website`, Functions directory `netlify/functions`). Jika muncul "unrecognized Git contributor", hubungkan akun GitHub lewat tombol **Link Git account** di halaman deploy.
-4. **Kunci AI**: buat di console.anthropic.com (API Keys), simpan di Netlify → Project configuration → Environment variables sebagai `ANTHROPIC_API_KEY`, lalu Deploys → Trigger deploy. **Jangan tempel kunci di chat, file, atau GitHub.** Opsional: `AI_MODEL` (bawaan `claude-sonnet-5-5`).
+3. **Cloudflare Pages**: proyek website terhubung ke repo GitHub (branch `main`, Framework preset **None**, Build command kosong, Build output directory `website`). Fungsi AI otomatis terbaca dari folder `functions/`. Domain **studio.tirtonichub.com** ditambahkan di Custom domains; di AntMedia Host catatan DNS `studio` berupa CNAME ke alamat `….pages.dev` proyek ini.
+4. **Kunci AI**: buat di console.anthropic.com (API Keys), simpan di Cloudflare → proyek website → Settings → Variables and Secrets sebagai `ANTHROPIC_API_KEY` (tipe **Secret**, environment Production), lalu deploy ulang. **Jangan tempel kunci di chat, file, atau GitHub.** Opsional: `AI_MODEL` (bawaan `claude-sonnet-5-5`).
 5. **Akun tim**: login sebagai Zaki → Tim & Aktivitas → Akun tim. Centang **Boleh memakai Analisis IDCC** untuk Aulia.
 
 ---
@@ -86,9 +86,9 @@ Yang dikirim ke AI hanya nama barang, varian, dan jumlah stok per umur (tanpa ha
 
 | Masalah | Solusi |
 |---|---|
-| Perubahan tidak muncul di website | Cek Netlify → Deploys sudah **Published**. Buka website di jendela Private atau muat ulang (Cmd + Shift + R). |
+| Perubahan tidak muncul di website | Cek Cloudflare → Workers & Pages → Deployments sudah **Success**. Buka website di jendela Private atau muat ulang (Cmd + Shift + R). |
 | Deploy **Failed**: unrecognized Git contributor | Klik **Link Git account** di halaman deploy, lalu Retry. |
-| "Layanan AI belum diatur di server" | `ANTHROPIC_API_KEY` belum diisi di Netlify, atau belum Trigger deploy setelah mengisi. |
+| "Layanan AI belum diatur di hosting" | `ANTHROPIC_API_KEY` belum diisi di Cloudflare (Settings → Variables and Secrets), atau belum deploy ulang setelah mengisi. |
 | "Akun Anda belum diizinkan memakai AI" | Centang akses IDCC untuk akun itu di Tim & Aktivitas. |
 | Anggota gagal memindahkan kartu / menyimpan link Drive | `firestore.rules` terbaru belum di-Publish di Firebase. |
 | "Domain website ini belum diizinkan" | Tambahkan domain di Firebase → Authentication → Settings → Authorized domains. |
