@@ -345,8 +345,9 @@ a.btn.wa{background:var(--good);color:var(--surface)}
   @page{margin:14mm}
 }
 /* login & akun */
-.gate header.top,.gate main{display:none}
-.login{min-height:100vh;display:grid;place-items:center;position:relative;background:linear-gradient(135deg,#2b6e4f,#1b2f5e);background-size:cover;background-position:center;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.gate header.top,.gate main,.gate .shell,.gate .navtip{display:none!important}
+body.gate{overflow:hidden}
+.login{position:fixed;inset:0;z-index:100;overflow:auto;min-height:100vh;min-height:100dvh;display:grid;place-items:center;background:linear-gradient(135deg,#2b6e4f,#1b2f5e);background-size:cover;background-position:center;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .login::before{content:"";position:absolute;inset:0;background:linear-gradient(160deg,color-mix(in srgb,#0d1a33 50%,transparent),color-mix(in srgb,#000 55%,transparent))}
 .login-card{position:relative;backdrop-filter:blur(6px);box-shadow:0 20px 50px -20px #000a;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px 24px;max-width:400px;width:100%;display:grid;gap:14px;text-align:center}
 .login-card h1{font:800 26px/1 var(--display);letter-spacing:-.015em;margin:0;display:flex;gap:10px;align-items:center;justify-content:center}
