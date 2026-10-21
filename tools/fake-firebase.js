@@ -12,7 +12,9 @@
   function check(path, before, after, op){
     const u = user(); if (!u) { violations.push({path, op, why:'no auth'}); return false; }
     const col = path.split('/')[0];
-    if (col === 'members') { const email = path.split('/')[1]; if (op==='set' && (window.__OWNERS||[]).includes(u.email) && email===u.email) return true; if (!isAdmin()) { violations.push({path,op,why:'member write'}); return false; } return true; }
+    if (col === 'members') { const email = path.split('/')[1]; if (op==='set' && (window.__OWNERS||[]).includes(u.email) && email===u.email) return true;
+      if (op==='update' && email===u.email && before && Object.keys(Object.assign({}, before, after)).every(k => k==='avColor' || JSON.stringify(before[k])===JSON.stringify(after[k])) && ['lime','orange','purple','teal','green','pink'].includes(after.avColor)) return true;
+      if (!isAdmin()) { violations.push({path,op,why:'member write'}); return false; } return true; }
     if (isAdmin()) return true;
     const mm = memberOf(u.email) || {}; const idcc = mm.idcc === true;
     if (col === 'idcc' && op === 'set' && !before && idcc) return true;

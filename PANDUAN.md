@@ -49,7 +49,7 @@ Firebase Console → proyek **tirtonic-studio** → **Firestore Database → Rul
 | **Panduan** | Aturan kerja, jobdesk, penyesuaian otomatis | Lihat & ubah jobdesk | Lihat | Lihat |
 | **Tim & Aktivitas** | Beban kerja, track per minggu, template caption, akun tim, latar login | Ya | – | – |
 
-Di laptop menu berupa kolom ikon di kanan; di HP berupa bilah di bawah layar. Pengaturan **Tampilan** (5 tema) berlaku per perangkat.
+Di laptop menu berupa kolom ikon di kanan; di HP berupa bilah di bawah layar. Pengaturan **Tampilan** (5 tema) berlaku per perangkat. Klik **avatar/nama Anda** di menu untuk membuka **Profil** dan memilih warna avatar; pilihan ini tersimpan di akun dan tampil di semua perangkat.
 
 ## Alur kerja konten
 

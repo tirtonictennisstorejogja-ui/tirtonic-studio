@@ -60,9 +60,10 @@ PANDUAN.md                    Panduan untuk manusia (pemasangan & pemakaian)
 - Data: `newTask`, `saveItem`, `setStatus`, `fileName` (format nama file), foto `makePhoto`/`savePhoto`/`thumbHtml`.
 - AI: `aiCall` → `/api/idcc-ai`; PDF finance dibaca di browser dengan pdf.js (`parseAccurate`, `aggregate`); caption `fillTemplate` + `settings.captionTemplate`.
 - Tema tampilan per perangkat: `applyTheme`, `THEMES` (localStorage `ts-theme`).
+- Profil (klik avatar di menu): `profPop`, `renderProfPop`, warna avatar `AV_COLORS` / `avStyle` / `paintMe` (tersimpan di `members/{email}.avColor`; daftar nilainya harus sama dengan `firestore.rules`).
 
 ### Firestore (koleksi)
-`members/{email}` (name, code, role, idcc, phone) · `items` · `photos/{itemId}` · `tasks` · `settings/main` · `logs/balance` · `locks` · `reports` · `idcc` · `public/login` (gambar latar login, dibaca sebelum login).
+`members/{email}` (name, code, role, idcc, phone, avColor — satu-satunya isian yang boleh diubah pemiliknya sendiri) · `items` · `photos/{itemId}` · `tasks` · `settings/main` · `logs/balance` · `locks` · `reports` · `idcc` · `public/login` (gambar latar login, dibaca sebelum login).
 
 ## 4. Aturan penting (jangan dilanggar)
 

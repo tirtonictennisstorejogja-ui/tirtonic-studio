@@ -28,6 +28,10 @@ service cloud.firestore {
     match /members/{email} {
       allow read: if signedIn() && (email == myEmail() || isAdmin());
       allow write: if isAdmin();
+      // Setiap orang boleh mengganti warna avatar di profilnya sendiri, tidak ada isian lain
+      allow update: if signedIn() && email == myEmail()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['avColor'])
+        && request.resource.data.avColor in ['lime', 'orange', 'purple', 'teal', 'green', 'pink'];
     }
 
     match /items/{id} {
