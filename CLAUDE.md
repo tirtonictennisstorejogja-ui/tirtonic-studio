@@ -33,10 +33,10 @@ Alamat: `https://mediadesk-tirtonic.netlify.app` (Netlify, terhubung ke repo Git
 ### Tahap Workflow Hub (status konten)
 `STAGES = Terdata → Diproduksi → Editing → Ready → Tayang`
 - **Terdata**: tercatat, masuk pantauan. **Diproduksi**: sedang syuting. **Editing**. **Ready**: file final sudah di Google Drive (`driveUrl` wajib untuk jenis yang tayang). **Tayang**: sudah di Instagram.
-- Di tahap Ready, Zaki menandai `checked` (Dicek Zaki), membuat caption, lalu menjadwalkan di Meta Business Suite secara manual dan menekan "Sudah dijadwalkan di Meta" (`metaAt`, `postTime`). `maintainStatuses()` (berjalan di akun admin) memindahkan ke Tayang otomatis setelah jam tayang lewat.
+- Di tahap Ready, Zaki menandai `checked` (Dicek Zaki), membuat caption, lalu menjadwalkan di Meta Business Suite secara manual dan menekan "Sudah dijadwalkan di Meta" di **Detail kartu** (`metaHtml`, klik ditangani `metaAction`; `metaAt`, `postTime`). Antrian upload Meta di Kalender sudah dihapus (v5.5). `maintainStatuses()` (berjalan di akun admin) memindahkan ke Tayang otomatis setelah jam tayang lewat.
 - Status lama (sebelum v5.2) dipetakan oleh `OLD_STATUS` di `splitTasks()`; jangan hapus pemetaan ini.
 - Anggota hanya boleh memindahkan sampai Ready (`MEMBER_STAGES`), tidak boleh mengubah kartu yang sudah `metaAt`.
-- Deadline per orang: `deadlinesOf(t)` / `deadlineFor(t)` (tulisan merah di kartu).
+- Deadline per orang: `deadlinesOf(t)` / `deadlineFor(t)` (tulisan merah di kartu). Deadline file final: `fileDue(t)` = 2 hari kerja sebelum `postAt` (`subWork`), tampil di kartu dan Watchlist sampai Ready.
 - Konten hangus 1 bulan setelah dibuat (`expiryOf`, `isExpired`), tetap bisa dilihat sebagai arsip.
 
 ## 3. Struktur repo
@@ -55,12 +55,15 @@ PANDUAN.md                    Panduan untuk manusia (pemasangan & pemakaian)
 
 ### Peta kode index.html (cari dengan nama fungsi)
 - Masuk & peran: `boot`, `start`, `applyRole`, `showLogin`, `loginReveal` (animasi login).
-- Navigasi: `setTab` (panel `p-home`, `p-masuk`, `p-pipeline` = Workflow Hub, `p-kalender`, `p-idcc`, `p-jumat` = Laporan Admin, `p-panduan`, `p-tim`), menu `nav.tabs` disembunyikan sejak v5.5 tetapi tetap di DOM (dipakai `setTab`, `applyRole`, `cntOpen`); yang terlihat adalah menu kotak geser di Beranda (`renderHomeMenu`, `#hMenu`, mengikuti tab yang tidak `hidden`) dan logo `#goHome` untuk kembali ke Beranda. Profil, Tampilan, dan Keluar ada di tombol avatar kanan atas (`#prof` → `#profPop`).
-- Render: `renderAll`, `renderHome`, `renderWatch` (+ `watchGroups`, `watchTile`), `renderBoard` + `cardInner` (kartu kanban), `renderCal`, `renderDay`, `renderMetaQueue`, `renderItems`, `renderReports`, `renderTeam`, `renderWeeks`.
+- Navigasi: `setTab` (panel `p-home`, `p-masuk`, `p-pipeline` = Workflow Hub, `p-kalender` (kosong sejak v5.5: isi Kalender ada di Beranda `#homeCal`, `setTab('kalender')` diarahkan ke sana), `p-idcc`, `p-jumat` = Laporan Admin, `p-panduan`, `p-tim`), menu `nav.tabs` disembunyikan sejak v5.5 tetapi tetap di DOM (dipakai `setTab`, `applyRole`, `cntOpen`); yang terlihat adalah menu kotak geser di Beranda (`renderHomeMenu`, `#hMenu`, mengikuti tab yang tidak `hidden`) dan logo `#goHome` untuk kembali ke Beranda. Profil, Tampilan, dan Keluar ada di tombol avatar kanan atas (`#prof` → `#profPop`).
+- Render: `renderAll`, `renderHome`, `renderWatch` (+ `watchGroups`, `watchTile`), `renderBoard` + `cardInner` (kartu kanban), `renderCal`, `renderDay`, `renderItems`, `renderReports`, `renderTeam`, `renderWeeks`.
 - Penjadwalan: `planBatch` (barang baru), `planOld` (stok lama/IDCC), `scheduleShoot`, `scheduleEdit`, `capState`, `slotUse`, `findSlot`, `pickPost`, `pickIdcc`, `dayPlan`, penyeimbang otomatis `computeBalance` / `runBalance` / `queueBalance`.
 - Data: `newTask`, `saveItem`, `setStatus`, `fileName` (format nama file), foto `makePhoto`/`savePhoto`/`thumbHtml`.
 - AI: `aiCall` → `/api/idcc-ai`; PDF finance dibaca di browser dengan pdf.js (`parseAccurate`, `aggregate`); caption `fillTemplate` + `settings.captionTemplate`.
 - Tema tampilan per perangkat: `applyTheme`, `THEMES` (localStorage `ts-theme`).
+- Beranda: sapaan berisi grafik Watchlist semua barang per tahap (`#hStats`, `S.hSig` mencegah animasi ulang), menu kotak `renderHomeMenu`, Jadwal tayang hari ini, Kalender produksi & tayang. Halaman lain punya menu geser kiri `#sDrawer` (`sideMenu`, `renderSideMenu`; terbuka saat kursor ke ujung kiri `#sEdge` atau tombol garis tiga `#sBurger`). Mode TV sudah dihapus.
+- Foto barang dipotong potret 2:3 (`PHOTO_R`, `toJpeg(img,max,q,r)`); bingkai `.ph` mengikuti 2:3.
+- Bahasa per perangkat (`LANG`, localStorage `ts-lang`, pilihan di panel avatar): mode Inggris menerjemahkan teks tampilan lewat kamus `I18N_EN` + `MutationObserver` (kunci memakai {n} angka, {d} tanggal, {p} nama, {e} email, {m} bulan). **Setiap menambah/mengubah teks tampilan, tambahkan terjemahannya di `I18N_EN`.** Data tim tidak diterjemahkan (`I18N_SKIP`), pesan WhatsApp selalu bahasa Indonesia (`inID`).
 - Profil (klik avatar di menu): `profPop`, `renderProfPop`, warna avatar `AV_COLORS` / `avStyle` / `paintMe` (tersimpan di `members/{email}.avColor`; daftar nilainya harus sama dengan `firestore.rules`).
 
 ### Firestore (koleksi)
@@ -74,7 +77,7 @@ PANDUAN.md                    Panduan untuk manusia (pemasangan & pemakaian)
 4. Pertahankan gaya visual: token warna di `:root` (navy `--navy`, lime `--ball`, warna tahap `--st-1..5`, warna jenis `--t-*`), mode gelap, 5 tema. Semua warna lewat token, bukan warna literal yang hanya cocok di satu tema.
 5. Harus nyaman di **HP** (lebar ~390px) dan laptop: tidak boleh ada scroll menyamping di halaman.
 6. Data anggota tim adalah data nyata. Jangan menghapus atau menulis ulang data massal tanpa persetujuan Zaki. Migrasi data harus aman dijalankan berulang.
-7. Teks yang terlihat pengguna: Bahasa Indonesia, singkat, jelas. Nama menu: Beranda, Barang Masuk, Workflow Hub, Kalender, Analisis IDCC, Laporan Admin, Panduan, Tim & Aktivitas.
+7. Teks yang terlihat pengguna: Bahasa Indonesia, singkat, jelas. Nama menu: Beranda, Barang Masuk, Workflow Hub, Analisis IDCC, Laporan Admin, Panduan, Tim & Aktivitas (Kalender ada di Beranda).
 
 ## 5. Cara menguji sebelum commit
 

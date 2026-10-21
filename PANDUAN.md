@@ -41,10 +41,9 @@ Di laptop Zaki, Claude Code juga bisa mem-Publish-nya langsung (Firebase CLI sud
 
 | Menu | Isi | Admin (Zaki) | Aulia | Rayhan, Salma |
 |---|---|---|---|---|
-| **Beranda** | Sapaan, angka ringkas, Watchlist saya, jadwal tayang hari ini, Watchlist semua barang (Mode TV) | Ya | Ya | Ya |
+| **Beranda** | Sapaan + grafik Watchlist semua barang, menu, Watchlist saya, jadwal tayang hari ini, kalender produksi & tayang, Watchlist semua barang | Ya | Ya | Ya |
 | **Barang Masuk** | Catat barang (satu, beberapa sekaligus, stok lama → konten) | Ya | – | – |
 | **Workflow Hub** | Papan kerja 5 tahap | Semua konten | Konten sendiri | Konten sendiri |
-| **Kalender** | Jadwal produksi, jadwal tayang, antrian upload Meta | Lihat & atur | Lihat | Lihat |
 | **Analisis IDCC** | Baca PDF umur persediaan dari finance + rekomendasi AI | Ya | Ya (jika dicentang) | – |
 | **Laporan Admin** | Laporan mingguan, planning + WhatsApp, laporan bulanan CEO | Ya | – | – |
 | **Panduan** | Aturan kerja, jobdesk, penyesuaian otomatis | Lihat & ubah jobdesk | Lihat | Lihat |
@@ -64,10 +63,10 @@ Menu berupa kotak-kotak di **Beranda**, tepat di bawah sapaan; geser ke kanan un
 
 1. Editor mengunggah file final ke Google Drive dengan nama file dari kartu, menempel link Drive di **Detail** kartu, lalu memindahkan kartu ke **Ready**.
 2. Zaki mengecek file dan klik **Tandai sudah dicek**. Di **Detail → Caption Instagram**, tempel deskripsi dari toko online lalu klik **Buat caption dengan AI** (template diatur di Tim & Aktivitas).
-3. Zaki membuka **Kalender → Antrian upload Meta Business Suite**: **Buka file**, unduh, **Salin caption**, jadwalkan di Meta Business Suite pada tanggal & jam yang tertera, lalu klik **Sudah dijadwalkan di Meta**.
+3. Zaki membuka **Detail** kartu Ready di Workflow Hub: buka file Drive, unduh, **Salin caption**, jadwalkan di Meta Business Suite pada tanggal & jam yang tertera, lalu klik **Sudah dijadwalkan di Meta**.
 4. Setelah jam tayang lewat, kartu pindah ke **Tayang** sendiri.
 
-Tulisan merah di kartu adalah deadline orang yang sedang ditunggu. Konten aktif 1 bulan sejak dibuat, setelah itu menjadi arsip.
+Tulisan merah di kartu adalah deadline orang yang sedang ditunggu. **Deadline** biru di kartu dan Watchlist adalah batas file final harus Ready: 2 hari kerja sebelum tayang. Foto barang otomatis dipotong potret 2:3. Di halaman selain Beranda, buka menu dengan mengarahkan kursor ke ujung kiri layar (laptop) atau tombol garis tiga di kiri atas (HP). Bahasa Indonesia/Inggris dipilih di panel avatar (berlaku per perangkat; pesan WhatsApp tetap bahasa Indonesia). Konten aktif 1 bulan sejak dibuat, setelah itu menjadi arsip.
 
 ## Jadwal tayang
 
