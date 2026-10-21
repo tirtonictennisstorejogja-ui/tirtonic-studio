@@ -4,7 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Tirtonic Studio</title>
-<link rel="icon" type="image/png" href="favicon.png">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-title" content="Tirtonic Studio">
@@ -54,10 +56,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
 .top .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding-block:10px;max-width:none}
 .brand{display:flex;align-items:center;gap:10px;min-width:0}
-.brand img.logo{width:34px;height:34px;object-fit:contain;flex:none;image-rendering:pixelated}
-.brand h1{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.015em;margin:0}
+.brand img.logo{width:42px;height:42px;object-fit:contain;flex:none;image-rendering:pixelated}
+.brand h1{font-family:var(--display);font-weight:800;font-size:27px;line-height:1.1;letter-spacing:-.015em;margin:0}
 .brand .dot{width:12px;height:12px;border-radius:50%;background:var(--ball);box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--ball-ink) 25%,transparent);align-self:center}
 .brand small{color:var(--muted);font-size:13px}
+@media (max-width:520px){.brand h1{font-size:23px}.brand img.logo{width:36px;height:36px}}
 /* menu samping kiri yang bisa dibuka-tutup */
 .shell{display:grid;grid-template-columns:var(--sw,224px) minmax(0,1fr);align-items:start;transition:grid-template-columns .2s ease}
 .shell.collapsed{--sw:68px}
@@ -138,26 +141,34 @@ select.gsel{width:auto;padding:2px 6px;font-size:12px;border-radius:999px;backgr
 .mono{font-family:var(--mono);font-size:12px}
 .num{font-variant-numeric:tabular-nums}
 
-.items{display:grid;gap:8px}
+.items{display:grid;gap:8px;container-type:inline-size}
 .item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;padding:12px;border:1px solid var(--line);border-radius:9px;background:var(--surface)}
 .item .name{font-weight:600}
 .item .meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px;color:var(--muted)}
 .item .acts{display:flex;gap:6px;align-items:center}
 .item .qty{width:74px}
 .progress{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px}
+@container (max-width:560px){
+  .item{grid-template-columns:minmax(0,1fr)}
+  .item .acts{flex-wrap:wrap;border-top:1px solid var(--line);padding-top:10px}
+  .item .acts .qty{width:70px}
+  .item .acts button{flex:1 1 auto}
+  .item .name{overflow-wrap:anywhere}
+}
 .pstep{font-size:12px;padding:3px 8px;border-radius:6px;border:1px solid var(--line);border-left:4px solid var(--t);color:var(--ink)}
 .pstep b{color:var(--t);font-weight:600}
 .pstep.done{background:color-mix(in srgb,var(--good) 12%,transparent)}
 .pstep.late{border-color:var(--crit);border-left-color:var(--t)}
 
 .toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
-.seg button{font:500 13px/1 var(--body);background:var(--surface);color:var(--muted);border:0;padding:8px 12px;cursor:pointer}
-.seg button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
-#calMode button{transition:background .15s,color .15s}
-#calMode button[aria-pressed="false"]:hover{background:var(--navy-soft);color:var(--navy)}
-#calMode button[aria-pressed="true"]{background:var(--navy);color:var(--surface)}
-#calMode button[aria-pressed="true"]:hover{filter:brightness(1.15)}
+.seg{display:inline-flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:9px;overflow:hidden;position:relative;isolation:isolate;background:var(--surface);padding:3px;gap:2px}
+.seg button{font:500 13px/1 var(--body);background:transparent;color:var(--muted);border:0;border-radius:6px;padding:8px 12px;cursor:pointer;position:relative;transition:color .25s,background .15s}
+.seg button[aria-pressed="false"]:hover{background:var(--navy-soft);color:var(--navy)}
+.seg button[aria-pressed="true"]{color:var(--surface);font-weight:600}
+.seg:not(.ready) button[aria-pressed="true"]{background:var(--navy)}
+.seg-ind{position:absolute;left:0;top:0;width:0;height:0;border-radius:6px;background:var(--navy);z-index:-1;pointer-events:none;box-shadow:0 4px 12px -6px color-mix(in srgb,var(--navy) 70%,transparent);transition:transform .32s cubic-bezier(.3,.8,.25,1),width .32s cubic-bezier(.3,.8,.25,1),height .2s,opacity .2s}
+.seg.noanim .seg-ind{transition:none}
+@media (prefers-reduced-motion:reduce){.seg-ind{transition:none}}
 .conn.on::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--good);margin-right:6px;vertical-align:1px}
 .navtip{position:fixed;z-index:60;pointer-events:none;background:var(--navy);color:#fff;font:600 12.5px/1 var(--body);padding:7px 10px;border-radius:7px;white-space:nowrap;box-shadow:0 8px 20px -10px #0008;opacity:0;transform:translateX(-4px);transition:opacity .12s,transform .12s}
 .navtip.show{opacity:1;transform:none}
@@ -374,6 +385,15 @@ body.gate{overflow:hidden}
 .rolestxt{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12.5px;color:var(--muted)}
 .rolestxt b{color:var(--ink);font-weight:600}
 .rolestxt .me{background:var(--ball);color:var(--ball-ink);border-radius:4px;padding:0 4px}
+.subhd{margin:4px 0 -2px;font-size:15px;color:var(--muted)}
+.wk-t td,.wk-t th{text-align:center}
+.wk-t td:first-child,.wk-t th:first-child{text-align:left}
+.wk-t button.cellbtn{all:unset;cursor:pointer;display:grid;gap:2px;padding:6px 8px;border-radius:7px;min-width:64px}
+.wk-t button.cellbtn:hover,.wk-t button.cellbtn.on{background:var(--navy-soft)}
+.wk-t .big{font:800 17px/1 var(--display);color:var(--ink)}
+.wk-t th.on{color:var(--navy)}
+.kv{display:grid;grid-template-columns:1fr auto;gap:4px 10px;font-size:13.5px}
+.kv b{font-variant-numeric:tabular-nums}
 .team{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
 .tcard{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:grid;gap:8px}
 .tcard h4{margin:0;font:800 17px/1 var(--display);letter-spacing:-.01em;display:flex;justify-content:space-between;align-items:center}
@@ -613,7 +633,17 @@ body.gate{overflow:hidden}
     <div>
       <div class="pghd"><h2>Tim &amp; aktivitas</h2><button type="button" class="help" aria-expanded="false" aria-label="Cara kerja: Tim &amp; aktivitas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.4"/><circle cx="12" cy="16.8" r=".6" fill="currentColor"/></svg>How to work?</button><div class="pop" role="tooltip">Pantau progres tiap orang dan setiap perubahan status yang mereka lakukan. Daftarkan email Google anggota tim di sini agar mereka bisa masuk.</div></div>
     </div>
+    <h3 class="subhd">Beban kerja saat ini</h3>
     <div class="team" id="teamProgress"></div>
+    <div class="box" id="weekBox">
+      <div class="toolbar" style="justify-content:space-between;margin-bottom:10px">
+        <h3 style="margin:0">Track per minggu</h3>
+        <div class="calnav"><button class="ghost" type="button" id="wkPrev" aria-label="Bulan sebelumnya">‹</button><strong id="wkTitle" class="cal-title"></strong><button class="ghost" type="button" id="wkNext" aria-label="Bulan berikutnya">›</button></div>
+      </div>
+      <div class="tw" id="wkTable"></div>
+      <div class="seg" id="wkSeg" role="group" aria-label="Pilih minggu" style="margin:14px 0 12px"></div>
+      <div class="team" id="wkCards"></div>
+    </div>
     <div class="grid2">
       <div class="box">
         <div class="toolbar" style="justify-content:space-between;margin-bottom:10px">
@@ -1704,6 +1734,14 @@ $('p-jumat').addEventListener('click',async e=>{const t=e.target;
   const sd=t.closest('[data-send]');if(sd)markSent(sd.dataset.send)});
 async function markSent(p){if(!S.db||!S.isAdmin)return;const id='p-'+S.rep.sat;const sent=Object.assign({},(S.reports[id]||{}).sent||{});sent[p]=Date.now();try{await saveRep(id,{kind:'plan',sat:S.rep.sat,sent})}catch(err){}}
 
+/* pilihan (seg): penanda navy yang bergeser ke pilihan aktif */
+function segPlace(seg,instant){let ind=seg.querySelector(':scope > .seg-ind');if(!ind){ind=document.createElement('span');ind.className='seg-ind';ind.setAttribute('aria-hidden','true');seg.prepend(ind);instant=true}
+  const b=seg.querySelector(':scope > button[aria-pressed="true"]');if(!b||!b.offsetWidth){seg.classList.remove('ready');return}
+  if(instant)seg.classList.add('noanim');ind.style.width=b.offsetWidth+'px';ind.style.height=b.offsetHeight+'px';ind.style.transform='translate('+b.offsetLeft+'px,'+b.offsetTop+'px)';seg.classList.add('ready');
+  if(instant)requestAnimationFrame(()=>seg.classList.remove('noanim'))}
+let segRaf=0;const segAll=()=>{cancelAnimationFrame(segRaf);segRaf=requestAnimationFrame(()=>document.querySelectorAll('.seg').forEach(x=>segPlace(x)))};
+new MutationObserver(ms=>{if(ms.some(m=>m.type==='childList'?m.target.closest&&(m.target.closest('.seg')||m.target.querySelector&&m.target.querySelector('.seg')):m.attributeName==='aria-pressed'||m.attributeName==='hidden'||m.attributeName==='class'))segAll()}).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['aria-pressed','hidden','class']});
+addEventListener('resize',segAll);segAll();
 /* label menu saat sidebar tertutup: muncul di samping ikon ketika disentuh kursor */
 const navTip=document.createElement('div');navTip.className='navtip';navTip.setAttribute('aria-hidden','true');document.body.appendChild(navTip);
 $('sideNav').querySelectorAll('button[role="tab"]').forEach(b=>{const lbl=b.querySelector('.lbl').textContent.trim();b.setAttribute('aria-label',lbl);b.removeAttribute('title');
@@ -1832,8 +1870,44 @@ function applyRole(){const a=S.isAdmin;
   if(!a&&['masuk','jumat','tim'].includes(S.tab))setTab('pipeline');
   $('tab-idcc').hidden=!(a||S.me.idcc);if(S.tab==='idcc'&&$('tab-idcc').hidden)setTab('pipeline');setHH();}
 
+/* ---------- tab Tim & Aktivitas: track per minggu ---------- */
+S.wk={month:'',idx:-1};
+function monthWeeks(month){const first=month+'-01';const y=+month.slice(0,4),m=+month.slice(5,7);const last=addDays(fromT(Date.UTC(y,m,1)),-1);
+  const W=[];let a=first;while(a<=last){let b=addDays(a,(7-dowOf(a))%7);if(b>last)b=last;W.push({a,b});a=addDays(b,1)}return W}   /* Senin–Minggu, dipotong di batas bulan */
+function weekStats(p,a,b){const T=S.allTasks||S.tasks;const inR=d=>d&&d>=a&&d<=b;const inv=t=>[t.producer,t.editor,t.talent,t.script].includes(p);const td=today();
+  const shoot=T.filter(t=>(t.producer===p||t.talent===p)&&inR(t.shotAt));
+  const edit=T.filter(t=>t.editor===p&&inR(t.readyAt));
+  const fin=T.filter(t=>inv(t)&&inR(t.readyAt));const ontime=fin.filter(t=>!t.due||t.readyAt<=t.due).length;
+  const posted=T.filter(t=>inv(t)&&t.status==='Tayang'&&inR(t.postAt));
+  const planned=T.filter(t=>inv(t)&&(inR(t.shootPlan)||inR(t.editPlan)));
+  const lateL=T.filter(t=>inv(t)&&inR(t.due)&&t.due<td&&(!t.readyAt||t.readyAt>t.due));
+  let moves=0;T.forEach(t=>(t.history||[]).forEach(h=>{if(h.by===p&&inR(dayOfMs(h.at)))moves++}));
+  return{shoot:shoot.length,edit:edit.length,fin:fin.length,ontime,pct:fin.length?Math.round(100*ontime/fin.length):null,posted:posted.length,planned:planned.length,late:lateL,moves}}
+function renderWeeks(){if(!S.isAdmin||!$('wkTable'))return;if(!S.wk.month)S.wk.month=today().slice(0,7);const W=monthWeeks(S.wk.month);const td=today();
+  if(S.wk.idx<0||S.wk.idx>=W.length){const k=W.findIndex(w=>td>=w.a&&td<=w.b);S.wk.idx=k>=0?k:W.length-1}
+  const y=+S.wk.month.slice(0,4),m=+S.wk.month.slice(5,7);$('wkTitle').textContent=BULAN_FULL[m-1]+' '+y;
+  const rng=w=>{const d1=+w.a.slice(8),d2=+w.b.slice(8);return d1===d2?String(d1):d1+'–'+d2};
+  const stats=PEOPLE.map(p=>W.map(w=>weekStats(p,w.a,w.b)));
+  $('wkTable').innerHTML='<table class="t wk-t"><thead><tr><th>Orang</th>'+W.map((w,i)=>'<th class="'+(i===S.wk.idx?'on':'')+'">Minggu '+(i+1)+'<div class="status">'+rng(w)+' '+BULAN[m-1]+'</div></th>').join('')+'<th>Total bulan</th></tr></thead><tbody>'+
+    PEOPLE.map((p,pi)=>{const row=stats[pi];const tot=row.reduce((a,x)=>({fin:a.fin+x.fin,late:a.late+x.late.length,ontime:a.ontime+x.ontime}),{fin:0,late:0,ontime:0});
+      return'<tr><td><b>'+esc(nm(p))+'</b></td>'+row.map((x,i)=>{const fut=W[i].a>td;return'<td><button type="button" class="cellbtn'+(i===S.wk.idx?' on':'')+'" data-wk="'+i+'" aria-label="'+esc(nm(p))+' minggu '+(i+1)+'">'+
+        (fut?'<span class="status">'+x.planned+' rencana</span>':'<span class="big">'+x.fin+'</span><span class="status">selesai</span>'+(x.late.length?'<span class="chip crit" style="justify-self:center">'+x.late.length+' telat</span>':''))+'</button></td>'}).join('')+
+        '<td><span class="big" style="font:800 17px/1 var(--display)">'+tot.fin+'</span><div class="status">'+(tot.fin?Math.round(100*tot.ontime/tot.fin)+'% tepat waktu':'—')+(tot.late?' · '+tot.late+' telat':'')+'</div></td></tr>'}).join('')+'</tbody></table>'+
+    '<p class="status" style="margin:8px 0 0">Selesai = konten yang ia kerjakan dan lolos ke QC pada minggu itu. Klik angka untuk melihat rinciannya.</p>';
+  const segH=W.map((w,i)=>'<button type="button" data-wk="'+i+'" aria-pressed="'+(i===S.wk.idx)+'">Minggu '+(i+1)+' · '+rng(w)+'</button>').join('');if($('wkSeg').dataset.h!==segH+S.wk.month){$('wkSeg').innerHTML=segH;$('wkSeg').dataset.h=segH+S.wk.month}
+  else $('wkSeg').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(+x.dataset.wk===S.wk.idx)));
+  const w=W[S.wk.idx];
+  $('wkCards').innerHTML=PEOPLE.map((p,pi)=>{const x=stats[pi][S.wk.idx];const fut=w.a>td;
+    return'<div class="tcard"><h4>'+esc(nm(p))+(fut?'<span class="chip">Akan datang</span>':x.late.length?'<span class="chip crit">'+x.late.length+' telat</span>':x.fin?'<span class="chip good">Baik</span>':'<span class="chip">Belum ada</span>')+'</h4>'+
+      '<div class="kv"><span>Dijadwalkan (syuting/edit)</span><b>'+x.planned+'</b><span>Syuting selesai</span><b>'+x.shoot+'</b><span>Editing selesai</span><b>'+x.edit+'</b><span>Lolos ke QC</span><b>'+x.fin+'</b>'+
+      '<span>Tepat waktu</span><b>'+(x.pct===null?'—':x.pct+'%')+'</b><span>Tayang</span><b>'+x.posted+'</b><span>Perubahan status</span><b>'+x.moves+'</b></div>'+
+      (x.late.length?'<div class="status"><b style="color:var(--crit)">Terlambat:</b> '+x.late.slice(0,4).map(t=>esc(t.title)+' ('+esc((TYPES[t.type]||{}).label||t.type)+')').join(', ')+(x.late.length>4?', +'+(x.late.length-4)+' lainnya':'')+'</div>':'')+'</div>'}).join('')}
+$('wkPrev').addEventListener('click',()=>{const[y,m]=S.wk.month.split('-').map(Number);S.wk.month=fromT(Date.UTC(y,m-2,1)).slice(0,7);S.wk.idx=-1;renderWeeks()});
+$('wkNext').addEventListener('click',()=>{const[y,m]=S.wk.month.split('-').map(Number);S.wk.month=fromT(Date.UTC(y,m,1)).slice(0,7);S.wk.idx=-1;renderWeeks()});
+$('weekBox').addEventListener('click',e=>{const b=e.target.closest('[data-wk]');if(!b)return;S.wk.idx=+b.dataset.wk;renderWeeks()});
+
 /* ---------- tab Tim & Aktivitas ---------- */
-function renderTeam(){if(!S.isAdmin||!$('teamProgress'))return;const all=S.tasks;const td=today();
+function renderTeam(){if(!S.isAdmin||!$('teamProgress'))return;renderWeeks();const all=S.tasks;const td=today();
   $('teamProgress').innerHTML=PEOPLE.map(p=>{const L=all.filter(t=>[t.producer,t.editor,t.talent,t.script].includes(p));const o=L.filter(open);
     const cnt=s=>o.filter(t=>t.status===s).length;const lt=o.filter(late).length;const wk=addDays(td,-7);
     const done=all.filter(t=>(t.history||[]).some(h=>h.by===p&&h.at>=toT(wk)-7*36e5)).length;
