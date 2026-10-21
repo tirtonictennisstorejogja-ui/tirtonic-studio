@@ -16,6 +16,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<script>/* tema tampilan pilihan pengguna (disimpan di perangkat ini) */
+(function(){var T={light:['light',''],dark:['dark',''],glass:['light','glass'],gradient:['light','gradient'],midnight:['dark','midnight']};var k;try{k=localStorage.getItem('ts-theme')}catch(e){}
+if(k&&T[k]){document.documentElement.setAttribute('data-theme',T[k][0]);if(T[k][1])document.documentElement.setAttribute('data-skin',T[k][1])}})();</script>
 <style>
 html,body{margin:0}[hidden]{display:none!important}img{max-width:100%}
 :root{padding-block:env(safe-area-inset-top,0px) env(safe-area-inset-bottom,0px)}
@@ -47,6 +50,60 @@ html,body{margin:0}[hidden]{display:none!important}img{max-width:100%}
 .ty{--t:var(--muted)}
 .ty-ktl{--t:var(--t-ktl)} .ty-igf{--t:var(--t-igf)} .ty-vpr{--t:var(--t-vpr)} .ty-vrv{--t:var(--t-vrv)} .ty-idf{--t:var(--t-idf)}
 .chip.ty{background:color-mix(in srgb,var(--t) 14%,transparent);color:var(--t);border:1px solid color-mix(in srgb,var(--t) 40%,transparent)}
+
+/* ---------- tema tampilan: glass, gradasi, midnight ---------- */
+:root{--on-navy:#ffffff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--on-navy:#0f1613}}
+:root[data-theme="dark"]{--on-navy:#0f1613}
+html[data-skin] body{background:transparent}
+html[data-skin] body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none}
+html[data-skin="glass"]{background:#e9eef7}
+html[data-skin="glass"] body::after{background:
+  radial-gradient(42rem 32rem at 8% 0%,#c9e86b66,transparent 60%),
+  radial-gradient(38rem 30rem at 95% 10%,#8fb3ff73,transparent 60%),
+  radial-gradient(40rem 34rem at 70% 100%,#f7a8d066,transparent 60%),
+  linear-gradient(160deg,#eef3fb,#e6efe9)}
+html[data-skin="gradient"]{background:#eef4ff}
+html[data-skin="gradient"] body::after{background:linear-gradient(135deg,#dfe9ff 0%,#eef8e0 45%,#ffe8dc 100%)}
+html[data-skin="midnight"]{background:#0b1220}
+html[data-skin="midnight"] body::after{background:
+  radial-gradient(40rem 30rem at 10% 0%,#2a4a9a66,transparent 60%),
+  radial-gradient(36rem 30rem at 100% 20%,#6a3fd155,transparent 60%),
+  radial-gradient(40rem 30rem at 60% 100%,#0d746855,transparent 60%),
+  linear-gradient(170deg,#0b1220,#0e1a1f)}
+html[data-skin="glass"]{--glass:rgba(255,255,255,.55);--glass-line:rgba(255,255,255,.75);--line:#cfd8e6}
+html[data-skin="midnight"]{--glass:rgba(16,24,40,.55);--glass-line:rgba(160,180,230,.16);--line:#2a3550;--bg:#121b2b;--chip:#1d2942}
+html[data-skin="gradient"]{--glass:rgba(255,255,255,.82);--glass-line:rgba(255,255,255,.9)}
+html[data-skin] :is(header.top,nav.tabs,.box,.card,.item,.kpi,.tcard,.pcard,.day,.seg,.empty,.recs li,.list li,.lb-in){background:var(--glass);border-color:var(--glass-line)}
+html[data-skin] .cal .cell{background:color-mix(in srgb,var(--glass) 70%,transparent)}
+html[data-skin="glass"] :is(header.top,nav.tabs,.box,.card,.item,.kpi,.tcard,.pcard,.seg),
+html[data-skin="midnight"] :is(header.top,nav.tabs,.box,.card,.item,.kpi,.tcard,.pcard,.seg){-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4)}
+html[data-skin] body::before{background:var(--glass)}
+html[data-skin] :is(.box,.card,.item,.tcard,.grid2>div,.pghd):has(.help:hover,.help:focus-visible,.help[aria-expanded="true"]){position:relative;z-index:30}
+html[data-skin] .box{box-shadow:0 10px 30px -22px #0005}
+/* tombol & panel pilihan tema */
+.navfoot{margin-top:auto;padding-top:10px;border-top:1px solid var(--line)}
+.navfoot button{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;border-radius:8px;color:var(--muted);font:600 14px/1 var(--body);cursor:pointer}
+.navfoot button svg{width:20px;height:20px;flex:none}
+.navfoot button:hover,.navfoot button[aria-expanded="true"]{background:var(--navy-soft);color:var(--navy)}
+.navfoot button:focus-visible{outline:2px solid var(--navy)}
+.shell.collapsed .navfoot button{justify-content:center;padding:10px 0}
+.shell.collapsed .navfoot .lbl{display:none}
+@media (max-width:820px){.shell.collapsed .navfoot button{justify-content:flex-start;padding:10px 12px}.shell.collapsed .navfoot .lbl{display:initial}}
+.themepop{position:fixed;z-index:70;width:min(300px,calc(100vw - 24px));background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:0 24px 60px -24px #000a;display:grid;gap:10px}
+.themepop h4{margin:0;font:800 15px/1.2 var(--display)}
+.themepop .opts{display:grid;gap:6px}
+.themepop .opt{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:12px;padding:8px;border-radius:10px;border:1px solid var(--line);cursor:pointer;font:600 14px/1.2 var(--body)}
+.themepop .opt small{display:block;font-weight:400;color:var(--muted);font-size:12px;margin-top:2px}
+.themepop .opt:hover{border-color:var(--navy)}
+.themepop .opt[aria-checked="true"]{border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy);background:var(--navy-soft)}
+.themepop .opt:focus-visible{outline:2px solid var(--navy);outline-offset:1px}
+.themepop .sw{width:44px;height:32px;border-radius:8px;flex:none;border:1px solid #0002;position:relative;overflow:hidden}
+.themepop .sw::after{content:"";position:absolute;left:6px;right:14px;top:7px;height:7px;border-radius:3px;background:var(--b,#fff);opacity:.9}
+.themepop .ck{margin-left:auto;color:var(--navy);visibility:hidden}
+.themepop .opt[aria-checked="true"] .ck{visibility:visible}
+.themepop .reset{all:unset;cursor:pointer;color:var(--muted);font-size:12.5px;text-decoration:underline;justify-self:start}
+
 .legend{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 
 *{box-sizing:border-box}
@@ -164,7 +221,7 @@ select.gsel{width:auto;padding:2px 6px;font-size:12px;border-radius:999px;backgr
 .seg{display:inline-flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:9px;overflow:hidden;position:relative;isolation:isolate;background:var(--surface);padding:3px;gap:2px}
 .seg button{font:500 13px/1 var(--body);background:transparent;color:var(--muted);border:0;border-radius:6px;padding:8px 12px;cursor:pointer;position:relative;transition:color .25s,background .15s}
 .seg button[aria-pressed="false"]:hover{background:var(--navy-soft);color:var(--navy)}
-.seg button[aria-pressed="true"]{color:var(--surface);font-weight:600}
+.seg button[aria-pressed="true"]{color:var(--on-navy);font-weight:600}
 .seg:not(.ready) button[aria-pressed="true"]{background:var(--navy)}
 .seg-ind{position:absolute;left:0;top:0;width:0;height:0;border-radius:6px;background:var(--navy);z-index:-1;pointer-events:none;box-shadow:0 4px 12px -6px color-mix(in srgb,var(--navy) 70%,transparent);transition:transform .32s cubic-bezier(.3,.8,.25,1),width .32s cubic-bezier(.3,.8,.25,1),height .2s,opacity .2s}
 .seg.noanim .seg-ind{transition:none}
@@ -432,7 +489,9 @@ body.gate{overflow:hidden}
       <button role="tab" id="tab-jumat" aria-selected="false" data-tab="jumat" title="Laporan Admin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h4"/></svg><span class="lbl">Laporan Admin</span></button>
       <button role="tab" id="tab-panduan" aria-selected="false" data-tab="panduan" title="Panduan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></svg><span class="lbl">Panduan</span></button>
       <button role="tab" id="tab-tim" aria-selected="false" data-tab="tim" title="Tim & Aktivitas" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.6c3 .2 5.5 2 5.5 5.4"/></svg><span class="lbl">Tim &amp; Aktivitas</span></button>
+    <div class="navfoot"><button type="button" id="themeBtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="themePop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.2 0 1.8-.8 1.8-1.7 0-.5-.2-.9-.5-1.3-.3-.4-.5-.8-.5-1.3 0-1 .8-1.7 1.8-1.7H17a4 4 0 0 0 4-4C21 6.6 17 3 12 3z"/><circle cx="7.5" cy="11" r="1.2" fill="currentColor"/><circle cx="10.5" cy="7.3" r="1.2" fill="currentColor"/><circle cx="15" cy="7.5" r="1.2" fill="currentColor"/></svg><span class="lbl">Tampilan</span></button></div>
   </nav>
+  <div class="themepop" id="themePop" role="dialog" aria-label="Pilih tampilan" hidden></div>
 <main class="wrap">
   <div class="banner noprint" id="banner" hidden></div>
   <!-- BARANG MASUK -->
@@ -1742,9 +1801,31 @@ function segPlace(seg,instant){let ind=seg.querySelector(':scope > .seg-ind');if
 let segRaf=0;const segAll=()=>{cancelAnimationFrame(segRaf);segRaf=requestAnimationFrame(()=>document.querySelectorAll('.seg').forEach(x=>segPlace(x)))};
 new MutationObserver(ms=>{if(ms.some(m=>m.type==='childList'?m.target.closest&&(m.target.closest('.seg')||m.target.querySelector&&m.target.querySelector('.seg')):m.attributeName==='aria-pressed'||m.attributeName==='hidden'||m.attributeName==='class'))segAll()}).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['aria-pressed','hidden','class']});
 addEventListener('resize',segAll);segAll();
+/* ---------- pilihan tampilan (tema) per pengguna, disimpan di perangkat ---------- */
+const THEMES=[
+  {k:'light',n:'Terang',d:'Bersih dan netral, nyaman di siang hari',t:'light',sk:'',sw:'linear-gradient(135deg,#f2f4ef,#ffffff)',b:'#1b2f5e'},
+  {k:'dark',n:'Gelap',d:'Hemat mata saat malam atau ruangan redup',t:'dark',sk:'',sw:'linear-gradient(135deg,#0f1613,#16201b)',b:'#9fb6ef'},
+  {k:'glass',n:'Glass',d:'Panel kaca buram di atas warna lembut',t:'light',sk:'glass',sw:'radial-gradient(circle at 15% 20%,#c9e86b,transparent 55%),radial-gradient(circle at 90% 30%,#8fb3ff,transparent 55%),radial-gradient(circle at 60% 100%,#f7a8d0,transparent 60%),#eef3fb',b:'#ffffffcc'},
+  {k:'gradient',n:'Gradasi',d:'Biru muda ke lime dan peach, segar',t:'light',sk:'gradient',sw:'linear-gradient(135deg,#dfe9ff,#eef8e0,#ffe8dc)',b:'#ffffff'},
+  {k:'midnight',n:'Midnight',d:'Gelap navy-ungu dengan panel kaca',t:'dark',sk:'midnight',sw:'radial-gradient(circle at 10% 10%,#2a4a9a,transparent 60%),radial-gradient(circle at 100% 40%,#6a3fd1,transparent 60%),#0b1220',b:'#9fb6ef'}];
+function curTheme(){try{return localStorage.getItem('ts-theme')||''}catch(e){return''}}
+function applyTheme(k){const T=THEMES.find(x=>x.k===k);const r=document.documentElement;
+  if(T){r.setAttribute('data-theme',T.t);if(T.sk)r.setAttribute('data-skin',T.sk);else r.removeAttribute('data-skin')}else{r.removeAttribute('data-theme');r.removeAttribute('data-skin')}
+  try{if(T)localStorage.setItem('ts-theme',k);else localStorage.removeItem('ts-theme')}catch(e){}renderThemePop();segAll()}
+function renderThemePop(){const c=curTheme();$('themePop').innerHTML='<h4>Tampilan</h4><div class="opts" role="radiogroup" aria-label="Tema tampilan">'+THEMES.map(T=>'<button type="button" class="opt" role="radio" aria-checked="'+(T.k===c)+'" data-theme-k="'+T.k+'"><span class="sw" style="background:'+T.sw+';--b:'+T.b+'"></span><span>'+T.n+'<small>'+T.d+'</small></span><svg class="ck" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>').join('')+'</div>'+
+  '<span class="status" style="font-size:12px">Hanya berlaku di perangkat ini. '+(c?'':'Saat ini mengikuti tema perangkat (terang/gelap).')+'</span>'+(c?'<button type="button" class="reset" data-theme-k="">Ikuti tema perangkat</button>':'')}
+function themePop(open){const P=$('themePop'),B=$('themeBtn');if(open===undefined)open=P.hidden;P.hidden=!open;B.setAttribute('aria-expanded',String(open));
+  if(open){renderThemePop();const r=B.getBoundingClientRect();const w=P.offsetWidth,h=P.offsetHeight;let left=r.right+10,top=r.bottom-h;
+    if(left+w>innerWidth-12||innerWidth<=820){left=Math.max(12,r.left);top=r.top-h-8}top=Math.max(12,top);P.style.left=left+'px';P.style.top=top+'px';(P.querySelector('[aria-checked="true"]')||P.querySelector('.opt')).focus()}}
+$('themeBtn').addEventListener('click',e=>{e.stopPropagation();navTip.classList.remove('show');themePop()});
+$('themePop').addEventListener('click',e=>{e.stopPropagation();const b=e.target.closest('[data-theme-k]');if(!b)return;applyTheme(b.dataset.themeK);const f=$('themePop').querySelector('[data-theme-k="'+b.dataset.themeK+'"]');if(f)f.focus()});
+$('themePop').addEventListener('keydown',e=>{if(e.key==='Escape'){themePop(false);$('themeBtn').focus()}
+  if(['ArrowDown','ArrowUp'].includes(e.key)){const o=[...$('themePop').querySelectorAll('.opt')];const i=o.indexOf(document.activeElement);if(i<0)return;e.preventDefault();o[(i+(e.key==='ArrowDown'?1:o.length-1))%o.length].focus()}});
+document.addEventListener('click',e=>{if(!$('themePop').hidden&&!e.target.closest('#themePop'))themePop(false)});
+addEventListener('resize',()=>{if(!$('themePop').hidden)themePop(false)});
 /* label menu saat sidebar tertutup: muncul di samping ikon ketika disentuh kursor */
 const navTip=document.createElement('div');navTip.className='navtip';navTip.setAttribute('aria-hidden','true');document.body.appendChild(navTip);
-$('sideNav').querySelectorAll('button[role="tab"]').forEach(b=>{const lbl=b.querySelector('.lbl').textContent.trim();b.setAttribute('aria-label',lbl);b.removeAttribute('title');
+$('sideNav').querySelectorAll('button[role="tab"],#themeBtn').forEach(b=>{const lbl=b.querySelector('.lbl').textContent.trim();b.setAttribute('aria-label',lbl);b.removeAttribute('title');
   b.addEventListener('mouseenter',()=>{if(!$('shell').classList.contains('collapsed')||innerWidth<=820)return;const r=b.getBoundingClientRect();const cn=b.querySelector('#cntOpen');navTip.textContent=lbl+(cn&&cn.textContent.trim()?' '+cn.textContent.trim():'');navTip.style.left=(r.right+10)+'px';navTip.style.top=(r.top+r.height/2-14)+'px';navTip.classList.add('show')});
   b.addEventListener('mouseleave',()=>navTip.classList.remove('show'));b.addEventListener('click',()=>navTip.classList.remove('show'))});
 /* ---------- ANALISIS IDCC: baca PDF "Umur Persediaan" (ACCURATE) + rekomendasi AI ---------- */
