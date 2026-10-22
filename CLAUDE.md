@@ -57,32 +57,33 @@ PANDUAN.md                    Panduan untuk manusia (pemasangan & pemakaian)
 
 ### Peta kode index.html (cari dengan nama fungsi)
 - Masuk & peran: `boot`, `start`, `applyRole`, `showLogin`, `loginReveal` (animasi login).
-- Navigasi: `setTab` (panel `p-home`, `p-masuk` = Barang, `p-pipeline` = Workflow Hub, `p-kalender` = Kalender (kalender pribadi `#pcalSec` di atas, kalender produksi & tayang `#homeCal` di bawah), `p-idcc`, `p-jumat` = Laporan Admin, `p-panduan`, `p-tim`), menu `nav.tabs` disembunyikan tetapi tetap di DOM (dipakai `setTab`, `applyRole`, `cntOpen`). Yang terlihat: menu kotak di Beranda (`renderHomeMenu`, `#hMenu`) dan **kolom ikon kiri** `#lRail` (`renderRail`, `railSync`; selalu tampil di halaman selain Beranda, di Beranda muncul halus saat `#hMenu` ter-scroll lewat, kelas `body.railon`). Logo `#goHome` kembali ke Beranda. Profil, Tampilan, Keluar di tombol avatar kanan atas (`#prof` → `#profPop`).
+- Navigasi: `setTab` (panel `p-home`, `p-masuk` = Barang, `p-pipeline` = Workflow Hub, `p-queue` = Content Queue (grafik `#hStats` + Watchlist semua barang `#genWatch`), `p-kalender` = Kalender (kalender pribadi `#pcalSec` di atas, kalender produksi & tayang `#homeCal` di bawah), `p-idcc`, `p-jumat` = Laporan Admin, `p-panduan`, `p-tim`), menu `nav.tabs` disembunyikan tetapi tetap di DOM (dipakai `setTab`, `applyRole`, `cntOpen`). Yang terlihat: menu kotak di Beranda (`renderHomeMenu`, `#hMenu`) dan **kolom ikon kiri** `#lRail` (`renderRail`, `railSync`; selalu tampil di halaman selain Beranda, di Beranda muncul halus saat `#hMenu` ter-scroll lewat, kelas `body.railon`; di HP ≤820px menjadi bilah mendatar di bawah judul). `#hMenu` berjalan pelan kiri↔kanan (berhenti saat disentuh/kursor), tombol `#hMenuPrev`/`#hMenuNext`. Tombol **Kembali** `#backBtn` di semua halaman selain Beranda (`S.hist`, `goBack`, `history.pushState`). `#homeCal` dipindah oleh `setTab` antara `#calSlotHome` (Beranda, di bawah Jadwal tayang hari ini) dan `#calSlotKal`. Logo `#goHome` kembali ke Beranda. Profil, Tampilan, Keluar di tombol avatar kanan atas (`#prof` → `#profPop`).
 - Render: `renderAll`, `renderHome`, `renderWatch` (+ `watchGroups`, `watchTile`), `renderBoard` + `cardInner` (kartu kanban), `renderCal`, `renderDay`, `renderItems`, `renderReports`, `renderTeam`, `renderWeeks`.
 - Penjadwalan: `planBatch` (barang baru), `planOld` (stok lama/IDCC), `scheduleShoot`, `scheduleEdit`, `capState`, `slotUse`, `findSlot`, `pickPost`, `pickIdcc`, `dayPlan`, penyeimbang otomatis `computeBalance` / `runBalance` / `queueBalance`.
 - Tab Barang (`p-masuk`): pilihan `#itemView` 1. Barang masuk (`#inView`) / 2. Daftar barang (`#listView`). Formulir Catat barang wajib lengkap termasuk foto (`itemFormMissing`, `checkItemForm`). Kartu barang bisa diedit (`itemEditHtml`, draf di `S.editItem`; ganti nama/kategori ikut memperbarui `title`/`cat` tugasnya). Daftar barang: filter kategori `S.iCat` → merek `S.iBrand` (`brandOf` = kata pertama nama, `BRAND2` untuk merek dua kata), urutan `S.iSort` (nama A–Z dengan pemisah huruf, tanggal datang, stok), `renderItemFilters`, kartu `itemCardHtml`.
 - Animasi scroll seluruh situs: `RV_SEL` + `rvIO` (IntersectionObserver) memberi kelas `.rv`/`.rv-in` (fade in saat masuk layar, fade out saat keluar); mati otomatis bila prefers-reduced-motion.
 - Data: `newTask`, `saveItem`, `setStatus`, `fileName` (format nama file), foto `makePhoto`/`savePhoto`/`thumbHtml`.
 - AI: `aiCall` → `/api/idcc-ai`; PDF finance dibaca di browser dengan pdf.js (`parseAccurate`, `aggregate`); caption `fillTemplate` + `settings.captionTemplate`.
-- Tema tampilan per perangkat: `applyTheme`, `THEMES` (localStorage `ts-theme`).
-- Beranda: sapaan hanya judul + grafik Watchlist semua barang per tahap (`#hStats`, `S.hSig`; label "Terdata (barang masuk)"), menu kotak `renderHomeMenu`, Watchlist saya, Jadwal tayang hari ini, Watchlist semua barang. Mode TV sudah dihapus.
+- Tema tampilan per perangkat: `applyTheme`, `THEMES` (localStorage `ts-theme`; daftar juga di skrip kepala halaman). 10 tema: Terang, Gelap, Glass, Gradasi, Midnight, Ocean, Sunset, Candy, Forest, Aurora (5 terakhir berlatar animasi `skinDrift`).
+- Beranda: sapaan = judul + ringkasan pribadi `#hMe` (tugas sekarang, deadline hari ini, terlambat, "Berikutnya"), menu kotak `renderHomeMenu`, Watchlist saya dikelompokkan per jenis konten (`#mGrid .wtype`), Jadwal tayang hari ini, Kalender produksi & tayang. Grafik dan Watchlist semua barang ada di Content Queue. Mode TV sudah dihapus.
 - Kalender pribadi (`renderPcal`, `renderPcDay`, `pcListen`): hanya pemiliknya, data di `pcal/{email}` (warna kalender) dan `pcal/{email}/events` (date, title, time, color, note); warna dari `AV_COLORS`. Aturan: `firestore.rules` match `/pcal/{email}` (admin pun tidak bisa baca).
 - Foto barang dipotong potret 2:3 (`PHOTO_R`, `toJpeg(img,max,q,r)`); bingkai `.ph` mengikuti 2:3.
 - Bahasa per perangkat (`LANG`, localStorage `ts-lang`, pilihan di panel avatar): mode Inggris menerjemahkan teks tampilan lewat kamus `I18N_EN` + `MutationObserver` (kunci memakai {n} angka, {d} tanggal, {p} nama, {e} email, {m} bulan). **Setiap menambah/mengubah teks tampilan, tambahkan terjemahannya di `I18N_EN`.** Data tim tidak diterjemahkan (`I18N_SKIP`), pesan WhatsApp selalu bahasa Indonesia (`inID`).
-- Profil (klik avatar di menu): `profPop`, `renderProfPop`, warna avatar `AV_COLORS` / `avStyle` / `paintMe` (tersimpan di `members/{email}.avColor`; daftar nilainya harus sama dengan `firestore.rules`).
+- Profil (klik avatar di menu): `profPop`, `renderProfPop`, `avSave`, `avInner`; foto profil kecil `avPhoto` (JPEG ≤60 KB), avatar hewan beranimasi `AV_ANIMALS` → `avAnimal`, warna `AV_COLORS` → `avColor` (semua di `members/{email}`; daftar nilai harus sama dengan `firestore.rules`). Catatan pribadi `#pNotes` tersimpan otomatis di `pcal/{email}.notes` (`pcSaveDoc`, selalu kirim color+notes+updatedAt).
+- Peran: `member`, `admin2` (Admin 2: seperti admin tanpa Laporan Admin & Tim & Aktivitas, Workflow Hub hanya kontennya sendiri; `S.isAdmin2`, `S.full` = admin penuh; rules `isStaff()`), `admin`.
 
 ### Firestore (koleksi)
-`members/{email}` (name, code, role, idcc, phone, avColor — satu-satunya isian yang boleh diubah pemiliknya sendiri) · `pcal/{email}` + `pcal/{email}/events` (kalender pribadi, hanya pemilik) · `items` · `photos/{itemId}` · `tasks` · `settings/main` · `logs/balance` · `locks` · `reports` · `idcc` · `public/login` (gambar latar login, dibaca sebelum login).
+`members/{email}` (name, code, role, idcc, phone, avColor/avAnimal/avPhoto — satu-satunya isian yang boleh diubah pemiliknya sendiri) · `pcal/{email}` (color, notes) + `pcal/{email}/events` (kalender pribadi & catatan, hanya pemilik) · `items` · `photos/{itemId}` · `tasks` · `settings/main` · `logs/balance` · `locks` · `reports` · `idcc` · `public/login` (gambar latar login, dibaca sebelum login).
 
 ## 4. Aturan penting (jangan dilanggar)
 
 1. **Jangan pernah menaruh rahasia di repo**: kunci API Anthropic hanya di variabel hosting `ANTHROPIC_API_KEY` (Cloudflare Pages → Settings → Variables and Secrets, tipe Secret). Jangan minta pengguna menempelkan kunci di chat.
 2. **Hak akses dijaga di dua tempat**: tampilan (`applyRole`, `S.isAdmin`, `mine(t)`) DAN `firestore.rules`. Setiap perubahan siapa-boleh-apa harus mengubah keduanya, lalu ingatkan pengguna untuk **Publish** rules di Firebase Console.
 3. Tetap satu file `index.html`, tanpa build step, tanpa framework. Library eksternal hanya bila benar perlu (sekarang: Firebase compat 10.12.2 dari gstatic, pdf.js 3.11.174 dari cdnjs, Google Fonts Plus Jakarta Sans).
-4. Pertahankan gaya visual: token warna di `:root` (navy `--navy`, lime `--ball`, warna tahap `--st-1..5`, warna jenis `--t-*`), mode gelap, 5 tema. Semua warna lewat token, bukan warna literal yang hanya cocok di satu tema.
+4. Pertahankan gaya visual: token warna di `:root` (navy `--navy`, lime `--ball`, warna tahap `--st-1..5`, warna jenis `--t-*`), mode gelap, 10 tema. Semua warna lewat token, bukan warna literal yang hanya cocok di satu tema.
 5. Harus nyaman di **HP** (lebar ~390px) dan laptop: tidak boleh ada scroll menyamping di halaman.
 6. Data anggota tim adalah data nyata. Jangan menghapus atau menulis ulang data massal tanpa persetujuan Zaki. Migrasi data harus aman dijalankan berulang.
-7. Teks yang terlihat pengguna: Bahasa Indonesia, singkat, jelas. Nama menu: Beranda, Barang, Workflow Hub, Kalender, Analisis IDCC, Laporan Admin, Panduan, Tim & Aktivitas.
+7. Teks yang terlihat pengguna: Bahasa Indonesia, singkat, jelas. Nama menu: Beranda, Barang, Workflow Hub, Content Queue, Kalender, Analisis IDCC, Laporan Admin, Panduan, Tim & Aktivitas.
 
 ## 5. Cara menguji sebelum commit
 
@@ -91,7 +92,7 @@ python3 tools/make-test-page.py                      # membuat _test/ dengan Fir
 python3 -m http.server 8765 --directory _test        # buka http://localhost:8765/ (Zaki) atau /#rayhan, /#aulia, /#salma
 ```
 - `tools/fake-firebase.js` meniru Firebase di memori dan **mencatat pelanggaran aturan** di `window.__VIOLATIONS` (tiruan dari firestore.rules; perbarui juga bila rules berubah).
-- Cek minimal: tidak ada error di console, tidak ada scroll menyamping di 390px dan 1366px, mode terang & gelap, sebagai admin dan anggota.
+- Cek minimal: tidak ada error di console, tidak ada scroll menyamping di 390px dan 1366px, mode terang & gelap, sebagai admin, Admin 2 (Aulia di data contoh), dan anggota.
 - Cek sintaks fungsi: `~/.local/node/bin/node --check lib/idcc-ai.mjs` (Node.js terpasang di `~/.local/node`). Simulasi Cloudflare Pages lengkap dengan fungsi AI: `npx wrangler@4 pages dev website --port 8788` (folder `.wrangler/` jangan di-commit).
 - Jangan commit folder `_test/`.
 

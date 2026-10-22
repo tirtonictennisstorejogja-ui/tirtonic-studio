@@ -8,6 +8,7 @@
   const clone = o => JSON.parse(JSON.stringify(o));
   const user = () => window.__USER || null;
   const memberOf = email => store['members/' + email];
+  const isStaff = () => { const u = user(); if (!u) return false; const m = memberOf(u.email); return isAdmin() || (m && m.role === 'admin2'); };
   const isAdmin = () => { const u = user(); if (!u) return false; const m = memberOf(u.email); return (window.__OWNERS||[]).includes(u.email) || (m && m.role === 'admin'); };
   function check(path, before, after, op){
     const u = user(); if (!u) { violations.push({path, op, why:'no auth'}); return false; }
@@ -17,9 +18,10 @@
       const pc = ['lime','orange','purple','teal','green','pink'];
       if (op !== 'delete' && after && !pc.includes(after.color)) { violations.push({path, op, why:'pcal warna'}); return false; } return true; }
     if (col === 'members') { const email = path.split('/')[1]; if (op==='set' && (window.__OWNERS||[]).includes(u.email) && email===u.email) return true;
-      if (op==='update' && email===u.email && before && Object.keys(Object.assign({}, before, after)).every(k => k==='avColor' || JSON.stringify(before[k])===JSON.stringify(after[k])) && ['lime','orange','purple','teal','green','pink'].includes(after.avColor)) return true;
+      if (op==='update' && email===u.email && before && Object.keys(Object.assign({}, before, after)).every(k => ['avColor','avAnimal','avPhoto'].includes(k) || JSON.stringify(before[k])===JSON.stringify(after[k])) && ['lime','orange','purple','teal','green','pink'].includes(after.avColor||'lime') && ['','cat','dog','panda','fox','rabbit','koala','tiger','frog','penguin','monkey','bear','chick'].includes(after.avAnimal||'') && String(after.avPhoto||'').length<=60000) return true;
       if (!isAdmin()) { violations.push({path,op,why:'member write'}); return false; } return true; }
-    if (isAdmin()) return true;
+    if (['reports','public'].includes(col)) { if (isAdmin()) return true; violations.push({path, op, why:'khusus admin'}); return false; }
+    if (isStaff()) return true;
     const mm = memberOf(u.email) || {}; const idcc = mm.idcc === true;
     if (col === 'idcc' && op === 'set' && !before && idcc) return true;
     if (col === 'items' && op === 'set' && !before && idcc && after && after.old === true) return true;

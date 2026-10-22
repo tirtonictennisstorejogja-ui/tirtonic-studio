@@ -6,7 +6,7 @@
   const S={};
   S['members/kepala@tirtonic.id']={name:'Zaki',code:'Z',role:'admin',email:'kepala@tirtonic.id'};
   S['members/rayhan@tirtonic.id']={name:'Rayhan',code:'R',role:'member',email:'rayhan@tirtonic.id'};
-  S['members/aulia@tirtonic.id']={name:'Aulia',code:'A',role:'member',email:'aulia@tirtonic.id',idcc:true};
+  S['members/aulia@tirtonic.id']={name:'Aulia',code:'A',role:'admin2',email:'aulia@tirtonic.id',idcc:true};
   S['members/salma@tirtonic.id']={name:'Salma',code:'S',role:'member',email:'salma@tirtonic.id'};
   S['settings/main']={idccQty:10,idccDays:90,idccDay:3};
   const items=[

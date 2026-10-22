@@ -22,24 +22,29 @@ service cloud.firestore {
     function isMember() { return isOwner() || hasMemberDoc(); }
     function isAdmin() { return isOwner() || (hasMemberDoc() && get(memberPath()).data.role == 'admin'); }
     // Anggota yang dicentang "Boleh memakai Analisis IDCC" (misalnya Aulia)
-    function isIdcc() { return isAdmin() || (hasMemberDoc() && get(memberPath()).data.get('idcc', false) == true); }
+    // Admin 2 (peran 'admin2'): mengelola barang, konten, dan pengaturan seperti admin, tetapi tidak akun tim dan laporan
+    function isStaff() { return isAdmin() || (hasMemberDoc() && get(memberPath()).data.role == 'admin2'); }
+    function isIdcc() { return isStaff() || (hasMemberDoc() && get(memberPath()).data.get('idcc', false) == true); }
 
     // Akun tim: setiap orang bisa membaca akunnya sendiri, hanya admin yang mengelola
     match /members/{email} {
       allow read: if signedIn() && (email == myEmail() || isAdmin());
       allow write: if isAdmin();
-      // Setiap orang boleh mengganti warna avatar di profilnya sendiri, tidak ada isian lain
+      // Setiap orang boleh mengganti tampilan profilnya sendiri (warna, avatar hewan, foto kecil), tidak ada isian lain
       allow update: if signedIn() && email == myEmail()
-        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['avColor'])
-        && request.resource.data.avColor in ['lime', 'orange', 'purple', 'teal', 'green', 'pink'];
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['avColor', 'avAnimal', 'avPhoto'])
+        && request.resource.data.get('avColor', 'lime') in ['lime', 'orange', 'purple', 'teal', 'green', 'pink']
+        && request.resource.data.get('avAnimal', '') in ['', 'cat', 'dog', 'panda', 'fox', 'rabbit', 'koala', 'tiger', 'frog', 'penguin', 'monkey', 'bear', 'chick']
+        && request.resource.data.get('avPhoto', '') is string && request.resource.data.get('avPhoto', '').size() <= 60000;
     }
 
     // Kalender pribadi: hanya pemiliknya sendiri yang bisa membaca dan mengubah (admin pun tidak)
     match /pcal/{email} {
       allow read: if signedIn() && email == myEmail() && isMember();
       allow create, update: if signedIn() && email == myEmail() && isMember()
-        && request.resource.data.keys().hasOnly(['color', 'updatedAt'])
-        && request.resource.data.color in ['lime', 'orange', 'purple', 'teal', 'green', 'pink'];
+        && request.resource.data.keys().hasOnly(['color', 'notes', 'updatedAt'])
+        && request.resource.data.get('color', 'lime') in ['lime', 'orange', 'purple', 'teal', 'green', 'pink']
+        && request.resource.data.get('notes', '') is string && request.resource.data.get('notes', '').size() <= 5000;
       match /events/{id} {
         allow read, delete: if signedIn() && email == myEmail() && isMember();
         allow create, update: if signedIn() && email == myEmail() && isMember()
@@ -54,28 +59,28 @@ service cloud.firestore {
 
     match /items/{id} {
       allow read: if isMember();
-      allow write: if isAdmin();
+      allow write: if isStaff();
       // anggota IDCC hanya boleh MENAMBAH barang stok lama dari hasil analisis, tidak mengubah barang yang ada
       allow create: if isIdcc() && request.resource.data.get('old', false) == true;
     }
     // Gambar latar halaman login: dibaca sebelum login, diubah admin
     match /public/{id}   { allow read: if true; allow write: if isAdmin(); }
     // Riwayat Analisis IDCC
-    match /idcc/{id}     { allow read, create: if isIdcc(); allow update, delete: if isAdmin(); }
+    match /idcc/{id}     { allow read, create: if isIdcc(); allow update, delete: if isStaff(); }
     // Foto barang (ukuran besar). Thumbnail tersimpan di data barang.
-    match /photos/{id}   { allow read: if isMember(); allow write: if isAdmin(); }
-    match /settings/{id} { allow read: if isMember(); allow write: if isAdmin(); }
-    match /logs/{id}     { allow read: if isMember(); allow write: if isAdmin(); }
-    match /locks/{id}    { allow read, write: if isAdmin(); }
+    match /photos/{id}   { allow read: if isMember(); allow write: if isStaff(); }
+    match /settings/{id} { allow read: if isMember(); allow write: if isStaff(); }
+    match /logs/{id}     { allow read: if isMember(); allow write: if isStaff(); }
+    match /locks/{id}    { allow read, write: if isStaff(); }
     // Laporan mingguan, planning, dan bulanan: khusus admin
     match /reports/{id}  { allow read, write: if isAdmin(); }
 
     match /tasks/{id} {
       // semua anggota boleh membaca (untuk kalender tim); aplikasi hanya menampilkan tugas miliknya di pipeline
       allow read: if isMember();
-      allow create: if isAdmin() || idccCreate();
-      allow delete: if isAdmin();
-      allow update: if isAdmin() || memberStatusUpdate();
+      allow create: if isStaff() || idccCreate();
+      allow delete: if isStaff();
+      allow update: if isStaff() || memberStatusUpdate();
 
       // Anggota IDCC: hanya membuat konten IDCC baru dari stok lama, status awal Rencana
       function idccCreate() {

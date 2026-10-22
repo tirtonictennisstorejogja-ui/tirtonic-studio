@@ -39,18 +39,21 @@ Di laptop Zaki, Claude Code juga bisa mem-Publish-nya langsung (Firebase CLI sud
 
 ## Menu
 
-| Menu | Isi | Admin (Zaki) | Aulia | Rayhan, Salma |
+| Menu | Isi | Admin (Zaki) | Aulia (Admin 2) | Rayhan, Salma |
 |---|---|---|---|---|
-| **Beranda** | Grafik Watchlist semua barang, menu, Watchlist saya, jadwal tayang hari ini, Watchlist semua barang | Ya | Ya | Ya |
+| **Beranda** | Ringkasan pribadi (tugas, deadline hari ini, terlambat, berikutnya), menu, Watchlist saya per jenis konten, jadwal tayang hari ini, kalender produksi & tayang | Ya | Ya | Ya |
+| **Content Queue** | Grafik dan Watchlist semua barang per tahap | Ya | Ya | Ya |
 | **Kalender** | Kalender pribadi (hanya bisa dilihat pemiliknya, pilihan warna) + kalender produksi & tayang tim | Kalender pribadi sendiri; jadwal tim: lihat & atur | Pribadi sendiri; jadwal tim: lihat | Pribadi sendiri; jadwal tim: lihat |
-| **Barang** | 1. Barang masuk: catat barang (satu, beberapa sekaligus, stok lama → konten); semua isian termasuk foto wajib diisi. 2. Daftar barang: pilih kategori lalu merek, cari, dan urutkan (nama A–Z, tanggal datang terlama/terbaru, stok terbanyak/tersedikit); kartu bisa diedit | Ya | – | – |
-| **Workflow Hub** | Papan kerja 5 tahap | Semua konten | Konten sendiri | Konten sendiri |
+| **Barang** | 1. Barang masuk: catat barang (satu barang, atau stok lama → konten IDCC); semua isian termasuk foto wajib diisi. 2. Daftar barang: pilih kategori lalu merek, cari, dan urutkan (nama A–Z, tanggal datang terlama/terbaru, stok terbanyak/tersedikit); kartu bisa diedit | Ya | Ya | – |
+| **Workflow Hub** | Papan kerja 5 tahap | Semua konten | Konten sendiri (bisa mengatur) | Konten sendiri |
 | **Analisis IDCC** | Baca PDF umur persediaan dari finance + rekomendasi AI | Ya | Ya (jika dicentang) | – |
 | **Laporan Admin** | Laporan mingguan, planning + WhatsApp, laporan bulanan CEO | Ya | – | – |
 | **Panduan** | Aturan kerja, jobdesk, penyesuaian otomatis | Lihat & ubah jobdesk | Lihat | Lihat |
 | **Tim & Aktivitas** | Beban kerja, track per minggu, template caption, akun tim, latar login | Ya | – | – |
 
-Menu berupa kotak-kotak di **Beranda**, tepat di bawah sapaan. Saat Beranda di-scroll ke bawah, menu berpindah menjadi **kolom ikon kecil di kiri layar**; kolom ini selalu tampil di halaman lain sehingga bisa pindah halaman kapan saja. Isinya menyesuaikan akun masing-masing. Klik **logo Tirtonic** di kiri atas untuk kembali ke Beranda. Klik **avatar Anda** di kanan atas untuk membuka **Profil** (warna avatar, bahasa), **Tampilan** (5 tema), dan **Keluar**.
+Menu berupa kotak-kotak di **Beranda**, tepat di bawah sapaan, berjalan pelan ke kiri-kanan (berhenti saat disentuh; ada tombol panah). Saat Beranda di-scroll ke bawah, menu berpindah menjadi **kolom ikon kecil di kiri layar** (di HP: bilah ikon di bawah tulisan Tirtonic Studio); kolom ini selalu tampil di halaman lain. Tombol **Kembali** di atas setiap halaman membawa ke halaman sebelumnya. Isinya menyesuaikan akun masing-masing. Klik **logo Tirtonic** di kiri atas untuk kembali ke Beranda. Klik **avatar Anda** di kanan atas untuk membuka **Profil** (foto profil, avatar hewan beranimasi, warna avatar, **catatan pribadi** yang hanya bisa dibaca pemiliknya, bahasa), **Tampilan** (10 tema, sebagian beranimasi), dan **Keluar**.
+
+**Admin 2** (diatur di Tim & Aktivitas → peran): bisa mencatat barang, mengatur konten, jadwal, dan pengaturan seperti admin, tetapi tidak melihat Laporan Admin dan Tim & Aktivitas, dan di Workflow Hub hanya melihat konten miliknya. Saat ini untuk Aulia.
 
 ## Alur kerja konten
 
