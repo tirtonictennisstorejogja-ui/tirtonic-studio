@@ -1,7 +1,7 @@
 # Panduan Tirtonic Studio
 
 Panduan untuk tim: cara memasang, memperbarui, dan memakai website Tirtonic Studio.
-Alamat website: **studio.tirtonichub.com** (hosting Firebase Hosting, cadangan: tirtonic-studio.web.app)
+Alamat website: **media.tirtonichub.com** (hosting Firebase Hosting, cadangan: tirtonic-studio.web.app)
 
 ## Isi repo
 
@@ -31,7 +31,7 @@ Di laptop Zaki, Claude Code juga bisa mem-Publish-nya langsung (Firebase CLI sud
 
 1. **Firebase**: proyek `tirtonic-studio`, login Google aktif, Firestore dibuat, `firestore.rules` di-Publish, domain website ada di Authentication → Settings → Authorized domains.
 2. **GitHub**: repo Private `tirtonic-studio` berisi folder dan file di atas.
-3. **Firebase Hosting**: website dipasang dari folder `website` ke proyek `tirtonic-studio` (`firebase deploy --only hosting`, pengaturan di `firebase.json`). Domain **studio.tirtonichub.com** ditambahkan di Firebase Console → Hosting → Add custom domain, lalu catatan DNS yang diminta Firebase dipasang di AntMedia Host.
+3. **Firebase Hosting**: website dipasang dari folder `website` ke proyek `tirtonic-studio` (otomatis lewat GitHub Actions, pengaturan di `firebase.json`). Domain **media.tirtonichub.com** ditambahkan di Firebase Console → Hosting → Add custom domain, lalu catatan **CNAME** `media` → `tirtonic-studio.web.app` dipasang di AntMedia lewat **cPanel → Zone Editor**, dan domainnya didaftarkan di Firebase → Authentication → Settings → Authorized domains.
 4. **Kunci AI** (ditunda): fitur AI butuh hosting dengan fungsi server (misalnya Cloudflare Pages, kodenya sudah siap di `lib/` dan `functions/`) dan kunci `ANTHROPIC_API_KEY` dari console.anthropic.com yang disimpan di pengaturan hosting tersebut. **Jangan tempel kunci di chat, file, atau GitHub.**
 5. **Akun tim**: login sebagai Zaki → Tim & Aktivitas → Akun tim. Centang **Boleh memakai Analisis IDCC** untuk Aulia.
 
