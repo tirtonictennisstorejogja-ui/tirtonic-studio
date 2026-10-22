@@ -60,6 +60,8 @@ PANDUAN.md                    Panduan untuk manusia (pemasangan & pemakaian)
 - Navigasi: `setTab` (panel `p-home`, `p-masuk`, `p-pipeline` = Workflow Hub, `p-kalender` (kosong sejak v5.5: isi Kalender ada di Beranda `#homeCal`, `setTab('kalender')` diarahkan ke sana), `p-idcc`, `p-jumat` = Laporan Admin, `p-panduan`, `p-tim`), menu `nav.tabs` disembunyikan sejak v5.5 tetapi tetap di DOM (dipakai `setTab`, `applyRole`, `cntOpen`); yang terlihat adalah menu kotak geser di Beranda (`renderHomeMenu`, `#hMenu`, mengikuti tab yang tidak `hidden`) dan logo `#goHome` untuk kembali ke Beranda. Profil, Tampilan, dan Keluar ada di tombol avatar kanan atas (`#prof` → `#profPop`).
 - Render: `renderAll`, `renderHome`, `renderWatch` (+ `watchGroups`, `watchTile`), `renderBoard` + `cardInner` (kartu kanban), `renderCal`, `renderDay`, `renderItems`, `renderReports`, `renderTeam`, `renderWeeks`.
 - Penjadwalan: `planBatch` (barang baru), `planOld` (stok lama/IDCC), `scheduleShoot`, `scheduleEdit`, `capState`, `slotUse`, `findSlot`, `pickPost`, `pickIdcc`, `dayPlan`, penyeimbang otomatis `computeBalance` / `runBalance` / `queueBalance`.
+- Tab Barang (`p-masuk`): pilihan `#itemView` 1. Barang masuk (`#inView`) / 2. Daftar barang (`#listView`). Formulir Catat barang wajib lengkap termasuk foto (`itemFormMissing`, `checkItemForm`). Kartu barang bisa diedit (`itemEditHtml`, draf di `S.editItem`; ganti nama/kategori ikut memperbarui `title`/`cat` tugasnya). Daftar barang: filter kategori `S.iCat` → merek `S.iBrand` (`brandOf` = kata pertama nama, `BRAND2` untuk merek dua kata), urutan `S.iSort` (nama A–Z dengan pemisah huruf, tanggal datang, stok), `renderItemFilters`, kartu `itemCardHtml`.
+- Animasi scroll seluruh situs: `RV_SEL` + `rvIO` (IntersectionObserver) memberi kelas `.rv`/`.rv-in` (fade in saat masuk layar, fade out saat keluar); mati otomatis bila prefers-reduced-motion.
 - Data: `newTask`, `saveItem`, `setStatus`, `fileName` (format nama file), foto `makePhoto`/`savePhoto`/`thumbHtml`.
 - AI: `aiCall` → `/api/idcc-ai`; PDF finance dibaca di browser dengan pdf.js (`parseAccurate`, `aggregate`); caption `fillTemplate` + `settings.captionTemplate`.
 - Tema tampilan per perangkat: `applyTheme`, `THEMES` (localStorage `ts-theme`).
@@ -79,7 +81,7 @@ PANDUAN.md                    Panduan untuk manusia (pemasangan & pemakaian)
 4. Pertahankan gaya visual: token warna di `:root` (navy `--navy`, lime `--ball`, warna tahap `--st-1..5`, warna jenis `--t-*`), mode gelap, 5 tema. Semua warna lewat token, bukan warna literal yang hanya cocok di satu tema.
 5. Harus nyaman di **HP** (lebar ~390px) dan laptop: tidak boleh ada scroll menyamping di halaman.
 6. Data anggota tim adalah data nyata. Jangan menghapus atau menulis ulang data massal tanpa persetujuan Zaki. Migrasi data harus aman dijalankan berulang.
-7. Teks yang terlihat pengguna: Bahasa Indonesia, singkat, jelas. Nama menu: Beranda, Barang Masuk, Workflow Hub, Analisis IDCC, Laporan Admin, Panduan, Tim & Aktivitas (Kalender ada di Beranda).
+7. Teks yang terlihat pengguna: Bahasa Indonesia, singkat, jelas. Nama menu: Beranda, Barang, Workflow Hub, Analisis IDCC, Laporan Admin, Panduan, Tim & Aktivitas (Kalender ada di Beranda).
 
 ## 5. Cara menguji sebelum commit
 

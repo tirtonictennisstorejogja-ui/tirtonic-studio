@@ -42,7 +42,7 @@ Di laptop Zaki, Claude Code juga bisa mem-Publish-nya langsung (Firebase CLI sud
 | Menu | Isi | Admin (Zaki) | Aulia | Rayhan, Salma |
 |---|---|---|---|---|
 | **Beranda** | Sapaan + grafik Watchlist semua barang, menu, Watchlist saya, jadwal tayang hari ini, kalender produksi & tayang, Watchlist semua barang | Ya | Ya | Ya |
-| **Barang Masuk** | Catat barang (satu, beberapa sekaligus, stok lama → konten) | Ya | – | – |
+| **Barang** | 1. Barang masuk: catat barang (satu, beberapa sekaligus, stok lama → konten); semua isian termasuk foto wajib diisi. 2. Daftar barang: pilih kategori lalu merek, cari, dan urutkan (nama A–Z, tanggal datang terlama/terbaru, stok terbanyak/tersedikit); kartu bisa diedit | Ya | – | – |
 | **Workflow Hub** | Papan kerja 5 tahap | Semua konten | Konten sendiri | Konten sendiri |
 | **Analisis IDCC** | Baca PDF umur persediaan dari finance + rekomendasi AI | Ya | Ya (jika dicentang) | – |
 | **Laporan Admin** | Laporan mingguan, planning + WhatsApp, laporan bulanan CEO | Ya | – | – |
