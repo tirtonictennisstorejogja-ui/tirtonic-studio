@@ -57,7 +57,7 @@ PANDUAN.md                    Panduan untuk manusia (pemasangan & pemakaian)
 
 ### Peta kode index.html (cari dengan nama fungsi)
 - Masuk & peran: `boot`, `start`, `applyRole`, `showLogin`, `loginReveal` (animasi login).
-- Navigasi: `setTab` (panel `p-home`, `p-masuk`, `p-pipeline` = Workflow Hub, `p-kalender` (kosong sejak v5.5: isi Kalender ada di Beranda `#homeCal`, `setTab('kalender')` diarahkan ke sana), `p-idcc`, `p-jumat` = Laporan Admin, `p-panduan`, `p-tim`), menu `nav.tabs` disembunyikan sejak v5.5 tetapi tetap di DOM (dipakai `setTab`, `applyRole`, `cntOpen`); yang terlihat adalah menu kotak geser di Beranda (`renderHomeMenu`, `#hMenu`, mengikuti tab yang tidak `hidden`) dan logo `#goHome` untuk kembali ke Beranda. Profil, Tampilan, dan Keluar ada di tombol avatar kanan atas (`#prof` → `#profPop`).
+- Navigasi: `setTab` (panel `p-home`, `p-masuk` = Barang, `p-pipeline` = Workflow Hub, `p-kalender` = Kalender (kalender pribadi `#pcalSec` di atas, kalender produksi & tayang `#homeCal` di bawah), `p-idcc`, `p-jumat` = Laporan Admin, `p-panduan`, `p-tim`), menu `nav.tabs` disembunyikan tetapi tetap di DOM (dipakai `setTab`, `applyRole`, `cntOpen`). Yang terlihat: menu kotak di Beranda (`renderHomeMenu`, `#hMenu`) dan **kolom ikon kiri** `#lRail` (`renderRail`, `railSync`; selalu tampil di halaman selain Beranda, di Beranda muncul halus saat `#hMenu` ter-scroll lewat, kelas `body.railon`). Logo `#goHome` kembali ke Beranda. Profil, Tampilan, Keluar di tombol avatar kanan atas (`#prof` → `#profPop`).
 - Render: `renderAll`, `renderHome`, `renderWatch` (+ `watchGroups`, `watchTile`), `renderBoard` + `cardInner` (kartu kanban), `renderCal`, `renderDay`, `renderItems`, `renderReports`, `renderTeam`, `renderWeeks`.
 - Penjadwalan: `planBatch` (barang baru), `planOld` (stok lama/IDCC), `scheduleShoot`, `scheduleEdit`, `capState`, `slotUse`, `findSlot`, `pickPost`, `pickIdcc`, `dayPlan`, penyeimbang otomatis `computeBalance` / `runBalance` / `queueBalance`.
 - Tab Barang (`p-masuk`): pilihan `#itemView` 1. Barang masuk (`#inView`) / 2. Daftar barang (`#listView`). Formulir Catat barang wajib lengkap termasuk foto (`itemFormMissing`, `checkItemForm`). Kartu barang bisa diedit (`itemEditHtml`, draf di `S.editItem`; ganti nama/kategori ikut memperbarui `title`/`cat` tugasnya). Daftar barang: filter kategori `S.iCat` → merek `S.iBrand` (`brandOf` = kata pertama nama, `BRAND2` untuk merek dua kata), urutan `S.iSort` (nama A–Z dengan pemisah huruf, tanggal datang, stok), `renderItemFilters`, kartu `itemCardHtml`.
@@ -65,13 +65,14 @@ PANDUAN.md                    Panduan untuk manusia (pemasangan & pemakaian)
 - Data: `newTask`, `saveItem`, `setStatus`, `fileName` (format nama file), foto `makePhoto`/`savePhoto`/`thumbHtml`.
 - AI: `aiCall` → `/api/idcc-ai`; PDF finance dibaca di browser dengan pdf.js (`parseAccurate`, `aggregate`); caption `fillTemplate` + `settings.captionTemplate`.
 - Tema tampilan per perangkat: `applyTheme`, `THEMES` (localStorage `ts-theme`).
-- Beranda: sapaan berisi grafik Watchlist semua barang per tahap (`#hStats`, `S.hSig` mencegah animasi ulang), menu kotak `renderHomeMenu`, Jadwal tayang hari ini, Kalender produksi & tayang. Halaman lain punya menu geser kiri `#sDrawer` (`sideMenu`, `renderSideMenu`; terbuka saat kursor ke ujung kiri `#sEdge` atau tombol garis tiga `#sBurger`). Mode TV sudah dihapus.
+- Beranda: sapaan hanya judul + grafik Watchlist semua barang per tahap (`#hStats`, `S.hSig`; label "Terdata (barang masuk)"), menu kotak `renderHomeMenu`, Watchlist saya, Jadwal tayang hari ini, Watchlist semua barang. Mode TV sudah dihapus.
+- Kalender pribadi (`renderPcal`, `renderPcDay`, `pcListen`): hanya pemiliknya, data di `pcal/{email}` (warna kalender) dan `pcal/{email}/events` (date, title, time, color, note); warna dari `AV_COLORS`. Aturan: `firestore.rules` match `/pcal/{email}` (admin pun tidak bisa baca).
 - Foto barang dipotong potret 2:3 (`PHOTO_R`, `toJpeg(img,max,q,r)`); bingkai `.ph` mengikuti 2:3.
 - Bahasa per perangkat (`LANG`, localStorage `ts-lang`, pilihan di panel avatar): mode Inggris menerjemahkan teks tampilan lewat kamus `I18N_EN` + `MutationObserver` (kunci memakai {n} angka, {d} tanggal, {p} nama, {e} email, {m} bulan). **Setiap menambah/mengubah teks tampilan, tambahkan terjemahannya di `I18N_EN`.** Data tim tidak diterjemahkan (`I18N_SKIP`), pesan WhatsApp selalu bahasa Indonesia (`inID`).
 - Profil (klik avatar di menu): `profPop`, `renderProfPop`, warna avatar `AV_COLORS` / `avStyle` / `paintMe` (tersimpan di `members/{email}.avColor`; daftar nilainya harus sama dengan `firestore.rules`).
 
 ### Firestore (koleksi)
-`members/{email}` (name, code, role, idcc, phone, avColor — satu-satunya isian yang boleh diubah pemiliknya sendiri) · `items` · `photos/{itemId}` · `tasks` · `settings/main` · `logs/balance` · `locks` · `reports` · `idcc` · `public/login` (gambar latar login, dibaca sebelum login).
+`members/{email}` (name, code, role, idcc, phone, avColor — satu-satunya isian yang boleh diubah pemiliknya sendiri) · `pcal/{email}` + `pcal/{email}/events` (kalender pribadi, hanya pemilik) · `items` · `photos/{itemId}` · `tasks` · `settings/main` · `logs/balance` · `locks` · `reports` · `idcc` · `public/login` (gambar latar login, dibaca sebelum login).
 
 ## 4. Aturan penting (jangan dilanggar)
 
@@ -81,7 +82,7 @@ PANDUAN.md                    Panduan untuk manusia (pemasangan & pemakaian)
 4. Pertahankan gaya visual: token warna di `:root` (navy `--navy`, lime `--ball`, warna tahap `--st-1..5`, warna jenis `--t-*`), mode gelap, 5 tema. Semua warna lewat token, bukan warna literal yang hanya cocok di satu tema.
 5. Harus nyaman di **HP** (lebar ~390px) dan laptop: tidak boleh ada scroll menyamping di halaman.
 6. Data anggota tim adalah data nyata. Jangan menghapus atau menulis ulang data massal tanpa persetujuan Zaki. Migrasi data harus aman dijalankan berulang.
-7. Teks yang terlihat pengguna: Bahasa Indonesia, singkat, jelas. Nama menu: Beranda, Barang, Workflow Hub, Analisis IDCC, Laporan Admin, Panduan, Tim & Aktivitas (Kalender ada di Beranda).
+7. Teks yang terlihat pengguna: Bahasa Indonesia, singkat, jelas. Nama menu: Beranda, Barang, Workflow Hub, Kalender, Analisis IDCC, Laporan Admin, Panduan, Tim & Aktivitas.
 
 ## 5. Cara menguji sebelum commit
 

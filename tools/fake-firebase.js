@@ -12,6 +12,10 @@
   function check(path, before, after, op){
     const u = user(); if (!u) { violations.push({path, op, why:'no auth'}); return false; }
     const col = path.split('/')[0];
+    // kalender pribadi: hanya pemiliknya (admin pun tidak), sama seperti firestore.rules
+    if (col === 'pcal') { const owner = path.split('/')[1]; if (owner !== u.email) { violations.push({path, op, why:'pcal bukan pemilik'}); return false; }
+      const pc = ['lime','orange','purple','teal','green','pink'];
+      if (op !== 'delete' && after && !pc.includes(after.color)) { violations.push({path, op, why:'pcal warna'}); return false; } return true; }
     if (col === 'members') { const email = path.split('/')[1]; if (op==='set' && (window.__OWNERS||[]).includes(u.email) && email===u.email) return true;
       if (op==='update' && email===u.email && before && Object.keys(Object.assign({}, before, after)).every(k => k==='avColor' || JSON.stringify(before[k])===JSON.stringify(after[k])) && ['lime','orange','purple','teal','green','pink'].includes(after.avColor)) return true;
       if (!isAdmin()) { violations.push({path,op,why:'member write'}); return false; } return true; }

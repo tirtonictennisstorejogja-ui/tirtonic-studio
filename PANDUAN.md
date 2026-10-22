@@ -41,7 +41,8 @@ Di laptop Zaki, Claude Code juga bisa mem-Publish-nya langsung (Firebase CLI sud
 
 | Menu | Isi | Admin (Zaki) | Aulia | Rayhan, Salma |
 |---|---|---|---|---|
-| **Beranda** | Sapaan + grafik Watchlist semua barang, menu, Watchlist saya, jadwal tayang hari ini, kalender produksi & tayang, Watchlist semua barang | Ya | Ya | Ya |
+| **Beranda** | Grafik Watchlist semua barang, menu, Watchlist saya, jadwal tayang hari ini, Watchlist semua barang | Ya | Ya | Ya |
+| **Kalender** | Kalender pribadi (hanya bisa dilihat pemiliknya, pilihan warna) + kalender produksi & tayang tim | Kalender pribadi sendiri; jadwal tim: lihat & atur | Pribadi sendiri; jadwal tim: lihat | Pribadi sendiri; jadwal tim: lihat |
 | **Barang** | 1. Barang masuk: catat barang (satu, beberapa sekaligus, stok lama → konten); semua isian termasuk foto wajib diisi. 2. Daftar barang: pilih kategori lalu merek, cari, dan urutkan (nama A–Z, tanggal datang terlama/terbaru, stok terbanyak/tersedikit); kartu bisa diedit | Ya | – | – |
 | **Workflow Hub** | Papan kerja 5 tahap | Semua konten | Konten sendiri | Konten sendiri |
 | **Analisis IDCC** | Baca PDF umur persediaan dari finance + rekomendasi AI | Ya | Ya (jika dicentang) | – |
@@ -49,7 +50,7 @@ Di laptop Zaki, Claude Code juga bisa mem-Publish-nya langsung (Firebase CLI sud
 | **Panduan** | Aturan kerja, jobdesk, penyesuaian otomatis | Lihat & ubah jobdesk | Lihat | Lihat |
 | **Tim & Aktivitas** | Beban kerja, track per minggu, template caption, akun tim, latar login | Ya | – | – |
 
-Menu berupa kotak-kotak di **Beranda**, tepat di bawah sapaan; geser ke kanan untuk melihat semuanya. Isinya menyesuaikan akun masing-masing. Dari halaman mana pun, klik **logo Tirtonic** di kiri atas untuk kembali ke Beranda. Klik **avatar Anda** di kanan atas untuk membuka **Profil** (warna avatar, tersimpan di akun), **Tampilan** (5 tema, berlaku per perangkat), dan **Keluar**.
+Menu berupa kotak-kotak di **Beranda**, tepat di bawah sapaan. Saat Beranda di-scroll ke bawah, menu berpindah menjadi **kolom ikon kecil di kiri layar**; kolom ini selalu tampil di halaman lain sehingga bisa pindah halaman kapan saja. Isinya menyesuaikan akun masing-masing. Klik **logo Tirtonic** di kiri atas untuk kembali ke Beranda. Klik **avatar Anda** di kanan atas untuk membuka **Profil** (warna avatar, bahasa), **Tampilan** (5 tema), dan **Keluar**.
 
 ## Alur kerja konten
 
