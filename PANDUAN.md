@@ -1,7 +1,7 @@
 # Panduan Tirtonic Studio
 
 Panduan untuk tim: cara memasang, memperbarui, dan memakai website Tirtonic Studio.
-Alamat website: **studio.tirtonichub.com** (hosting Cloudflare Pages)
+Alamat website: **studio.tirtonichub.com** (hosting Firebase Hosting, cadangan: tirtonic-studio.web.app)
 
 ## Isi repo
 
@@ -19,7 +19,7 @@ Alamat website: **studio.tirtonichub.com** (hosting Cloudflare Pages)
 
 ## Memperbarui website
 
-Website diambil Cloudflare Pages langsung dari GitHub. Setiap **Commit changes** di GitHub (manual atau oleh Claude Code) membuat Cloudflare memperbarui website sendiri dalam sekitar 1 menit (dash.cloudflare.com → Workers & Pages → proyek website → Deployments → status **Success**).
+Website tayang dari **Firebase Hosting** (proyek tirtonic-studio) dan **otomatis diperbarui** setiap ada perubahan di folder `website` pada branch `main` GitHub (manual atau oleh Claude Code), biasanya dalam 1–2 menit. Cek di GitHub → tab **Actions** (centang hijau = berhasil) atau Firebase Console → Hosting → riwayat rilis. Aturan database (`firestore.rules`) tetap dipasang terpisah.
 
 **Unggah manual:** buka folder tujuan di GitHub → **Add file → Upload files** → **choose your files** → **Commit changes**. File bernama sama otomatis ditimpa. Pastikan nama file tepat (misalnya `index.html`, bukan `index 2.html`).
 
@@ -31,8 +31,8 @@ Di laptop Zaki, Claude Code juga bisa mem-Publish-nya langsung (Firebase CLI sud
 
 1. **Firebase**: proyek `tirtonic-studio`, login Google aktif, Firestore dibuat, `firestore.rules` di-Publish, domain website ada di Authentication → Settings → Authorized domains.
 2. **GitHub**: repo Private `tirtonic-studio` berisi folder dan file di atas.
-3. **Cloudflare Pages**: proyek website terhubung ke repo GitHub (branch `main`, Framework preset **None**, Build command kosong, Build output directory `website`). Fungsi AI otomatis terbaca dari folder `functions/`. Domain **studio.tirtonichub.com** ditambahkan di Custom domains; di AntMedia Host catatan DNS `studio` berupa CNAME ke alamat `….pages.dev` proyek ini.
-4. **Kunci AI**: buat di console.anthropic.com (API Keys), simpan di Cloudflare → proyek website → Settings → Variables and Secrets sebagai `ANTHROPIC_API_KEY` (tipe **Secret**, environment Production), lalu deploy ulang. **Jangan tempel kunci di chat, file, atau GitHub.** Opsional: `AI_MODEL` (bawaan `claude-sonnet-5-5`).
+3. **Firebase Hosting**: website dipasang dari folder `website` ke proyek `tirtonic-studio` (`firebase deploy --only hosting`, pengaturan di `firebase.json`). Domain **studio.tirtonichub.com** ditambahkan di Firebase Console → Hosting → Add custom domain, lalu catatan DNS yang diminta Firebase dipasang di AntMedia Host.
+4. **Kunci AI** (ditunda): fitur AI butuh hosting dengan fungsi server (misalnya Cloudflare Pages, kodenya sudah siap di `lib/` dan `functions/`) dan kunci `ANTHROPIC_API_KEY` dari console.anthropic.com yang disimpan di pengaturan hosting tersebut. **Jangan tempel kunci di chat, file, atau GitHub.**
 5. **Akun tim**: login sebagai Zaki → Tim & Aktivitas → Akun tim. Centang **Boleh memakai Analisis IDCC** untuk Aulia.
 
 ---
@@ -86,9 +86,9 @@ Yang dikirim ke AI hanya nama barang, varian, dan jumlah stok per umur (tanpa ha
 
 | Masalah | Solusi |
 |---|---|
-| Perubahan tidak muncul di website | Cek Cloudflare → Workers & Pages → Deployments sudah **Success**. Buka website di jendela Private atau muat ulang (Cmd + Shift + R). |
+| Perubahan tidak muncul di website | Cek GitHub → tab Actions: proses "Deploy ke Firebase Hosting" harus hijau. Kalau merah, buka lalu kirim tangkapan layarnya ke Claude Code. Buka website di jendela Private atau muat ulang (Cmd + Shift + R). |
 | Deploy **Failed**: unrecognized Git contributor | Klik **Link Git account** di halaman deploy, lalu Retry. |
-| "Layanan AI belum diatur di hosting" | `ANTHROPIC_API_KEY` belum diisi di Cloudflare (Settings → Variables and Secrets), atau belum deploy ulang setelah mengisi. |
+| Tombol AI (Analisis dengan AI, Buat caption dengan AI) gagal | Fitur AI sedang ditunda: Firebase Hosting paket gratis tidak menjalankan fungsi server. |
 | "Akun Anda belum diizinkan memakai AI" | Centang akses IDCC untuk akun itu di Tim & Aktivitas. |
 | Anggota gagal memindahkan kartu / menyimpan link Drive | `firestore.rules` terbaru belum di-Publish di Firebase. |
 | "Domain website ini belum diizinkan" | Tambahkan domain di Firebase → Authentication → Settings → Authorized domains. |
