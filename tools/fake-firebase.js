@@ -21,6 +21,10 @@
       if (op==='update' && email===u.email && before && Object.keys(Object.assign({}, before, after)).every(k => ['avColor','avAnimal','avPhoto'].includes(k) || JSON.stringify(before[k])===JSON.stringify(after[k])) && ['lime','orange','purple','teal','green','pink'].includes(after.avColor||'lime') && ['','cat','dog','panda','fox','rabbit','koala','tiger','frog','penguin','monkey','bear','chick'].includes(after.avAnimal||'') && String(after.avPhoto||'').length<=60000) return true;
       if (!isAdmin()) { violations.push({path,op,why:'member write'}); return false; } return true; }
     if (['reports','public'].includes(col)) { if (isAdmin()) return true; violations.push({path, op, why:'khusus admin'}); return false; }
+    if (col === 'items' && !isAdmin() && isStaff()) { const jp = d => !d || ((d.tier||'JP') === 'JP' && !d.seasonal);
+      if (op === 'set' && !before && !jp(after)) { violations.push({path, op, why:'kode Louis1 khusus admin'}); return false; }
+      if (op !== 'delete' && before && after && (JSON.stringify(before.tier) !== JSON.stringify(after.tier) || JSON.stringify(!!before.seasonal) !== JSON.stringify(!!after.seasonal))) { violations.push({path, op, why:'kode Louis1 khusus admin'}); return false; }
+      return true; }
     if (isStaff()) return true;
     const mm = memberOf(u.email) || {}; const idcc = mm.idcc === true;
     if (col === 'idcc' && op === 'set' && !before && idcc) return true;

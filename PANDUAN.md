@@ -55,6 +55,19 @@ Menu berupa kotak-kotak di **Beranda**, tepat di bawah sapaan, berjalan pelan ke
 
 **Admin 2** (diatur di Tim & Aktivitas → peran): bisa mencatat barang, mengatur konten, jadwal, dan pengaturan seperti admin, tetapi tidak melihat Laporan Admin dan Tim & Aktivitas, dan di Workflow Hub hanya melihat konten miliknya. Saat ini untuk Aulia.
 
+## Louis1 (kode barang)
+
+Setiap barang masuk diberi kode oleh admin (Zaki). Kode menentukan konten yang dibuat dan urutan jadwalnya:
+
+| Kode | Arti | Konten | Urutan |
+|---|---|---|---|
+| **EX** | Eksklusif Produk | Katalog, Foto IG, Video produk, Video review | Paling dulu; boleh menggeser jadwal JP |
+| **LS** | Limited Stock | Katalog, Foto IG, Video produk | Kedua; tayang secepatnya sebelum stok habis |
+| **JP+** | Jumlah Produk, stok di atas 10 | Katalog, Foto IG | Ketiga; paling lama 7 hari kerja |
+| **JP** | Jumlah Produk, stok 10 ke bawah | Katalog, Foto IG | Terakhir; paling lama 10 hari kerja |
+
+Batas 7/10 hari kerja untuk JP tidak berlaku selama masih ada barang EX/LS yang ditandai **Musiman** dan belum tayang. Kode terlihat oleh semua orang di kartu barang (Daftar barang dan Content Queue). Hanya admin yang bisa mengubahnya; barang yang dicatat Admin 2 otomatis JP. Menaikkan kode (mis. JP → EX) otomatis menambah konten yang belum ada.
+
 ## Alur kerja konten
 
 | Tahap | Artinya | Siapa yang memindahkan |

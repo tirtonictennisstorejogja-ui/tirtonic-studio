@@ -59,9 +59,15 @@ service cloud.firestore {
 
     match /items/{id} {
       allow read: if isMember();
-      allow write: if isStaff();
+      // Kode Louis1 (tier EX/LS/JP + seasonal) hanya boleh diberi/diubah admin penuh; Admin 2 mencatat barang sebagai JP
+      allow create: if isAdmin() || (isStaff() && jpOnly());
+      allow update: if isAdmin() || (isStaff() && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['tier', 'seasonal']));
+      allow delete: if isStaff();
       // anggota IDCC hanya boleh MENAMBAH barang stok lama dari hasil analisis, tidak mengubah barang yang ada
-      allow create: if isIdcc() && request.resource.data.get('old', false) == true;
+      allow create: if isIdcc() && request.resource.data.get('old', false) == true && jpOnly();
+      function jpOnly() {
+        return request.resource.data.get('tier', 'JP') == 'JP' && request.resource.data.get('seasonal', false) == false;
+      }
     }
     // Gambar latar halaman login: dibaca sebelum login, diubah admin
     match /public/{id}   { allow read: if true; allow write: if isAdmin(); }
