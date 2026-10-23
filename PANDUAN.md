@@ -61,12 +61,12 @@ Setiap barang masuk diberi kode oleh admin (Zaki). Kode menentukan konten yang d
 
 | Kode | Arti | Konten | Urutan |
 |---|---|---|---|
-| **EX** | Eksklusif Produk | Katalog, Foto IG, Video produk, Video review | Paling dulu; boleh menggeser jadwal JP |
-| **LS** | Limited Stock | Katalog, Foto IG, Video produk | Kedua; tayang secepatnya sebelum stok habis |
-| **JP+** | Jumlah Produk, stok di atas 10 | Katalog, Foto IG | Ketiga; paling lama 7 hari kerja |
-| **JP** | Jumlah Produk, stok 10 ke bawah | Katalog, Foto IG | Terakhir; Foto IG syuting mulai H+3, tayang paling cepat H+5, paling lama 10 hari kerja |
+| **EX** | Eksklusif Produk | Lengkap: Katalog, Foto IG, Video produk, Video review | Paling dulu; boleh menggeser jadwal JP |
+| **LS** | Limited Stock | Lengkap | Kedua; tayang secepatnya sebelum stok habis |
+| **JP+** | Jumlah Produk, stok di atas 10 | Lengkap | Ketiga; ikut jadwal biasa, paling lama 7 hari kerja |
+| **JP** | Jumlah Produk, stok 10 ke bawah | Lengkap | Terakhir; syuting mulai H+3, tayang paling cepat H+5, tidak menggeser jadwal lain, paling lama 10 hari kerja |
 
-Batas 7/10 hari kerja untuk JP tidak berlaku selama masih ada barang EX/LS yang ditandai **Musiman** dan belum tayang. Kode terlihat oleh semua orang di kartu barang (Daftar barang dan Content Queue). Hanya admin yang bisa mengubahnya; barang yang dicatat Admin 2 otomatis JP. Menaikkan kode (mis. JP → EX) otomatis menambah konten yang belum ada.
+Batas 7/10 hari kerja untuk JP tidak berlaku selama masih ada barang EX/LS yang ditandai **Musiman** dan belum tayang. Kode terlihat oleh semua orang di kartu barang (Daftar barang dan Content Queue). Hanya admin yang bisa mengubahnya (pilihan kode langsung di kartu Daftar barang, atau tombol Edit); barang yang dicatat Admin 2 otomatis JP. Saat kode diubah, konten yang belum ada ditambahkan dan jadwal Foto IG, Video produk, dan Video review yang belum diproduksi dihitung ulang mulai hari itu.
 
 ## Alur kerja konten
 
