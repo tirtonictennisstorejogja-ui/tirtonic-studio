@@ -1867,8 +1867,8 @@ function planBatch(rows,base,order,excl){const rk=Math.min(...rows.map(rankOfIte
     const R=l2Ready(t,r,base),s0=l2Start(r,base);
     let from=rankOfItem(r)<=1||t==='ktl'?s0:maxD(s0,nextDayWith([],subWork(R,1)));   /* JP+/JP tidak memakai jam kerja lebih awal dari perlu */
     if(t==='vrv')from=maxD(from,nextDayWith([],addDays(s0,1)));   /* review: skrip dulu */
-    if(t==='vpr'&&it.igfDay&&it.igfDay>=from&&it.igfDay<=R)from=it.igfDay;   /* video produk: coba satu sesi dengan foto IG */
-    const sh=scheduleShoot(st,t,from);if(t==='igf')it.igfDay=sh.d;
+    let sh=t==='vpr'&&it.igfDay&&it.igfDay>=from&&it.igfDay<=R?scheduleShoot(st,t,it.igfDay,null,null,1):null;   /* video produk: coba satu sesi dengan foto IG */
+    if(!sh)sh=scheduleShoot(st,t,from);if(t==='igf')it.igfDay=sh.d;
     const ed=scheduleEdit(st,t,sh.d);
     it.tasks.push({type:t,due:R,readyBy:R,late:ed.d>R,target:t==='ktl'?R:'',producer:sh.prod,editor:ed.ed,talent:sh.tal,shootPlan:sh.d,editPlan:ed.d,postAt:''});}));
   return items}
