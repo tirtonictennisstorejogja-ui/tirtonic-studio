@@ -83,6 +83,10 @@ Setiap barang masuk diberi kode oleh admin (Zaki). Kode menentukan konten yang d
 
 Kode terlihat oleh semua orang di kartu barang (Daftar barang dan Content Queue). Hanya admin yang bisa mengubahnya (pilihan kode langsung di kartu Daftar barang, atau tombol Edit); barang yang dicatat Admin 2 otomatis JP. Saat kode diubah, konten yang belum ada ditambahkan dan jadwal Foto IG, Video produk, dan Video review yang belum diproduksi dihitung ulang mulai hari itu.
 
+## Cara pakai Workflow Hub (di website)
+
+Di samping judul **Workflow Hub** ada tombol **Cara pakai Workflow Hub** yang membuka halaman panduan: alur 5 tahap, cara membaca kartu, tanggal Ready Louis2, filter, cara menandai Ready, Content Queue, pertanyaan umum, dan tugas harian khusus untuk Zaki, Aulia, Rayhan, dan Salma (pilih nama di atas halaman).
+
 ## Alur kerja konten
 
 | Tahap | Artinya | Siapa yang memindahkan |
