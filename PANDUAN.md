@@ -42,7 +42,7 @@ Di laptop Zaki, Claude Code juga bisa mem-Publish-nya langsung (Firebase CLI sud
 | Menu | Isi | Admin (Zaki) | Aulia (Admin 2) | Rayhan, Salma |
 |---|---|---|---|---|
 | **Beranda** | Ringkasan pribadi (tugas, deadline hari ini, terlambat, berikutnya), menu, Watchlist saya per jenis konten, jadwal tayang hari ini, kalender produksi & tayang | Ya | Ya | Ya |
-| **Hasil Konten** (setelah pindah ke Tirtonichub) | Folder per barang untuk menyimpan file hasil konten (foto/video final, caption). Klik folder → jendela file: unggah (tombol atau tarik file), unduh satu/terpilih/semua, hapus | Ya | Ya | Barang yang ia kerjakan |
+| **File Konten** (setelah pindah ke Tirtonichub) | Folder per barang berisi foto & video konten, dibagi per jenis konten (Foto katalog, Video produk, dst. + Lainnya). **+ File** untuk menambah (nama otomatis berkode, bisa diganti; file besar sampai 5 GB). Tombol ⋯ di file: ganti nama, warna, pindah bagian, hapus. Titik warna di atas: warna folder. Klik file untuk melihat/memutar video. File final dari kartu Workflow Hub (Unggah file final) otomatis masuk ke sini | Ya | Ya | Ya (hapus: file sendiri) |
 | **Content Queue** | Grafik dan Watchlist semua barang per tahap | Ya | Ya | Ya |
 | **Kalender** | Kalender pribadi (hanya bisa dilihat pemiliknya, pilihan warna) + kalender produksi & tayang tim | Kalender pribadi sendiri; jadwal tim: lihat & atur | Pribadi sendiri; jadwal tim: lihat | Pribadi sendiri; jadwal tim: lihat |
 | **Barang** | 1. Barang masuk: catat barang (satu barang, atau stok lama → konten IDCC); semua isian termasuk foto wajib diisi. 2. Daftar barang: pilih kategori lalu merek, cari, dan urutkan (nama A–Z, tanggal datang terlama/terbaru, stok terbanyak/tersedikit); kartu bisa diedit | Ya | Ya | – |
