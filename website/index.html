@@ -463,7 +463,7 @@ table.t th{font:700 12.5px/1.2 var(--display);letter-spacing:0;color:var(--muted
 @media (max-width:640px){.cell{min-height:70px;padding:4px}.slots .lbl{display:none}.tag{font-size:9.5px;padding:0 3px}.dn{font-size:13px}#calEvents{margin-left:0!important}}
 .grid2.solo{grid-template-columns:minmax(0,1fr)}
 /* halaman Cara pakai Workflow Hub */
-.guidebtn{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:var(--navy);color:var(--on-navy);font:700 13px/1 var(--display);cursor:pointer;transition:transform .2s,background .2s}
+.guidebtn{all:unset;text-decoration:none;box-sizing:border-box;display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:var(--navy);color:var(--on-navy);font:700 13px/1 var(--display);cursor:pointer;transition:transform .2s,background .2s}
 .guidebtn svg{width:16px;height:16px}
 .guidebtn:hover{transform:translateY(-1px);background:color-mix(in srgb,var(--navy) 85%,var(--ball))}
 .guidebtn:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
@@ -635,6 +635,8 @@ button.addph svg{width:16px;height:16px}
 .pday .off{font-size:12.5px;color:var(--muted)}
 .prow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 a.btn{text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+#guideOpenHub{font:600 14px/1 var(--body);background:var(--accent);color:var(--accent-ink);border-radius:7px;padding:11px 16px}
+a.hmtile,a.lritem{text-decoration:none;-webkit-touch-callout:default}
 a.btn.wa{background:var(--good);color:var(--surface)}
 .mono-msg{font:12px/1.45 var(--mono);white-space:pre-wrap;background:var(--bg);border-radius:8px;padding:10px;max-height:180px;overflow:auto}
 .doc-head{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between;align-items:flex-end;border-bottom:3px solid var(--ink);padding-bottom:10px}
@@ -1261,7 +1263,7 @@ html[data-skin] .pccell{background:var(--glass);border-color:var(--glass-line)}
   <!-- PIPELINE -->
   <section class="panel" id="p-pipeline" hidden>
     <div>
-      <div class="pghd"><h2>Workflow Hub</h2><button type="button" class="help" aria-expanded="false" aria-label="Cara kerja: Workflow Hub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.4"/><circle cx="12" cy="16.8" r=".6" fill="currentColor"/></svg>How to work?</button><div class="pop" role="tooltip">Lima tahap: <b>Terdata</b> (masuk pantauan), <b>Diproduksi</b> (sedang syuting), <b>Editing</b>, <b>Ready</b> (file final sudah di Google Drive), <b>Tayang</b>. Klik nama tahap di kartu untuk memindahkannya. Tulisan merah di kartu adalah deadline untuk orang yang sedang ditunggu (pilih nama orang untuk melihat deadline orang itu). Kartu Ready yang sudah dijadwalkan di Meta otomatis pindah ke Tayang setelah jam tayangnya lewat. Setiap konten aktif di Workflow Hub selama 1 bulan sejak dibuat, lalu hangus: hilang dari Workflow Hub, kalender, dan penjadwalan, tetapi tetap bisa dilihat sebagai arsip lewat pilihan bulan.</div><button type="button" class="guidebtn" id="goGuide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/><path d="M9 7h7M9 11h5"/></svg>Cara pakai Workflow Hub</button></div>
+      <div class="pghd"><h2>Workflow Hub</h2><button type="button" class="help" aria-expanded="false" aria-label="Cara kerja: Workflow Hub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.4"/><circle cx="12" cy="16.8" r=".6" fill="currentColor"/></svg>How to work?</button><div class="pop" role="tooltip">Lima tahap: <b>Terdata</b> (masuk pantauan), <b>Diproduksi</b> (sedang syuting), <b>Editing</b>, <b>Ready</b> (file final sudah di Google Drive), <b>Tayang</b>. Klik nama tahap di kartu untuk memindahkannya. Tulisan merah di kartu adalah deadline untuk orang yang sedang ditunggu (pilih nama orang untuk melihat deadline orang itu). Kartu Ready yang sudah dijadwalkan di Meta otomatis pindah ke Tayang setelah jam tayangnya lewat. Setiap konten aktif di Workflow Hub selama 1 bulan sejak dibuat, lalu hangus: hilang dari Workflow Hub, kalender, dan penjadwalan, tetapi tetap bisa dilihat sebagai arsip lewat pilihan bulan.</div><a class="guidebtn" id="goGuide" href="?p=guide" data-go="guide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/><path d="M9 7h7M9 11h5"/></svg>Cara pakai Workflow Hub</a></div>
     </div>
     <div class="toolbar">
       <span class="status">Orang:</span>
@@ -1310,7 +1312,7 @@ html[data-skin] .pccell{background:var(--glass);border-color:var(--glass-line)}
   <section class="panel" id="p-guide" hidden>
     <div class="gtop"><h2>Cara pakai Workflow Hub</h2><p class="status" style="margin:0">Panduan lengkap untuk setiap anggota tim. Pilih nama untuk melihat bagian yang paling penting buat orang itu.</p>
       <div class="gwho" id="gWho" role="group" aria-label="Panduan untuk"><button type="button" data-gwho="all">Semua</button><button type="button" data-gwho="Z" data-noi18n>Zaki</button><button type="button" data-gwho="A" data-noi18n>Aulia</button><button type="button" data-gwho="R" data-noi18n>Rayhan</button><button type="button" data-gwho="S" data-noi18n>Salma</button></div>
-      <button type="button" class="btn" id="guideOpenHub">Buka Workflow Hub</button></div>
+      <a class="btn" id="guideOpenHub" href="?p=pipeline" data-go="pipeline">Buka Workflow Hub</a></div>
     <div class="gbody" id="guideBody" data-noi18n></div>
   </section>
 
@@ -1785,7 +1787,8 @@ function setHH(){const h=document.querySelector('header.top');if(h)document.docu
 window.addEventListener('resize',setHH);applyNav();
 /* How to work?: muncul saat kursor menyentuh; di HP diketuk */
 document.addEventListener('click',e=>{const h=e.target.closest('.help');document.querySelectorAll('.help[aria-expanded="true"]').forEach(x=>{if(x!==h)x.setAttribute('aria-expanded','false')});if(h)h.setAttribute('aria-expanded',String(h.getAttribute('aria-expanded')!=='true'))});
-function setTab(t,noHist){if(!noHist&&S.tab&&S.tab!==t){S.hist.push(S.tab);if(S.hist.length>30)S.hist.shift();try{history.pushState({ts:1},'')}catch(e){}}S.tab=t;document.body.classList.toggle('inpage',t!=='home');if(t!=='home')S.railHome=false;if(typeof railSync==='function')railSync();document.querySelectorAll('nav.tabs button[role="tab"]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===t)));
+const tabUrl=t=>(t==='home'?location.pathname:'?p='+t)+location.hash;
+function setTab(t,noHist){if(!noHist&&S.tab&&S.tab!==t){S.hist.push(S.tab);if(S.hist.length>30)S.hist.shift();try{history.pushState({ts:1},'',tabUrl(t))}catch(e){}}else{try{history.replaceState(history.state,'',tabUrl(t))}catch(e){}}S.tab=t;document.body.classList.toggle('inpage',t!=='home');if(t!=='home')S.railHome=false;if(typeof railSync==='function')railSync();document.querySelectorAll('nav.tabs button[role="tab"]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===t)));
   ['home','masuk','pipeline','guide','queue','kalender','idcc','jumat','panduan','tim'].forEach(k=>{$('p-'+k).hidden=k!==t});if(t==='guide')renderGuide();
   const cs=t==='home'?$('calSlotHome'):t==='kalender'?$('calSlotKal'):null;if(cs&&$('homeCal').parentNode!==cs)cs.appendChild($('homeCal'));try{localStorage.setItem('md-tab',t)}catch(e){}window.scrollTo(0,0)}
 /* tombol Kembali: halaman sebelumnya (juga tombol kembali browser/HP) */
@@ -1793,7 +1796,7 @@ S.hist=[];
 function goBack(){const p=S.hist.pop();setTab(p||'home',true)}
 addEventListener('popstate',()=>{if(!S.me)return;goBack()});
 $('backBtn').addEventListener('click',()=>{if(S.hist.length){try{history.back();return}catch(e){}}setTab('home',true)});
-/* setelah login selalu mulai dari Beranda */
+/* setelah login mulai dari Beranda, kecuali alamat menunjuk halaman tertentu (?p=...) */
 
 /* ---------- item form ---------- */
 $('fDate').value=today();$('tDue').value=addWork(today(),5);
@@ -2289,8 +2292,6 @@ function renderGuide(){if(!S.gWho)S.gWho=S.me&&['Z','A','R','S'].includes(S.me.c
   const list=GUIDE.filter(g=>g.who==='all'||who==='all'||g.who.includes(who));const mine=list.filter(g=>g.who!=='all'),rest=list.filter(g=>g.who==='all');
   $('guideBody').innerHTML=mine.concat(rest).map((g,i)=>'<section class="box gsec"><h3><span class="gnum">'+(i+1)+'</span>'+g.h[L]+'</h3>'+g.b[L]+'</section>').join('')}
 $('gWho').addEventListener('click',e=>{const b=e.target.closest('[data-gwho]');if(!b)return;S.gWho=b.dataset.gwho;renderGuide()});
-$('goGuide').addEventListener('click',()=>setTab('guide'));
-$('guideOpenHub').addEventListener('click',()=>setTab('pipeline'));
 /* ikon di legenda warna Workflow Hub */
 document.querySelectorAll('.legend .chip.ty').forEach(c=>{const m=c.className.match(/ty-(\w+)/);if(m)c.insertAdjacentHTML('afterbegin',tyIc(m[1]))});
 /* filter Daftar barang */
@@ -3046,10 +3047,10 @@ const HM_SUB={queue:()=>'Watchlist semua barang',masuk:()=>'Barang masuk & dafta
   jumat:()=>'Laporan mingguan & bulanan',panduan:()=>S.isAdmin?'Aturan kerja & jobdesk':'Aturan kerja & jobdesk Anda',tim:()=>'Beban kerja & akun tim'};
 function renderHomeMenu(){const el=$('hMenu');if(!el||!S.me)return;
   el.innerHTML=[...document.querySelectorAll('nav.tabs button[role="tab"]')].filter(b=>!b.hidden&&b.dataset.tab!=='home').map(b=>{const k=b.dataset.tab,bd=b.querySelector('.badge');
-    return'<button type="button" class="hmtile" data-go="'+k+'"><span class="ic">'+b.querySelector('svg').outerHTML+'</span><b>'+esc(b.querySelector('.lbl').textContent)+(bd?' <span class="badge">'+esc(bd.textContent)+'</span>':'')+'</b><small>'+esc(HM_SUB[k]?HM_SUB[k]():'')+'</small></button>'}).join('');hmNext();renderRail();railSync()}
+    return'<a class="hmtile" href="?p='+k+'" data-go="'+k+'"><span class="ic">'+b.querySelector('svg').outerHTML+'</span><b>'+esc(b.querySelector('.lbl').textContent)+(bd?' <span class="badge">'+esc(bd.textContent)+'</span>':'')+'</b><small>'+esc(HM_SUB[k]?HM_SUB[k]():'')+'</small></a>'}).join('');hmNext();renderRail();railSync()}
 function renderRail(){const el=$('lrList');if(!el||!S.me)return;
   el.innerHTML=[...document.querySelectorAll('nav.tabs button[role="tab"]')].filter(b=>!b.hidden).map((b,n)=>{const k=b.dataset.tab,l=b.querySelector('.lbl').textContent;
-    return'<button type="button" class="lritem" style="--i:'+n+'" data-go="'+k+'"'+(k===S.tab?' aria-current="page"':'')+' title="'+esc(l)+'">'+b.querySelector('svg').outerHTML+'<span>'+esc(l)+'</span></button>'}).join('')}
+    return'<a class="lritem" href="'+(k==='home'?'./':'?p='+k)+'" style="--i:'+n+'" data-go="'+k+'"'+(k===S.tab?' aria-current="page"':'')+' title="'+esc(l)+'">'+b.querySelector('svg').outerHTML+'<span>'+esc(l)+'</span></a>'}).join('')}
 /* kolom ikon kiri tampil di halaman lain; di Beranda baru tampil setelah kotak menu lewat ke atas layar (bergeser halus ke kiri) */
 function railSync(){const on=document.body.classList.contains('inpage')||!!S.railHome;document.body.classList.toggle('railon',on);
   document.querySelectorAll('#lrList .lritem').forEach(b=>b.toggleAttribute('aria-current',b.dataset.go===S.tab));
@@ -3197,7 +3198,7 @@ function applyRole(){const a=S.isAdmin;renderTierPick();
   $('calResched').hidden=!a;$('jobHintAdmin').hidden=!a;$('jobHintMember').hidden=a;$('calEvents').hidden=!a;
   if(!a){const l=document.querySelector('#p-pipeline .pop');l.textContent='Tugas konten milik Anda: tempat Anda menjadi produser, editor, talent, atau penulis skrip. Klik nama tahap di kartu setiap kali pekerjaan berpindah (Terdata → Diproduksi → Editing → Ready). Untuk pindah ke Ready, tempel dulu link Google Drive file final di Detail. Tulisan merah adalah deadline Anda. Tanggal dan penanggung jawab diatur admin.'}
   if((!a&&S.tab==='masuk')||(!S.full&&['jumat','tim'].includes(S.tab)))setTab('pipeline');
-  $('tab-idcc').hidden=!(a||S.me.idcc);if(S.tab==='idcc'&&$('tab-idcc').hidden)setTab('pipeline');if(!S.homeInit){S.homeInit=true;setTab('home')}renderHomeMenu();setHH();}
+  $('tab-idcc').hidden=!(a||S.me.idcc);if(S.tab==='idcc'&&$('tab-idcc').hidden)setTab('pipeline');if(!S.homeInit){S.homeInit=true;const w=new URLSearchParams(location.search).get('p');const ok=w&&w!=='home'&&$('p-'+w)&&(w==='guide'||($('tab-'+w)&&!$('tab-'+w).hidden));setTab(ok?w:'home',true)}renderHomeMenu();setHH();}
 
 /* ---------- template caption Instagram (diatur admin di Tim & Aktivitas) ---------- */
 const DEFAULT_CAP_TPL='{caption}\n\n📍 Tirtonic Tennis Store Jogja\n💬 Info & order: DM atau WhatsApp (link di bio)\n\n{hashtag} #tirtonic #tirtonictennisstore #tenisjogja';
@@ -3280,7 +3281,7 @@ function renderHome(){if(!$('hStats')||!S.me)return;renderHomeMenu();const me=S.
   $('hSlots').innerHTML=[['09:00','foto',0],['12:00','video',0],['15:00','foto',1],['18:00','video',1]].map(([tm,k,i])=>{const t=P[k][i];const H=+tm.slice(0,2);const past=hr>H+1,now=hr>=H-1&&hr<=H+1;
     return'<div class="slot'+(past?' past':'')+(now?' now':'')+'"><span class="k">'+(k==='foto'?'Foto':'Video')+'</span><span class="tm num">'+fmtTime(tm)+'</span>'+
       (t?'<span class="tt">'+esc(t.title)+'</span><span class="status">'+esc(TYPES[t.type].label)+'</span>'+metaState(t):'<span class="status">Slot kosong</span>')+'</div>'}).join('')}
-document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g){setTab(g.dataset.go);return}const sc=e.target.closest('[data-scrollto]');if(sc){const el=$(sc.dataset.scrollto);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})}});
+document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g){if(g.tagName==='A'&&(e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey))return;e.preventDefault();setTab(g.dataset.go);return}const sc=e.target.closest('[data-scrollto]');if(sc){const el=$(sc.dataset.scrollto);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})}});
 setInterval(()=>{if(S.tab==='home')renderHome()},60000);
 $('wSearch').addEventListener('input',e=>{S.wq=e.target.value.toLowerCase().trim();renderWatch()});
 $('wCat').addEventListener('change',e=>{S.wcat=e.target.value;renderWatch()});
