@@ -55,6 +55,19 @@ Menu berupa kotak-kotak di **Beranda**, tepat di bawah sapaan, berjalan pelan ke
 
 **Admin 2** (diatur di Tim & Aktivitas → peran): bisa mencatat barang, mengatur konten, jadwal, dan pengaturan seperti admin, tetapi tidak melihat Laporan Admin dan Tim & Aktivitas, dan di Workflow Hub hanya melihat konten miliknya. Saat ini untuk Aulia.
 
+## Louis2 (jadwal berdasarkan tanggal Ready)
+
+Saat mencatat barang, isi juga **Jam datang** (sebelum atau sesudah 15.00). Setiap konten otomatis mendapat tanggal **wajib Ready** (file final sudah di Drive), dihitung dari hari barang datang:
+
+| Konten | Datang sebelum 15.00 (EX / LS / JP+ / JP) | Datang sesudah 15.00 (EX / LS / JP+ / JP) |
+|---|---|---|
+| Foto katalog | hari itu | besoknya |
+| Foto Instagram | H+1 / H+1 / H+2 / H+3 | H+2 / H+2 / H+4 / H+6 |
+| Video produk | H+2 / H+2 / H+3 / H+5 | H+3 / H+3 / H+4 / H+4 |
+| Video review | H+3 / H+3 / H+4 / H+4 | H+5 / H+5 / H+6 / H+6 |
+
+Kartu di Workflow Hub menampilkan **Deadline Ready**. Tanggal tayang tidak lagi diisi otomatis: konten yang sudah Ready masuk ke kotak **Konten ready** di Content Queue, lengkap dengan saran tanggal tayang (hari yang sama dengan tanggal Ready-nya). Admin menarik konten ke **Kalender tayang** (di HP: tombol Jadwalkan), lalu memilih jam tayang. Klik konten di kalender untuk mengubah jadwal atau mengembalikannya ke Konten ready.
+
 ## Louis1 (kode barang)
 
 Setiap barang masuk diberi kode oleh admin (Zaki). Kode menentukan konten yang dibuat dan urutan jadwalnya:
