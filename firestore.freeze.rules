@@ -1,0 +1,33 @@
+rules_version = '2';
+
+// ATURAN BEKU (pindah ke Tirtonichub, 26 Okt 2026): semua data hanya bisa DIBACA, tidak bisa diubah.
+// Pasang:        ~/.local/bin/firebase deploy --only firestore:rules --config firebase.freeze.json
+// Kembali normal: ~/.local/bin/firebase deploy --only firestore:rules   (memakai firestore.rules)
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function ownerEmails() { return ['mzakiramadhan261003@gmail.com']; }
+    function signedIn() { return request.auth != null && request.auth.token.email != null && request.auth.token.email_verified == true; }
+    function myEmail() { return request.auth.token.email.lower(); }
+    function memberPath() { return /databases/$(database)/documents/members/$(myEmail()); }
+    function isOwner() { return signedIn() && myEmail() in ownerEmails(); }
+    function hasMemberDoc() { return signedIn() && exists(memberPath()); }
+    function isMember() { return isOwner() || hasMemberDoc(); }
+    function isAdmin() { return isOwner() || (hasMemberDoc() && get(memberPath()).data.role == 'admin'); }
+    function isStaff() { return isAdmin() || (hasMemberDoc() && get(memberPath()).data.role == 'admin2'); }
+    function isIdcc() { return isStaff() || (hasMemberDoc() && get(memberPath()).data.get('idcc', false) == true); }
+
+    match /members/{email} { allow read: if signedIn() && (email == myEmail() || isAdmin()); }
+    match /pcal/{email} {
+      allow read: if signedIn() && email == myEmail() && isMember();
+      match /events/{id} { allow read: if signedIn() && email == myEmail() && isMember(); }
+    }
+    match /items/{id}    { allow read: if isMember(); }
+    match /public/{id}   { allow read: if true; }
+    match /idcc/{id}     { allow read: if isIdcc(); }
+    match /photos/{id}   { allow read: if isMember(); }
+    match /settings/{id} { allow read: if isMember(); }
+    match /logs/{id}     { allow read: if isMember(); }
+    match /reports/{id}  { allow read: if isAdmin(); }
+    match /tasks/{id}    { allow read: if isMember(); }
+  }
+}
