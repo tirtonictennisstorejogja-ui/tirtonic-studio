@@ -21,9 +21,10 @@ Alamat utama: `https://media.tirtonichub.com` → **Firebase Hosting** proyek `t
 - Jam kerja: 10.00–11.30 dan 13.00–15.00. Kamis seluruh tim libur (`isOff`), konten tetap tayang lewat penjadwalan.
 - Kapasitas per hari: `SHOOT_CAP`, `EDIT_CAP` (jam per orang), `TYPE_CAP` (konten per jenis), durasi `SHOOT_H` / `EDIT_H`. Libur per orang: `OFF`.
 - Jobdesk utama + pengganti: `DEFAULT_JOB` (bisa diubah admin di tab Panduan, tersimpan di `settings/main.jobdesk`, dibaca lewat `job(type)`).
-- **Louis2 (ready oriented, sejak 26 Okt 2026)**: setiap konten barang baru punya tanggal wajib Ready `readyBy` (= `due`), dihitung dalam hari kalender sejak datang menurut jam datang (sebelum/sesudah 15.00, `items.arrivedAfter15`, formulir `#fTime`) dan kode Louis1, tabel `L2_R` (urutan EX, LS, JP+, JP):
-  - Sebelum 15.00: katalog H · Foto IG 1/1/2/3 · Video produk 2/2/3/5 · Video review 3/3/4/4.
-  - Sesudah 15.00: katalog H+1 · Foto IG 2/2/4/6 · Video produk 3/3/4/4 · Video review 5/5/6/6.
+- **Louis2 (pembaruan dari Louis1, ready oriented, sejak 26 Okt 2026)**: kode EX/LS/JP+/JP dari Louis1 tetap dipakai. Setiap konten barang baru punya tanggal wajib Ready `readyBy` (= `due`) berupa **jangka waktu** (bukan hari tetap) dalam hari kalender sejak hari barang datang menurut jam datang (sebelum/sesudah 15.00, `items.arrivedAfter15`, formulir `#fTime`) dan kode Louis1, tabel `L2_R` (urutan EX, LS, JP+, JP):
+  - Sebelum 15.00: katalog H · Foto IG H+1/1/2/3 · Video produk H+2/2/3/2 · Video review H+3/3/4/4.
+  - Sesudah 15.00: katalog H+1 · Foto IG H+2/2/4/6 · Video produk H+3/3/4/4 · Video review H+5/5/6/6.
+  - Saat kapasitas bentrok, urutan prioritas tetap EX → LS → JP+ (stok >10) → JP (`prioOf` di penyeimbang).
   - `planBatch` menjadwalkan syuting/edit supaya selesai ≤ R (`l2Ready`, `l2Start`); JP+/JP mulai paling cepat 1 hari kerja sebelum R. **Tanggal tayang tidak diisi otomatis** (`postAt` kosong): admin menarik konten Ready ke Kalender tayang di Content Queue.
 - Jenis konten (`TYPES`): `ktl` katalog, `igf` foto IG, `vpr` video produk, `vrv` video review, `idf` foto IDCC, `idc` video IDCC, `evt` event, `khs` khusus, `cmp` campaign. Yang tayang di IG: `POSTED`.
 - Kategori: sepatu, raket, tas, baju, celana, aksesoris, lainnya (`CATS`, `CATLBL`). Sepatu/baju/celana punya gender ukuran Men/Women/Unisex (`GENDER_CATS`).

@@ -55,15 +55,15 @@ Menu berupa kotak-kotak di **Beranda**, tepat di bawah sapaan, berjalan pelan ke
 
 **Admin 2** (diatur di Tim & Aktivitas → peran): bisa mencatat barang, mengatur konten, jadwal, dan pengaturan seperti admin, tetapi tidak melihat Laporan Admin dan Tim & Aktivitas, dan di Workflow Hub hanya melihat konten miliknya. Saat ini untuk Aulia.
 
-## Louis2 (jadwal berdasarkan tanggal Ready)
+## Louis2 (pembaruan Louis1: jadwal berdasarkan tanggal Ready)
 
-Saat mencatat barang, isi juga **Jam datang** (sebelum atau sesudah 15.00). Setiap konten otomatis mendapat tanggal **wajib Ready** (file final sudah di Drive), dihitung dari hari barang datang:
+Kode EX / LS / JP+ / JP dari Louis1 tetap dipakai. Saat mencatat barang, isi juga **Jam datang** (sebelum atau sesudah 15.00). Setiap konten otomatis mendapat tanggal **wajib Ready** (file final sudah di Drive). Angkanya adalah **jangka waktu sejak hari barang datang** (H = hari datang), bukan hari tetap; barang datang hari apa pun dihitung dengan cara yang sama. Saat jadwal tim penuh, urutan prioritas tetap EX → LS → JP+ → JP:
 
 | Konten | Datang sebelum 15.00 (EX / LS / JP+ / JP) | Datang sesudah 15.00 (EX / LS / JP+ / JP) |
 |---|---|---|
 | Foto katalog | hari itu | besoknya |
 | Foto Instagram | H+1 / H+1 / H+2 / H+3 | H+2 / H+2 / H+4 / H+6 |
-| Video produk | H+2 / H+2 / H+3 / H+5 | H+3 / H+3 / H+4 / H+4 |
+| Video produk | H+2 / H+2 / H+3 / H+2 | H+3 / H+3 / H+4 / H+4 |
 | Video review | H+3 / H+3 / H+4 / H+4 | H+5 / H+5 / H+6 / H+6 |
 
 Kartu di Workflow Hub menampilkan **Deadline Ready**. Tanggal tayang tidak lagi diisi otomatis: konten yang sudah Ready masuk ke kotak **Konten ready** di Content Queue, lengkap dengan saran tanggal tayang (hari yang sama dengan tanggal Ready-nya). Admin menarik konten ke **Kalender tayang** (di HP: tombol Jadwalkan), lalu memilih jam tayang. Klik konten di kalender untuk mengubah jadwal atau mengembalikannya ke Konten ready.
