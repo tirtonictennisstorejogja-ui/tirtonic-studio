@@ -57,14 +57,16 @@ Menu berupa kotak-kotak di **Beranda**, tepat di bawah sapaan, berjalan pelan ke
 
 ## Louis2 (pembaruan Louis1: jadwal berdasarkan tanggal Ready)
 
-Kode EX / LS / JP+ / JP dari Louis1 tetap dipakai. Saat mencatat barang, isi juga **Jam datang** (sebelum atau sesudah 15.00). Setiap konten otomatis mendapat tanggal **wajib Ready** (file final sudah di Drive). Angkanya adalah **jangka waktu sejak hari barang datang** (H = hari datang), bukan hari tetap; barang datang hari apa pun dihitung dengan cara yang sama. Saat jadwal tim penuh, urutan prioritas tetap EX → LS → JP+ → JP:
+Kode EX / LS / JP+ / JP dari Louis1 tetap dipakai. Saat mencatat barang, isi juga **Jam datang** (sebelum atau sesudah 15.00). Setiap konten otomatis mendapat tanggal **wajib Ready** (file final sudah di Drive). Angkanya adalah **jangka waktu dalam hari kerja sejak hari barang datang** (H = hari datang, Kamis tidak dihitung karena tim libur), bukan hari tetap; barang datang hari apa pun dihitung dengan cara yang sama. Saat jadwal tim penuh, urutan prioritas tetap EX → LS → JP+ → JP:
 
 | Konten | Datang sebelum 15.00 (EX / LS / JP+ / JP) | Datang sesudah 15.00 (EX / LS / JP+ / JP) |
 |---|---|---|
-| Foto katalog | hari itu | besoknya |
-| Foto Instagram | H+1 / H+1 / H+2 / H+3 | H+2 / H+2 / H+4 / H+6 |
-| Video produk | H+2 / H+2 / H+3 / H+5 | H+3 / H+3 / H+4 / H+4 |
-| Video review | H+3 / H+3 / H+4 / H+4 | H+5 / H+5 / H+6 / H+6 |
+| Foto katalog | hari itu (Kamis → Jumat) | hari kerja berikutnya |
+| Foto Instagram | H+1 / H+1 / H+2 / H+3 | H+2 / H+2 / H+3 / H+4 |
+| Video produk | H+2 / H+2 / H+3 / H+4 | H+3 / H+3 / H+4 / H+5 |
+| Video review | H+3 / H+3 / H+4 / H+5 | H+5 / H+5 / H+6 / H+7 |
+
+**Konten per stok:** EX, LS, dan JP stok di atas 10 mendapat konten lengkap. JP stok 6–10: katalog, Foto IG, Video produk (tanpa review). JP stok 5 ke bawah: katalog dan Foto IG saja. Kalau satu seri datang dalam beberapa warna (nama barang sama), Video review cukup dibuat sekali.
 
 Kartu di Workflow Hub menampilkan **Deadline Ready**. Tanggal tayang tidak lagi diisi otomatis: konten yang sudah Ready masuk ke kotak **Konten ready** di Content Queue, lengkap dengan saran tanggal tayang (hari yang sama dengan tanggal Ready-nya). Admin menarik konten ke **Kalender tayang** (di HP: tombol Jadwalkan), lalu memilih jam tayang. Klik konten di kalender untuk mengubah jadwal atau mengembalikannya ke Konten ready.
 
