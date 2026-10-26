@@ -113,5 +113,7 @@ python3 -m http.server 8765 --directory _test        # buka http://localhost:876
 
 ## 7. Rencana / ide yang pernah dibahas
 
+- **Pindah ke Tirtonichub (Okt 2026, Cara A):** UI ini tetap dipakai, tapi login (OTP WA), absen, akun, barang dari QC, foto (MinIO), dan data pindah ke repo `aldooasdd/Tirtonichub` (Next.js + PostgreSQL di PC kantor), tersaji di `tirtonichub.com/studio`. Di sini: `config.js` `backend:'hub'` → `hubBoot`/`makeHubDb` (meniru `makeDb`, sinkron `/api/studio/sync` tiap 4 detik). `tools/build-hub.py` menyalin UI ke `public/studio` Tirtonichub; `tools/export-firebase.py` mengekspor Firestore. Di Tirtonichub: branch `studio-ui` (API `/api/studio`, aturan `src/server/studio/rules.ts`, impor `prisma/studio-import.mts`, panduan `MIGRASI_STUDIO.md`). Setelah pindah selesai & dicek, Firebase dihapus. **Setiap mengubah UI, jalankan build-hub.py lagi**; aturan akses diubah di `rules.ts` Tirtonichub (bukan firestore.rules).
+
 - n8n untuk otomasi terjadwal (WhatsApp planning Jumat 16.00, deteksi file baru di Google Drive → Ready). AI website tetap lewat fungsi server (`/api/idcc-ai`).
 - Upload otomatis ke Instagram lewat Meta API sengaja TIDAK dibuat; alurnya manual lewat Meta Business Suite dengan bantuan "Antrian upload".
