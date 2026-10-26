@@ -53,6 +53,8 @@ Di laptop Zaki, Claude Code juga bisa mem-Publish-nya langsung (Firebase CLI sud
 
 Menu berupa kotak-kotak di **Beranda**, tepat di bawah sapaan, berjalan pelan ke kiri-kanan (berhenti saat disentuh; ada tombol panah). Saat Beranda di-scroll ke bawah, menu berpindah menjadi **kolom ikon kecil di kiri layar** (di HP: bilah ikon di bawah tulisan Tirtonic Studio); kolom ini selalu tampil di halaman lain. Tombol **Kembali** di atas setiap halaman membawa ke halaman sebelumnya. Isinya menyesuaikan akun masing-masing. Klik **logo Tirtonic** di kiri atas untuk kembali ke Beranda. Klik **avatar Anda** di kanan atas untuk membuka **Profil** (foto profil, avatar hewan beranimasi, warna avatar, **catatan pribadi** yang hanya bisa dibaca pemiliknya, bahasa), **Tampilan** (10 tema, sebagian beranimasi), dan **Keluar**.
 
+**Akun tim** (Tim & Aktivitas → Akun tim): isi formulir lalu Tambah untuk akun baru. Tekan **Edit** di baris akun untuk mengubah email, nama, kode jobdesk, peran, nomor WhatsApp, atau izin IDCC, lalu Simpan perubahan. Ganti email = orang itu masuk dengan email baru; kalender & catatan pribadi di email lama tidak ikut pindah. Email dan peran akun Anda sendiri tidak bisa diganti dari akun Anda.
+
 **Admin 2** (diatur di Tim & Aktivitas → peran): bisa mencatat barang, mengatur konten, jadwal, dan pengaturan seperti admin, tetapi tidak melihat Laporan Admin dan Tim & Aktivitas, dan di Workflow Hub hanya melihat konten miliknya. Saat ini untuk Aulia.
 
 ## Louis2 (pembaruan Louis1: jadwal berdasarkan tanggal Ready)
