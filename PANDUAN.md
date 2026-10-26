@@ -68,7 +68,7 @@ Kode EX / LS / JP+ / JP dari Louis1 tetap dipakai. Saat mencatat barang, isi jug
 
 **Konten per stok:** EX, LS, dan JP stok di atas 10 mendapat konten lengkap. JP stok 6–10: katalog, Foto IG, Video produk (tanpa review). JP stok 5 ke bawah: katalog dan Foto IG saja. Kalau satu seri datang dalam beberapa warna (nama barang sama), Video review cukup dibuat sekali.
 
-Kartu di Workflow Hub menampilkan **Deadline Ready**. Tanggal tayang tidak lagi diisi otomatis: konten yang sudah Ready masuk ke kotak **Konten ready** di Content Queue, lengkap dengan saran tanggal tayang (hari yang sama dengan tanggal Ready-nya). Admin menarik konten ke **Kalender tayang** (di HP: tombol Jadwalkan), lalu memilih jam tayang. Klik konten di kalender untuk mengubah jadwal atau mengembalikannya ke Konten ready.
+Kartu di Workflow Hub menampilkan **Deadline Ready**. Tanggal tayang tidak lagi diisi otomatis: konten yang sudah Ready masuk ke kotak **Konten ready** di Content Queue, lengkap dengan keterangan **Saran upload** (sehari sesudah tanggal Ready). Ini hanya saran, tidak otomatis masuk kalender; admin yang menentukan. Admin menarik konten ke **Kalender tayang** (di HP: tombol Jadwalkan), lalu memilih jam tayang. Klik konten di kalender untuk mengubah jadwal atau mengembalikannya ke Konten ready.
 
 ## Louis1 (kode barang)
 
@@ -81,7 +81,7 @@ Setiap barang masuk diberi kode oleh admin (Zaki). Kode menentukan konten yang d
 | **JP+** | Jumlah Produk, stok di atas 10 | Lengkap | Ketiga; ikut jadwal biasa, paling lama 7 hari kerja |
 | **JP** | Jumlah Produk, stok 10 ke bawah | Lengkap | Terakhir; syuting mulai H+3, tayang paling cepat H+5, tidak menggeser jadwal lain, paling lama 10 hari kerja |
 
-Batas 7/10 hari kerja untuk JP tidak berlaku selama masih ada barang EX/LS yang ditandai **Musiman** dan belum tayang. Kode terlihat oleh semua orang di kartu barang (Daftar barang dan Content Queue). Hanya admin yang bisa mengubahnya (pilihan kode langsung di kartu Daftar barang, atau tombol Edit); barang yang dicatat Admin 2 otomatis JP. Saat kode diubah, konten yang belum ada ditambahkan dan jadwal Foto IG, Video produk, dan Video review yang belum diproduksi dihitung ulang mulai hari itu.
+Kode terlihat oleh semua orang di kartu barang (Daftar barang dan Content Queue). Hanya admin yang bisa mengubahnya (pilihan kode langsung di kartu Daftar barang, atau tombol Edit); barang yang dicatat Admin 2 otomatis JP. Saat kode diubah, konten yang belum ada ditambahkan dan jadwal Foto IG, Video produk, dan Video review yang belum diproduksi dihitung ulang mulai hari itu.
 
 ## Alur kerja konten
 
