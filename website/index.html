@@ -1627,7 +1627,7 @@ function bumpable(t,rank,d){const r=rankOfTask(t);return r>rank&&r>=2&&r<4&&!t.l
 const postGap=r=>r<=1?1:2;
 /* Louis2 (pembaruan Louis1, ready oriented): tanggal wajib Ready (R) = jangka waktu dalam hari kalender sejak barang datang (bukan hari tetap),
    tergantung jam datang (sebelum/sesudah 15.00) dan kode. Urutan kolom: EX, LS, JP+, JP (= rankOfItem). */
-const L2_R={early:{ktl:[0,0,0,0],igf:[1,1,2,3],vpr:[2,2,3,2],vrv:[3,3,4,4]},late:{ktl:[1,1,1,1],igf:[2,2,4,6],vpr:[3,3,4,4],vrv:[5,5,6,6]}};
+const L2_R={early:{ktl:[0,0,0,0],igf:[1,1,2,3],vpr:[2,2,3,5],vrv:[3,3,4,4]},late:{ktl:[1,1,1,1],igf:[2,2,4,6],vpr:[3,3,4,4],vrv:[5,5,6,6]}};
 const maxD=(a,b)=>a>b?a:b;
 const l2Ready=(t,r,base)=>addDays(base,L2_R[r.after15?'late':'early'][t][rankOfItem(r)]);
 const l2Start=(r,base)=>nextDayWith([],r.after15?addDays(base,1):base);   /* EX/LS: file final siap H-1 sebelum tayang, lainnya H-2 */

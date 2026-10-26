@@ -63,7 +63,7 @@ Kode EX / LS / JP+ / JP dari Louis1 tetap dipakai. Saat mencatat barang, isi jug
 |---|---|---|
 | Foto katalog | hari itu | besoknya |
 | Foto Instagram | H+1 / H+1 / H+2 / H+3 | H+2 / H+2 / H+4 / H+6 |
-| Video produk | H+2 / H+2 / H+3 / H+2 | H+3 / H+3 / H+4 / H+4 |
+| Video produk | H+2 / H+2 / H+3 / H+5 | H+3 / H+3 / H+4 / H+4 |
 | Video review | H+3 / H+3 / H+4 / H+4 | H+5 / H+5 / H+6 / H+6 |
 
 Kartu di Workflow Hub menampilkan **Deadline Ready**. Tanggal tayang tidak lagi diisi otomatis: konten yang sudah Ready masuk ke kotak **Konten ready** di Content Queue, lengkap dengan saran tanggal tayang (hari yang sama dengan tanggal Ready-nya). Admin menarik konten ke **Kalender tayang** (di HP: tombol Jadwalkan), lalu memilih jam tayang. Klik konten di kalender untuk mengubah jadwal atau mengembalikannya ke Konten ready.
