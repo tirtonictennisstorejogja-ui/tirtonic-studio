@@ -19,7 +19,7 @@ Alamat utama: `https://media.tirtonichub.com` → **Firebase Hosting** proyek `t
 | S | Salma | Talent foto IG, video produk & review, penulis skrip | Kamis, Jumat |
 
 - Jam kerja: 10.00–11.30 dan 13.00–15.00. Kamis seluruh tim libur (`isOff`), konten tetap tayang lewat penjadwalan.
-- Kapasitas per hari: `SHOOT_CAP`, `EDIT_CAP` (jam per orang), `TYPE_CAP` (konten per jenis), durasi `SHOOT_H` / `EDIT_H`. Libur per orang: `OFF`.
+- Kapasitas per hari: `SHOOT_CAP`, `EDIT_CAP` (jam per orang; editing di luar jam aktif kerja: Rayhan 6, Aulia 6, Zaki 4, Salma 0), `TYPE_CAP` (konten per jenis), durasi `SHOOT_H` / `EDIT_H`. Libur per orang: `OFF`.
 - Jobdesk utama + pengganti: `DEFAULT_JOB` (bisa diubah admin di tab Panduan, tersimpan di `settings/main.jobdesk`, dibaca lewat `job(type)`).
 - **Louis2 (pembaruan dari Louis1, ready oriented, sejak 26 Okt 2026)**: kode EX/LS/JP+/JP dari Louis1 tetap dipakai. Setiap konten barang baru punya tanggal wajib Ready `readyBy` (= `due`) berupa **jangka waktu** (bukan hari tetap) dalam **hari kerja** (Kamis dilewati; R yang jatuh di hari libur pindah ke hari kerja berikutnya) sejak hari barang datang menurut jam datang (sebelum/sesudah 15.00, `items.arrivedAfter15`, formulir `#fTime`) dan kode Louis1, tabel `L2_R` (urutan EX, LS, JP+, JP):
   - Sebelum 15.00: katalog H · Foto IG H+1/1/2/3 · Video produk H+2/2/3/4 · Video review H+3/3/4/5.
