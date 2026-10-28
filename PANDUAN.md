@@ -33,7 +33,7 @@ Di laptop Zaki, Claude Code juga bisa mem-Publish-nya langsung (Firebase CLI sud
 2. **GitHub**: repo Private `tirtonic-studio` berisi folder dan file di atas.
 3. **Firebase Hosting**: website dipasang dari folder `website` ke proyek `tirtonic-studio` (otomatis lewat GitHub Actions, pengaturan di `firebase.json`). Domain **media.tirtonichub.com** ditambahkan di Firebase Console → Hosting → Add custom domain, lalu catatan **CNAME** `media` → `tirtonic-studio.web.app` dipasang di AntMedia lewat **cPanel → Zone Editor**, dan domainnya didaftarkan di Firebase → Authentication → Settings → Authorized domains.
 4. **Kunci AI** (ditunda): fitur AI butuh hosting dengan fungsi server (misalnya Cloudflare Pages, kodenya sudah siap di `lib/` dan `functions/`) dan kunci `ANTHROPIC_API_KEY` dari console.anthropic.com yang disimpan di pengaturan hosting tersebut. **Jangan tempel kunci di chat, file, atau GitHub.**
-5. **Akun tim**: login sebagai Zaki → Tim & Aktivitas → Akun tim. Centang **Boleh memakai Analisis IDCC** untuk Aulia.
+5. **Akun tim**: login sebagai Zaki → Tim & Aktivitas → Akun tim. Centang **Boleh memakai IDCC** untuk Aulia.
 
 ---
 
@@ -42,13 +42,13 @@ Di laptop Zaki, Claude Code juga bisa mem-Publish-nya langsung (Firebase CLI sud
 | Menu | Isi | Admin (Zaki) | Aulia (Admin 2) | Rayhan, Salma |
 |---|---|---|---|---|
 | **Beranda** | Ringkasan pribadi (tugas, deadline hari ini, terlambat, berikutnya), menu, Watchlist saya per jenis konten, jadwal tayang hari ini, kalender produksi & tayang | Ya | Ya | Ya |
-| **File Konten** (setelah pindah ke Tirtonichub) | Folder per barang berisi foto & video konten, dibagi per jenis konten (Foto katalog, Video produk, dst. + Lainnya). **+ File** untuk menambah (nama otomatis berkode, bisa diganti; file besar sampai 5 GB). Tombol ⋯ di file: ganti nama, warna, pindah bagian, hapus. Titik warna di atas: warna folder. Klik file untuk melihat/memutar video. File final dari kartu Workflow Hub (Unggah file final) otomatis masuk ke sini | Ya | Ya | Ya (hapus: file sendiri) |
+| **File** (dulu File Konten, setelah pindah ke Tirtonichub) | Folder per barang berisi foto & video konten, dibagi per jenis konten (Foto katalog, Video produk, dst. + Lainnya). **+ File** untuk menambah (nama otomatis berkode, bisa diganti; file besar sampai 5 GB). Tombol ⋯ di file: ganti nama, warna, pindah bagian, hapus. Titik warna di atas: warna folder. Klik file untuk melihat/memutar video. File final dari kartu Workflow Hub (Unggah file final) otomatis masuk ke sini | Ya | Ya | Ya (hapus: file sendiri) |
 | **Content Queue** | Grafik dan Watchlist semua barang per tahap | Ya | Ya | Ya |
 | **Kalender** | Kalender pribadi (hanya bisa dilihat pemiliknya, pilihan warna) + kalender produksi & tayang tim | Kalender pribadi sendiri; jadwal tim: lihat & atur | Pribadi sendiri; jadwal tim: lihat | Pribadi sendiri; jadwal tim: lihat |
 | **Barang** | 1. Barang masuk: catat barang (satu barang, atau stok lama → konten IDCC); semua isian termasuk foto wajib diisi. 2. Daftar barang: pilih kategori lalu merek, cari, dan urutkan (nama A–Z, tanggal datang terlama/terbaru, stok terbanyak/tersedikit); kartu bisa diedit | Ya | Ya | – |
 | **Workflow Hub** | Papan kerja 5 tahap | Semua konten | Konten sendiri (bisa mengatur) | Konten sendiri |
-| **Analisis IDCC** | Baca PDF umur persediaan dari finance + rekomendasi AI | Ya | Ya (jika dicentang) | – |
-| **Laporan Admin** | Laporan mingguan, planning + WhatsApp, laporan bulanan CEO | Ya | – | – |
+| **Barang → IDCC** (dulu Analisis IDCC) | Baca PDF umur persediaan dari finance + rekomendasi AI | Ya | Ya (jika dicentang) | – |
+| **Laporan** | Laporan mingguan, planning + WhatsApp, laporan bulanan CEO | Ya | – | – |
 | **Panduan** | Aturan kerja, jobdesk, penyesuaian otomatis | Lihat & ubah jobdesk | Lihat | Lihat |
 | **Tim & Aktivitas** | Beban kerja, track per minggu, template caption, akun tim, latar login | Ya | – | – |
 
@@ -56,7 +56,7 @@ Menu berupa kotak-kotak di **Beranda**, tepat di bawah sapaan, berjalan pelan ke
 
 **Akun tim** (Tim & Aktivitas → Akun tim): isi formulir lalu Tambah untuk akun baru. Tekan **Edit** di baris akun untuk mengubah email, nama, kode jobdesk, peran, nomor WhatsApp, atau izin IDCC, lalu Simpan perubahan. Ganti email = orang itu masuk dengan email baru; kalender & catatan pribadi di email lama tidak ikut pindah. Email dan peran akun Anda sendiri tidak bisa diganti dari akun Anda.
 
-**Admin 2** (diatur di Tim & Aktivitas → peran): bisa mencatat barang, mengatur konten, jadwal, dan pengaturan seperti admin, tetapi tidak melihat Laporan Admin dan Tim & Aktivitas, dan di Workflow Hub hanya melihat konten miliknya. Saat ini untuk Aulia.
+**Admin 2** (diatur di Tim & Aktivitas → peran): bisa mencatat barang, mengatur konten, jadwal, dan pengaturan seperti admin, tetapi tidak melihat Laporan dan Tim & Aktivitas, dan di Workflow Hub hanya melihat konten miliknya. Saat ini untuk Aulia.
 
 ## Louis2 (pembaruan Louis1: jadwal berdasarkan tanggal Ready)
 
@@ -113,10 +113,10 @@ Tulisan merah di kartu adalah deadline orang yang sedang ditunggu. **Deadline** 
 - Payday tayang tanggal 23, tanggal kembar tayang H-2, IDCC satu video per minggu (bawaan Rabu).
 - Jadwal syuting dan editing mengikuti hari masuk dan kapasitas tiap orang. Jika penuh atau ada yang libur, website memindahkan tugas sendiri (lihat Panduan → Penyesuaian otomatis terakhir).
 
-## Analisis IDCC
+## IDCC (di dalam Barang)
 
 1. Minta finance mengekspor laporan **Umur Persediaan** dari ACCURATE ke PDF (boleh terpisah: sepatu, raket, tas).
-2. **Analisis IDCC → Pilih file PDF** → pilih semua file. Kolom **Cocok** berarti total stok sama dengan baris total laporan.
+2. **Barang → IDCC → Pilih file PDF** → pilih semua file. Kolom **Cocok** berarti total stok sama dengan baris total laporan.
 3. Atur kriteria → **Analisis dengan AI** → centang barang yang disetujui → **Pratinjau jadwal** → **Simpan & jadwalkan**.
 
 Yang dikirim ke AI hanya nama barang, varian, dan jumlah stok per umur (tanpa harga). File PDF dibaca di browser dan tidak diunggah.
