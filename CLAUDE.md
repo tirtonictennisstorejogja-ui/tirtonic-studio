@@ -101,7 +101,7 @@ python3 tools/make-test-page.py                      # membuat _test/ dengan Fir
 python3 -m http.server 8765 --directory _test        # buka http://localhost:8765/ (Zaki) atau /#rayhan, /#aulia, /#salma
 ```
 - `tools/fake-firebase.js` meniru Firebase di memori dan **mencatat pelanggaran aturan** di `window.__VIOLATIONS` (tiruan dari firestore.rules; perbarui juga bila rules berubah).
-- Cek minimal: tidak ada error di console, tidak ada scroll menyamping di 390px dan 1366px, mode terang & gelap, sebagai admin, Admin 2 (Aulia di data contoh), dan anggota.
+- Cek minimal: tidak ada error di console, tidak ada scroll menyamping di 390px dan 1366px (catatan: Chrome headless biasa tidak bisa lebih sempit dari 500px; uji HP harus memakai emulasi perangkat `Emulation.setDeviceMetricsOverride` lebar 390, mobile:true. `html{overflow-x:clip}` menyembunyikan scroll samping, jadi cek juga `document.documentElement.scrollWidth` ≤ 390 dan isi yang terpotong di kanan), mode terang & gelap, sebagai admin, Admin 2 (Aulia di data contoh), dan anggota.
 - Cek sintaks fungsi: `~/.local/node/bin/node --check lib/idcc-ai.mjs` (Node.js terpasang di `~/.local/node`). Simulasi Cloudflare Pages lengkap dengan fungsi AI: `npx wrangler@4 pages dev website --port 8788` (folder `.wrangler/` jangan di-commit).
 - Jangan commit folder `_test/`.
 
