@@ -42,11 +42,11 @@ Di laptop Zaki, Claude Code juga bisa mem-Publish-nya langsung (Firebase CLI sud
 | Menu | Isi | Admin (Zaki) | Aulia (Admin 2) | Rayhan, Salma |
 |---|---|---|---|---|
 | **Beranda** | Ringkasan pribadi (tugas, deadline hari ini, terlambat, berikutnya), menu, Watchlist saya per jenis konten, jadwal tayang hari ini, kalender produksi & tayang | Ya | Ya | Ya |
-| **File** (dulu File Konten, setelah pindah ke Tirtonichub) | Folder per barang berisi foto & video konten, dibagi per jenis konten (Foto katalog, Video produk, dst. + Lainnya). **+ File** untuk menambah (nama otomatis berkode, bisa diganti; file besar sampai 5 GB). Tombol ⋯ di file: ganti nama, warna, pindah bagian, hapus. Titik warna di atas: warna folder. Klik file untuk melihat/memutar video. File final dari kartu Workflow Hub (Unggah file final) otomatis masuk ke sini | Ya | Ya | Ya (hapus: file sendiri) |
+| **File** (dulu File Konten, setelah pindah ke Tirtonichub) | Folder per barang berisi foto & video konten, dibagi per jenis konten (Foto katalog, Video produk, dst. + Lainnya). **+ File** untuk menambah (nama otomatis berkode, bisa diganti; file besar sampai 5 GB). Tombol ⋯ di file: ganti nama, warna, pindah bagian, hapus. Titik warna di atas: warna folder. Klik file untuk melihat/memutar video. File final dari kartu FlowSpace (Unggah file final) otomatis masuk ke sini | Ya | Ya | Ya (hapus: file sendiri) |
 | **Content Queue** | Grafik dan Watchlist semua barang per tahap | Ya | Ya | Ya |
 | **Kalender** | Kalender pribadi (hanya bisa dilihat pemiliknya, pilihan warna) + kalender produksi & tayang tim | Kalender pribadi sendiri; jadwal tim: lihat & atur | Pribadi sendiri; jadwal tim: lihat | Pribadi sendiri; jadwal tim: lihat |
 | **Barang** | 1. Barang masuk: catat barang (satu barang, atau stok lama → konten IDCC); semua isian termasuk foto wajib diisi. 2. Daftar barang: pilih kategori lalu merek, cari, dan urutkan (nama A–Z, tanggal datang terlama/terbaru, stok terbanyak/tersedikit); kartu bisa diedit | Ya | Ya | – |
-| **Workflow Hub** | Papan kerja 5 tahap | Semua konten | Konten sendiri (bisa mengatur) | Konten sendiri |
+| **FlowSpace** | Papan kerja 5 tahap | Semua konten | Konten sendiri (bisa mengatur) | Konten sendiri |
 | **Barang → IDCC** (dulu Analisis IDCC) | Baca PDF umur persediaan dari finance + rekomendasi AI | Ya | Ya (jika dicentang) | – |
 | **Laporan** | Laporan mingguan, planning + WhatsApp, laporan bulanan CEO | Ya | – | – |
 | **Panduan** | Aturan kerja, jobdesk, penyesuaian otomatis | Lihat & ubah jobdesk | Lihat | Lihat |
@@ -56,7 +56,7 @@ Menu berupa kotak-kotak di **Beranda**, tepat di bawah sapaan, berjalan pelan ke
 
 **Akun tim** (Tim & Aktivitas → Akun tim): isi formulir lalu Tambah untuk akun baru. Tekan **Edit** di baris akun untuk mengubah email, nama, kode jobdesk, peran, nomor WhatsApp, atau izin IDCC, lalu Simpan perubahan. Ganti email = orang itu masuk dengan email baru; kalender & catatan pribadi di email lama tidak ikut pindah. Email dan peran akun Anda sendiri tidak bisa diganti dari akun Anda.
 
-**Admin 2** (diatur di Tim & Aktivitas → peran): bisa mencatat barang, mengatur konten, jadwal, dan pengaturan seperti admin, tetapi tidak melihat Laporan dan Tim & Aktivitas, dan di Workflow Hub hanya melihat konten miliknya. Saat ini untuk Aulia.
+**Admin 2** (diatur di Tim & Aktivitas → peran): bisa mencatat barang, mengatur konten, jadwal, dan pengaturan seperti admin, tetapi tidak melihat Laporan dan Tim & Aktivitas, dan di FlowSpace hanya melihat konten miliknya. Saat ini untuk Aulia.
 
 ## Louis2 (pembaruan Louis1: jadwal berdasarkan tanggal Ready)
 
@@ -71,7 +71,7 @@ Kode EX / LS / JP+ / JP dari Louis1 tetap dipakai. Saat mencatat barang, isi jug
 
 **Konten per stok:** EX, LS, dan JP stok di atas 10 mendapat konten lengkap. JP stok 6–10: katalog, Foto IG, Video produk (tanpa review). JP stok 5 ke bawah: katalog dan Foto IG saja. Kalau satu seri datang dalam beberapa warna (nama barang sama), Video review cukup dibuat sekali.
 
-Kartu di Workflow Hub menampilkan **Deadline Ready**. Tanggal tayang tidak lagi diisi otomatis: konten yang sudah Ready masuk ke kotak **Konten ready** di Content Queue, lengkap dengan keterangan **Saran upload** (sehari sesudah tanggal Ready). Ini hanya saran, tidak otomatis masuk kalender; admin yang menentukan. Admin menarik konten ke **Kalender tayang** (di HP: tombol Jadwalkan), lalu memilih jam tayang. Klik konten di kalender untuk mengubah jadwal atau mengembalikannya ke Konten ready.
+Kartu di FlowSpace menampilkan **Deadline Ready**. Tanggal tayang tidak lagi diisi otomatis: konten yang sudah Ready masuk ke kotak **Konten ready** di Content Queue, lengkap dengan keterangan **Saran upload** (sehari sesudah tanggal Ready). Ini hanya saran, tidak otomatis masuk kalender; admin yang menentukan. Admin menarik konten ke **Kalender tayang** (di HP: tombol Jadwalkan), lalu memilih jam tayang. Klik konten di kalender untuk mengubah jadwal atau mengembalikannya ke Konten ready.
 
 ## Louis1 (kode barang)
 
@@ -86,9 +86,9 @@ Setiap barang masuk diberi kode oleh admin (Zaki). Kode menentukan konten yang d
 
 Kode terlihat oleh semua orang di kartu barang (Daftar barang dan Content Queue). Hanya admin yang bisa mengubahnya (pilihan kode langsung di kartu Daftar barang, atau tombol Edit); barang yang dicatat Admin 2 otomatis JP. Saat kode diubah, konten yang belum ada ditambahkan dan jadwal Foto IG, Video produk, dan Video review yang belum diproduksi dihitung ulang mulai hari itu.
 
-## Cara pakai Workflow Hub (di website)
+## Cara pakai FlowSpace (di website)
 
-Di samping judul **Workflow Hub** ada tombol **Cara pakai Workflow Hub** yang membuka halaman panduan: alur 5 tahap, cara membaca kartu, tanggal Ready Louis2, filter, cara menandai Ready, Content Queue, pertanyaan umum, dan tugas harian khusus untuk Zaki, Aulia, Rayhan, dan Salma (pilih nama di atas halaman).
+Di samping judul **FlowSpace** ada tombol **Cara pakai FlowSpace** yang membuka halaman panduan: alur 5 tahap, cara membaca kartu, tanggal Ready Louis2, filter, cara menandai Ready, Content Queue, pertanyaan umum, dan tugas harian khusus untuk Zaki, Aulia, Rayhan, dan Salma (pilih nama di atas halaman).
 
 ## Alur kerja konten
 
@@ -102,7 +102,7 @@ Di samping judul **Workflow Hub** ada tombol **Cara pakai Workflow Hub** yang me
 
 1. Editor mengunggah file final ke Google Drive dengan nama file dari kartu, menempel link Drive di **Detail** kartu, lalu memindahkan kartu ke **Ready**.
 2. Zaki mengecek file dan klik **Tandai sudah dicek**. Di **Detail → Caption Instagram**, tempel deskripsi dari toko online lalu klik **Buat caption dengan AI** (template diatur di Tim & Aktivitas).
-3. Zaki membuka **Detail** kartu Ready di Workflow Hub: buka file Drive, unduh, **Salin caption**, jadwalkan di Meta Business Suite pada tanggal & jam yang tertera, lalu klik **Sudah dijadwalkan di Meta**.
+3. Zaki membuka **Detail** kartu Ready di FlowSpace: buka file Drive, unduh, **Salin caption**, jadwalkan di Meta Business Suite pada tanggal & jam yang tertera, lalu klik **Sudah dijadwalkan di Meta**.
 4. Setelah jam tayang lewat, kartu pindah ke **Tayang** sendiri.
 
 Tulisan merah di kartu adalah deadline orang yang sedang ditunggu. **Deadline** biru di kartu dan Watchlist adalah batas file final harus Ready: 2 hari kerja sebelum tayang. Foto barang otomatis dipotong potret 2:3. Di halaman selain Beranda, buka menu dengan mengarahkan kursor ke ujung kiri layar (laptop) atau tombol garis tiga di kiri atas (HP). Bahasa Indonesia/Inggris dipilih di panel avatar (berlaku per perangkat; pesan WhatsApp tetap bahasa Indonesia). Konten aktif 1 bulan sejak dibuat, setelah itu menjadi arsip.
