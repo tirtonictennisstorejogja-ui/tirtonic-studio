@@ -86,7 +86,7 @@ service cloud.firestore {
       allow read: if isMember();
       allow create: if isStaff() || idccCreate();
       allow delete: if isStaff();
-      allow update: if isStaff() || memberStatusUpdate();
+      allow update: if (isStaff() && (isAdmin() || !request.resource.data.diff(resource.data).affectedKeys().hasAny(['suspendedAt', 'suspendedBy', 'pausedMs']))) || memberStatusUpdate();
 
       // Anggota IDCC: hanya membuat konten IDCC baru dari stok lama, status awal Rencana
       function idccCreate() {

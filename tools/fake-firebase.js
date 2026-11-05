@@ -25,7 +25,7 @@
       if (op === 'set' && !before && !jp(after)) { violations.push({path, op, why:'kode Louis1 khusus admin'}); return false; }
       if (op !== 'delete' && before && after && (JSON.stringify(before.tier) !== JSON.stringify(after.tier) || JSON.stringify(!!before.seasonal) !== JSON.stringify(!!after.seasonal))) { violations.push({path, op, why:'kode Louis1 khusus admin'}); return false; }
       return true; }
-    if (isStaff()) return true;
+    if (isStaff()) { if (col==='tasks' && !isAdmin() && before && after && ['suspendedAt','suspendedBy','pausedMs'].some(k=>JSON.stringify(before[k])!==JSON.stringify(after[k]))) { violations.push({path,op,why:'tangguhkan khusus admin'}); return false; } return true; }
     const mm = memberOf(u.email) || {}; const idcc = mm.idcc === true;
     if (col === 'idcc' && op === 'set' && !before && idcc) return true;
     if (col === 'items' && op === 'set' && !before && idcc && after && after.old === true) return true;
