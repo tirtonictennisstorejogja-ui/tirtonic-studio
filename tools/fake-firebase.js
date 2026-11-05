@@ -33,7 +33,7 @@
     if (col !== 'tasks' || op !== 'update' || !before) { violations.push({path, op, why:'non-admin '+op+' on '+col}); return false; }
     const m = memberOf(u.email) || {}; const code = m.code;
     if (![before.producer,before.editor,before.talent,before.script].includes(code)) { violations.push({path,op,why:'not assignee'}); return false; }
-    const allowed = ['status','shotAt','readyAt','note','driveUrl','history','updatedAt','updatedBy'];
+    const allowed = ['status','shotAt','readyAt','note','driveUrl','scriptUrl','history','updatedAt','updatedBy'];
     const changed = Object.keys(Object.assign({}, before, after)).filter(k => JSON.stringify(before[k]) !== JSON.stringify(after[k]));
     const bad = changed.filter(k => !allowed.includes(k));
     const early = ['Rencana','Siap Produksi','Diproduksi','Editing','QC','Terdata','Ready'];const allowedTo=['Terdata','Diproduksi','Editing','Ready'];

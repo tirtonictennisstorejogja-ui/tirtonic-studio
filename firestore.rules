@@ -109,12 +109,13 @@ service cloud.firestore {
         return hasMemberDoc()
           && code is string && code != ''
           && code in [before.get('producer', ''), before.get('editor', ''), before.get('talent', ''), before.get('script', '')]
-          && after.diff(before).affectedKeys().hasOnly(['status', 'shotAt', 'readyAt', 'note', 'driveUrl', 'history', 'updatedAt', 'updatedBy'])
+          && after.diff(before).affectedKeys().hasOnly(['status', 'shotAt', 'readyAt', 'note', 'driveUrl', 'scriptUrl', 'history', 'updatedAt', 'updatedBy'])
           && before.status in early
           && before.get('metaAt', 0) == 0
           && (after.status in allowedTo || after.status == before.status)
           && after.get('note', '') is string && after.get('note', '').size() <= 1000
           && after.get('driveUrl', '') is string && after.get('driveUrl', '').size() <= 500
+          && after.get('scriptUrl', '') is string && after.get('scriptUrl', '').size() <= 500
           && after.get('history', []) is list && after.get('history', []).size() <= 40;
       }
     }
