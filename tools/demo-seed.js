@@ -33,14 +33,14 @@
   const drv='https://drive.google.com/file/d/contoh/view';
   T('i1','ktl','Ready',-2,-1,null,{checked:true,driveUrl:drv});
   T('i1','igf','Ready',-2,-1,1,{checked:true,driveUrl:drv,caption:CAP,metaAt:now-3*H,postTime:'09:00'});
-  T('i1','vpr','Editing',-1,0,2);
+  T('i1','vpr','Editing',-1,0,2,{cprId:'TRT-CPR-VPD-2611-0001',qaReq:true});   /* CPR: contoh Content ID + QA */
   T('i1','vrv','Terdata',1,3,5);
   T('i2','ktl','Editing',-1,0,null);
   T('i2','igf','Diproduksi',0,1,3);
   T('i2','vpr','Terdata',1,2,4);
   T('i2','vrv','Terdata',2,5,7);
   T('i3','ktl','Ready',-3,-2,null,{driveUrl:drv});
-  T('i3','igf','Ready',-2,-1,2,{driveUrl:drv});
+  T('i3','igf','Ready',-2,-1,2,{driveUrl:drv,cprId:'TRT-CPR-FIP-2611-0002',qaReq:true,qa:{st:'revisi',g:{pf:true,bi:true,cr:true,te:false,rc:true,da:true},by:'Zaki',at:now-2*H,round:1,note:'Foto agak noise, ulang edit grain',log:[{at:now-2*H,by:'Zaki',st:'revisi',note:'Foto agak noise, ulang edit grain',fail:['te']}]}});
   T('i3','vpr','Diproduksi',0,1,3);
   T('i4','igf','Terdata',-1,-1,2);
   T('i4','vrv','Editing',-2,-1,1);
@@ -49,7 +49,7 @@
   T('i6','igf','Terdata',1,1,3);
   T('i6','vrv','Editing',-1,1,4);
   T('i7','idc','Terdata',1,2,6,{source:'lama',reason:'idcc'});
-  T('i8','vrv','Ready',-3,-1,3,{checked:true,driveUrl:drv,caption:CAP.replace('Langkah ringan','Ringan dan responsif')});
+  T('i8','vrv','Ready',-3,-1,3,{cprId:'TRT-CPR-VRV-2611-0003',qaReq:true,qa:{st:'ok',g:{pf:true,bi:true,cr:true,te:true,rc:true,da:true},by:'Zaki',at:now-H,round:1,note:'',log:[{at:now-H,by:'Zaki',st:'ok',note:'',fail:[]}]},checked:true,driveUrl:drv,caption:CAP.replace('Langkah ringan','Ringan dan responsif')});
   S['logs/balance']={updatedAt:now-2*H,entries:[]};
   const who={rayhan:'rayhan@tirtonic.id',aulia:'aulia@tirtonic.id',salma:'salma@tirtonic.id'}[location.hash.slice(1)]||'kepala@tirtonic.id';
   window.__STORE=S;window.__OWNERS=['kepala@tirtonic.id'];window.__USER={email:who,displayName:who};window.__NEXT_USER=window.__USER;
