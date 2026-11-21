@@ -51,6 +51,11 @@
   T('i7','idc','Terdata',1,2,6,{source:'lama',reason:'idcc'});
   T('i8','vrv','Ready',-3,-1,3,{cprId:'TRT-CPR-VRV-2611-0003',qaReq:true,qa:{st:'ok',g:{pf:true,bi:true,cr:true,te:true,rc:true,da:true},by:'Zaki',at:now-H,round:1,note:'',log:[{at:now-H,by:'Zaki',st:'ok',note:'',fail:[]}]},checked:true,driveUrl:drv,caption:CAP.replace('Langkah ringan','Ringan dan responsif')});
   S['logs/balance']={updatedAt:now-2*H,entries:[]};
+  /* CPR: contoh snapshot, inquiry, order, action item (tab CPR) */
+  S['cpr/s_t15_7']={taskId:'t15',cp:'D+7',reach:5000,views:null,likes:210,comments:18,saves:96,shares:12,profileVisits:40,source:'Instagram Insights',observedAt:now-H,by:'Zaki',at:now-H};
+  S['cpr/q_wa-2611-014']={ref:'WA-2611-014',date:D(0),kind:'Direct',intent:'ukuran',taskId:'t16',campaignId:'',evidence:'Chat CS, tanya ukuran 42',by:'Zaki',at:now-H};
+  S['cpr/o_inv-2611-0091']={orderId:'INV-2611-0091',date:D(0),kind:'Assisted',amount:3500000,taskId:'t16',campaignId:'CMP-PYD-2611',evidence:'Kode promo REV11',note:'',by:'Zaki',at:now-H};
+  S['cpr/a_demo1']={insight:'Save rate video produk tinggi',action:'Tambah 2 video produk sepatu minggu depan',owner:'R',due:D(5),status:'Open',taskId:'',by:'Zaki',at:now-H};
   const who={rayhan:'rayhan@tirtonic.id',aulia:'aulia@tirtonic.id',salma:'salma@tirtonic.id'}[location.hash.slice(1)]||'kepala@tirtonic.id';
   window.__STORE=S;window.__OWNERS=['kepala@tirtonic.id'];window.__USER={email:who,displayName:who};window.__NEXT_USER=window.__USER;
   window.__DEMO_WHO=who;

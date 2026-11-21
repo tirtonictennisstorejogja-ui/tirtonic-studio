@@ -80,6 +80,8 @@ service cloud.firestore {
     match /locks/{id}    { allow read, write: if isStaff(); }
     // Laporan mingguan, planning, dan bulanan: khusus admin
     match /reports/{id}  { allow read, write: if isAdmin(); }
+    // Tab CPR (snapshot metrik, inquiry, order, action item): hanya admin. Validasi lengkap ada di server Tirtonichub (rules.ts cprDocWhy).
+    match /cpr/{id}      { allow read, write: if isAdmin(); }
 
     match /tasks/{id} {
       // semua anggota boleh membaca (untuk kalender tim); aplikasi hanya menampilkan tugas miliknya di pipeline
